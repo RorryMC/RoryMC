@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.inventory.translators;
@@ -34,10 +34,10 @@ import com.nukkitx.protocol.bedrock.data.inventory.stackrequestactions.StackRequ
 import com.nukkitx.protocol.bedrock.packet.ItemStackResponsePacket;
 import com.nukkitx.protocol.bedrock.packet.PlayerEnchantOptionsPacket;
 import org.geysermc.connector.inventory.EnchantingContainer;
-import org.geysermc.connector.inventory.GeyserEnchantOption;
+import org.geysermc.connector.inventory.RoryEnchantOption;
 import org.geysermc.connector.inventory.Inventory;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.BedrockContainerSlot;
 import org.geysermc.connector.network.translators.inventory.updater.UIInventoryUpdater;
 import org.geysermc.connector.network.translators.item.Enchantment;
@@ -51,7 +51,7 @@ public class EnchantingInventoryTranslator extends AbstractBlockInventoryTransla
     }
 
     @Override
-    public void updateProperty(GeyserSession session, Inventory inventory, int key, int value) {
+    public void updateProperty(RorySession session, Inventory inventory, int key, int value) {
         int slotToUpdate;
         EnchantingContainer enchantingInventory = (EnchantingContainer) inventory;
         boolean shouldUpdate = false;
@@ -61,7 +61,7 @@ public class EnchantingInventoryTranslator extends AbstractBlockInventoryTransla
             case 2:
                 // Experience required
                 slotToUpdate = key;
-                enchantingInventory.getGeyserEnchantOptions()[slotToUpdate].setXpCost(value);
+                enchantingInventory.getRoryEnchantOptions()[slotToUpdate].setXpCost(value);
                 break;
             case 4:
             case 5:
@@ -81,20 +81,20 @@ public class EnchantingInventoryTranslator extends AbstractBlockInventoryTransla
                         bedrockIndex = -1;
                     }
                 }
-                enchantingInventory.getGeyserEnchantOptions()[slotToUpdate].setEnchantIndex(value, bedrockIndex);
+                enchantingInventory.getRoryEnchantOptions()[slotToUpdate].setEnchantIndex(value, bedrockIndex);
                 break;
             case 7:
             case 8:
             case 9:
                 // Enchantment level
                 slotToUpdate = key - 7;
-                enchantingInventory.getGeyserEnchantOptions()[slotToUpdate].setEnchantLevel(value);
+                enchantingInventory.getRoryEnchantOptions()[slotToUpdate].setEnchantLevel(value);
                 shouldUpdate = true; // Java sends each property as its own packet, so let's only update after all properties have been sent
                 break;
             default:
                 return;
         }
-        GeyserEnchantOption enchantOption = enchantingInventory.getGeyserEnchantOptions()[slotToUpdate];
+        RoryEnchantOption enchantOption = enchantingInventory.getRoryEnchantOptions()[slotToUpdate];
         if (shouldUpdate && enchantOption.hasChanged()) {
             enchantingInventory.getEnchantOptions()[slotToUpdate] = enchantOption.build(session);
             PlayerEnchantOptionsPacket packet = new PlayerEnchantOptionsPacket();
@@ -109,7 +109,7 @@ public class EnchantingInventoryTranslator extends AbstractBlockInventoryTransla
     }
 
     @Override
-    public ItemStackResponsePacket.Response translateSpecialRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateSpecialRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         // Client has requested an item to be enchanted
         CraftRecipeStackRequestActionData craftRecipeData = (CraftRecipeStackRequestActionData) request.getActions()[0];
         EnchantingContainer enchantingInventory = (EnchantingContainer) inventory;
@@ -119,7 +119,7 @@ public class EnchantingInventoryTranslator extends AbstractBlockInventoryTransla
             if (enchantData != null) {
                 if (craftRecipeData.getRecipeNetworkId() == enchantData.getEnchantNetId()) {
                     // Enchant net ID is how we differentiate between what item Bedrock wants
-                    javaSlot = enchantingInventory.getGeyserEnchantOptions()[i].getJavaIndex();
+                    javaSlot = enchantingInventory.getRoryEnchantOptions()[i].getJavaIndex();
                     break;
                 }
             }

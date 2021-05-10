@@ -1,9 +1,9 @@
 # --------------------------------
-# Geyser Configuration File
+# Rory Configuration File
 #
 # A bridge between Minecraft: Bedrock Edition and Minecraft: Java Edition.
 #
-# GitHub: https://github.com/GeyserMC/Geyser
+# GitHub: https://github.com/RoryMC/Rory
 # Discord: https://discord.geysermc.org/
 # --------------------------------
 
@@ -18,16 +18,16 @@ bedrock:
   # This option is for the plugin version only.
   clone-remote-port: false
   # The MOTD that will be broadcasted to Minecraft: Bedrock Edition clients. This is irrelevant if "passthrough-motd" is set to true
-  # If either of these are empty, the respective string will default to "Geyser"
-  motd1: "Geyser"
-  motd2: "Another Geyser server."
+  # If either of these are empty, the respective string will default to "Rory"
+  motd1: "Rory"
+  motd2: "Another Rory server."
   # The Server Name that will be sent to Minecraft: Bedrock Edition clients. This is visible in both the pause menu and the settings menu.
-  server-name: "Geyser"
+  server-name: "Rory"
   # How much to compress network traffic to the Bedrock client. The higher the number, the more CPU usage used, but
   # the smaller the bandwidth used. Does not have any effect below -1 or above 9. Set to -1 to disable.
   compression-level: 6
   # Whether to enable PROXY protocol or not for clients. You DO NOT WANT this feature unless you run UDP reverse proxy
-  # in front of your Geyser instance.
+  # in front of your Rory instance.
   enable-proxy-protocol: false
   # A list of allowed PROXY protocol speaking proxy IP addresses/subnets. Only effective when "enable-proxy-protocol" is enabled, and
   # should really only be used when you are not able to use a proper firewall (usually true with shared hosting providers etc.).
@@ -37,15 +37,15 @@ bedrock:
 remote:
   # The IP address of the remote (Java Edition) server
   # If it is "auto", for standalone version the remote address will be set to 127.0.0.1,
-  # for plugin versions, Geyser will attempt to find the best address to connect to.
+  # for plugin versions, Rory will attempt to find the best address to connect to.
   address: auto
   # The port of the remote (Java Edition) server
   # For plugin versions, if address has been set to "auto", the port will also follow the server's listening port.
   port: 25565
-  # Authentication type. Can be offline, online, or floodgate (see https://github.com/GeyserMC/Geyser/wiki/Floodgate).
+  # Authentication type. Can be offline, online, or floodgate (see https://github.com/RoryMC/Rory/wiki/Floodgate).
   auth-type: online
-  # Allow for password-based authentication methods through Geyser. Only useful in online mode.
-  # If this is false, users must authenticate to Microsoft using a code provided by Geyser on their desktop.
+  # Allow for password-based authentication methods through Rory. Only useful in online mode.
+  # If this is false, users must authenticate to Microsoft using a code provided by Rory on their desktop.
   allow-password-authentication: true
   # Whether to enable PROXY protocol or not while connecting to the server.
   # This is useful only when:
@@ -141,9 +141,9 @@ emote-offhand-workaround: "disabled"
 # creative mode (and other features). Although this increases RAM usage, it likely
 # won't have much of an effect for the vast majority of people. However, if you're
 # running out of RAM or are in a RAM-sensitive environment, you may want to disable
-# this. When using the Spigot version of Geyser, support for features or
+# this. When using the Spigot version of Rory, support for features or
 # implementations this allows is automatically enabled without the additional caching
-# as Geyser has direct access to the server itself.
+# as Rory has direct access to the server itself.
 cache-chunks: true
 
 # Specify how many days images will be cached to disk to save downloading them from the internet.
@@ -156,7 +156,7 @@ allow-custom-skulls: true
 # Whether to add (at this time, only) the furnace minecart as a separate item in the game, which normally does not exist in Bedrock Edition.
 # This should only need to be disabled if using a proxy that does not use the "transfer packet" style of server switching.
 # If this is disabled, furnace minecart items will be mapped to hopper minecart items.
-# This option requires a restart of Geyser in order to change its setting.
+# This option requires a restart of Rory in order to change its setting.
 add-non-bedrock-items: true
 
 # Bedrock prevents building and displaying blocks above Y127 in the Nether -
@@ -175,9 +175,9 @@ force-resource-packs: true
 xbox-achievements-enabled: false
 
 # bStats is a stat tracker that is entirely anonymous and tracks only basic information
-# about Geyser, such as how many people are online, how many servers are using Geyser,
+# about Rory, such as how many people are online, how many servers are using Rory,
 # what OS is being used, etc. You can learn more about bStats here: https://bstats.org/.
-# https://bstats.org/plugin/server-implementation/GeyserMC
+# https://bstats.org/plugin/server-implementation/RoryMC
 metrics:
   # If metrics should be enabled
   enabled: true
@@ -186,7 +186,7 @@ metrics:
 
 # ADVANCED OPTIONS - DO NOT TOUCH UNLESS YOU KNOW WHAT YOU ARE DOING!
 
-# Geyser updates the Scoreboard after every Scoreboard packet, but when Geyser tries to handle
+# Rory updates the Scoreboard after every Scoreboard packet, but when Rory tries to handle
 # a lot of scoreboard packets per second can cause serious lag.
 # This option allows you to specify after how many Scoreboard packets per seconds
 # the Scoreboard updates will be limited to four updates per second.

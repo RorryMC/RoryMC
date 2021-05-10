@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.bedrock;
@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.data.game.entity.player.Hand;
 import com.github.steveice10.mc.protocol.packet.ingame.client.player.ClientPlayerSwingArmPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.client.world.ClientSteerBoatPacket;
 import com.nukkitx.protocol.bedrock.packet.AnimatePacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 public class BedrockAnimateTranslator extends PacketTranslator<AnimatePacket> {
 
     @Override
-    public void translate(AnimatePacket packet, GeyserSession session) {
+    public void translate(AnimatePacket packet, RorySession session) {
         // Stop the player sending animations before they have fully spawned into the server
         if (!session.isSpawned()) {
             return;

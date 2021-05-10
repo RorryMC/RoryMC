@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.inventory.translators;
@@ -36,10 +36,10 @@ import com.nukkitx.protocol.bedrock.packet.InventorySlotPacket;
 import com.nukkitx.protocol.bedrock.packet.ItemStackResponsePacket;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.Inventory;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.BedrockContainerSlot;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
 import org.geysermc.connector.network.translators.inventory.SlotType;
@@ -59,7 +59,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
     }
 
     @Override
-    public void updateInventory(GeyserSession session, Inventory inventory) {
+    public void updateInventory(RorySession session, Inventory inventory) {
         updateCraftingGrid(session, inventory);
 
         InventoryContentPacket inventoryContentPacket = new InventoryContentPacket();
@@ -98,7 +98,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
      * @param session Session of the player
      * @param inventory Inventory of the player
      */
-    public static void updateCraftingGrid(GeyserSession session, Inventory inventory) {
+    public static void updateCraftingGrid(RorySession session, Inventory inventory) {
         // Crafting grid
         for (int i = 1; i < 5; i++) {
             InventorySlotPacket slotPacket = new InventorySlotPacket();
@@ -116,7 +116,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
     }
 
     @Override
-    public void updateSlot(GeyserSession session, Inventory inventory, int slot) {
+    public void updateSlot(RorySession session, Inventory inventory, int slot) {
         if (slot >= 1 && slot <= 44) {
             InventorySlotPacket slotPacket = new InventorySlotPacket();
             if (slot >= 9) {
@@ -209,7 +209,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
     }
 
     @Override
-    public ItemStackResponsePacket.Response translateRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         if (session.getGameMode() != GameMode.CREATIVE) {
             return super.translateRequest(session, inventory, request);
         }
@@ -231,7 +231,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
                     int transferAmount = transferAction.getCount();
                     if (isCursor(transferAction.getDestination())) {
                         int sourceSlot = bedrockSlotToJava(transferAction.getSource());
-                        GeyserItemStack sourceItem = inventory.getItem(sourceSlot);
+                        RoryItemStack sourceItem = inventory.getItem(sourceSlot);
                         if (playerInv.getCursor().isEmpty()) {
                             playerInv.setCursor(sourceItem.copy(0), session);
                         }
@@ -242,7 +242,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
                         affectedSlots.add(sourceSlot);
                     } else if (isCursor(transferAction.getSource())) {
                         int destSlot = bedrockSlotToJava(transferAction.getDestination());
-                        GeyserItemStack sourceItem = playerInv.getCursor();
+                        RoryItemStack sourceItem = playerInv.getCursor();
                         if (inventory.getItem(destSlot).isEmpty()) {
                             inventory.setItem(destSlot, sourceItem.copy(0), session);
                         }
@@ -254,7 +254,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
                     } else {
                         int sourceSlot = bedrockSlotToJava(transferAction.getSource());
                         int destSlot = bedrockSlotToJava(transferAction.getDestination());
-                        GeyserItemStack sourceItem = inventory.getItem(sourceSlot);
+                        RoryItemStack sourceItem = inventory.getItem(sourceSlot);
                         if (inventory.getItem(destSlot).isEmpty()) {
                             inventory.setItem(destSlot, sourceItem.copy(0), session);
                         }
@@ -278,8 +278,8 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
 
                     if (isCursor(swapAction.getDestination())) {
                         int sourceSlot = bedrockSlotToJava(swapAction.getSource());
-                        GeyserItemStack sourceItem = inventory.getItem(sourceSlot);
-                        GeyserItemStack destItem = playerInv.getCursor();
+                        RoryItemStack sourceItem = inventory.getItem(sourceSlot);
+                        RoryItemStack destItem = playerInv.getCursor();
 
                         playerInv.setCursor(sourceItem, session);
                         inventory.setItem(sourceSlot, destItem, session);
@@ -287,8 +287,8 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
                         affectedSlots.add(sourceSlot);
                     } else if (isCursor(swapAction.getSource())) {
                         int destSlot = bedrockSlotToJava(swapAction.getDestination());
-                        GeyserItemStack sourceItem = playerInv.getCursor();
-                        GeyserItemStack destItem = inventory.getItem(destSlot);
+                        RoryItemStack sourceItem = playerInv.getCursor();
+                        RoryItemStack destItem = inventory.getItem(destSlot);
 
                         inventory.setItem(destSlot, sourceItem, session);
                         playerInv.setCursor(destItem, session);
@@ -297,8 +297,8 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
                     } else {
                         int sourceSlot = bedrockSlotToJava(swapAction.getSource());
                         int destSlot = bedrockSlotToJava(swapAction.getDestination());
-                        GeyserItemStack sourceItem = inventory.getItem(sourceSlot);
-                        GeyserItemStack destItem = inventory.getItem(destSlot);
+                        RoryItemStack sourceItem = inventory.getItem(sourceSlot);
+                        RoryItemStack destItem = inventory.getItem(destSlot);
 
                         inventory.setItem(destSlot, sourceItem, session);
                         inventory.setItem(sourceSlot, destItem, session);
@@ -317,7 +317,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
                         return rejectRequest(request, false);
                     }
 
-                    GeyserItemStack sourceItem;
+                    RoryItemStack sourceItem;
                     if (isCursor(dropAction.getSource())) {
                         sourceItem = playerInv.getCursor();
                     } else {
@@ -349,7 +349,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
                     if (!isCursor(destroyAction.getSource())) {
                         // Item exists; let's remove it from the inventory
                         int javaSlot = bedrockSlotToJava(destroyAction.getSource());
-                        GeyserItemStack existingItem = inventory.getItem(javaSlot);
+                        RoryItemStack existingItem = inventory.getItem(javaSlot);
                         existingItem.sub(destroyAction.getCount());
                         affectedSlots.add(javaSlot);
                     } else {
@@ -370,7 +370,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
     }
 
     @Override
-    public ItemStackResponsePacket.Response translateCreativeRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateCreativeRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         ItemStack javaCreativeItem = null;
         IntSet affectedSlots = new IntOpenHashSet();
         CraftState craftState = CraftState.START;
@@ -407,7 +407,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
                     }
 
                     int sourceSlot = bedrockSlotToJava(destroyAction.getSource());
-                    inventory.setItem(sourceSlot, GeyserItemStack.EMPTY, session); //assume all creative destroy requests will empty the slot
+                    inventory.setItem(sourceSlot, RoryItemStack.EMPTY, session); //assume all creative destroy requests will empty the slot
                     affectedSlots.add(sourceSlot);
                     break;
                 }
@@ -425,7 +425,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
 
                     if (isCursor(transferAction.getDestination())) {
                         if (session.getPlayerInventory().getCursor().isEmpty()) {
-                            GeyserItemStack newItemStack = GeyserItemStack.from(javaCreativeItem);
+                            RoryItemStack newItemStack = RoryItemStack.from(javaCreativeItem);
                             newItemStack.setAmount(transferAction.getCount());
                             session.getPlayerInventory().setCursor(newItemStack, session);
                         } else {
@@ -435,7 +435,7 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
                     } else {
                         int destSlot = bedrockSlotToJava(transferAction.getDestination());
                         if (inventory.getItem(destSlot).isEmpty()) {
-                            GeyserItemStack newItemStack = GeyserItemStack.from(javaCreativeItem);
+                            RoryItemStack newItemStack = RoryItemStack.from(javaCreativeItem);
                             newItemStack.setAmount(transferAction.getCount());
                             inventory.setItem(destSlot, newItemStack, session);
                         } else {
@@ -455,8 +455,8 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
         return acceptRequest(request, makeContainerEntries(session, inventory, affectedSlots));
     }
 
-    private static void sendCreativeAction(GeyserSession session, Inventory inventory, int slot) {
-        GeyserItemStack item = inventory.getItem(slot);
+    private static void sendCreativeAction(RorySession session, Inventory inventory, int slot) {
+        RoryItemStack item = inventory.getItem(slot);
         ItemStack itemStack = item.isEmpty() ? new ItemStack(-1, 0, null) : item.getItemStack();
 
         ClientCreativeInventoryActionPacket creativePacket = new ClientCreativeInventoryActionPacket(slot, itemStack);
@@ -473,18 +473,18 @@ public class PlayerInventoryTranslator extends InventoryTranslator {
     }
 
     @Override
-    public void prepareInventory(GeyserSession session, Inventory inventory) {
+    public void prepareInventory(RorySession session, Inventory inventory) {
     }
 
     @Override
-    public void openInventory(GeyserSession session, Inventory inventory) {
+    public void openInventory(RorySession session, Inventory inventory) {
     }
 
     @Override
-    public void closeInventory(GeyserSession session, Inventory inventory) {
+    public void closeInventory(RorySession session, Inventory inventory) {
     }
 
     @Override
-    public void updateProperty(GeyserSession session, Inventory inventory, int key, int value) {
+    public void updateProperty(RorySession session, Inventory inventory, int key, int value) {
     }
 }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.dump;
@@ -34,11 +34,11 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.common.serializer.AsteriskSerializer;
-import org.geysermc.connector.configuration.GeyserConfiguration;
+import org.geysermc.connector.configuration.RoryConfiguration;
 import org.geysermc.connector.network.BedrockProtocol;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.DockerCheck;
 import org.geysermc.connector.utils.FileUtils;
 import org.geysermc.floodgate.util.DeviceOS;
@@ -59,7 +59,7 @@ public class DumpInfo {
 
     private final DumpInfo.VersionInfo versionInfo;
     private Properties gitInfo;
-    private final GeyserConfiguration config;
+    private final RoryConfiguration config;
     private final HashInfo hashInfo;
     private final Object2IntMap<DeviceOS> userPlatforms;
     private final RamInfo ramInfo;
@@ -73,7 +73,7 @@ public class DumpInfo {
             this.gitInfo.load(FileUtils.getResource("git.properties"));
         } catch (IOException ignored) { }
 
-        this.config = GeyserConnector.getInstance().getConfig();
+        this.config = RoryConnector.getInstance().getConfig();
 
         String md5Hash = "unknown";
         String sha256Hash = "unknown";
@@ -88,7 +88,7 @@ public class DumpInfo {
             //noinspection UnstableApiUsage
             sha256Hash = byteSource.hash(Hashing.sha256()).toString();
         } catch (Exception e) {
-            if (GeyserConnector.getInstance().getConfig().isDebugMode()) {
+            if (RoryConnector.getInstance().getConfig().isDebugMode()) {
                 e.printStackTrace();
             }
         }
@@ -98,12 +98,12 @@ public class DumpInfo {
         this.ramInfo = new DumpInfo.RamInfo();
 
         this.userPlatforms = new Object2IntOpenHashMap<>();
-        for (GeyserSession session : GeyserConnector.getInstance().getPlayers()) {
+        for (RorySession session : RoryConnector.getInstance().getPlayers()) {
             DeviceOS device = session.getClientData().getDeviceOS();
             userPlatforms.put(device, userPlatforms.getOrDefault(device, 0) + 1);
         }
 
-        this.bootstrapInfo = GeyserConnector.getInstance().getBootstrap().getDumpInfo();
+        this.bootstrapInfo = RoryConnector.getInstance().getBootstrap().getDumpInfo();
     }
 
     @Getter
@@ -120,8 +120,8 @@ public class DumpInfo {
         private final MCInfo mcInfo;
 
         VersionInfo() {
-            this.name = GeyserConnector.NAME;
-            this.version = GeyserConnector.VERSION;
+            this.name = RoryConnector.NAME;
+            this.version = RoryConnector.VERSION;
             this.javaVersion = System.getProperty("java.version");
             this.architecture = System.getProperty("os.arch"); // Usually gives Java architecture but still may be helpful.
             this.operatingSystem = System.getProperty("os.name");

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.world;
@@ -33,7 +33,7 @@ import com.nukkitx.nbt.NbtMap;
 import com.nukkitx.nbt.NbtMapBuilder;
 import com.nukkitx.protocol.bedrock.packet.BlockEntityDataPacket;
 import com.nukkitx.protocol.bedrock.packet.BlockEventPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.world.block.entity.NoteblockBlockEntityTranslator;
@@ -45,7 +45,7 @@ import java.util.concurrent.TimeUnit;
 public class JavaBlockValueTranslator extends PacketTranslator<ServerBlockValuePacket> {
 
     @Override
-    public void translate(ServerBlockValuePacket packet, GeyserSession session) {
+    public void translate(ServerBlockValuePacket packet, RorySession session) {
         BlockEventPacket blockEventPacket = new BlockEventPacket();
         blockEventPacket.setBlockPosition(Vector3i.from(packet.getPosition().getX(),
                 packet.getPosition().getY(), packet.getPosition().getZ()));
@@ -115,12 +115,12 @@ public class JavaBlockValueTranslator extends PacketTranslator<ServerBlockValueP
 
     /**
      * Emulating a piston extending
-     * @param session GeyserSession
+     * @param session RorySession
      * @param position Block position
      * @param progress How far the piston is
      * @param lastProgress How far the piston last was
      */
-    private void extendPiston(GeyserSession session, Vector3i position, float progress, float lastProgress) {
+    private void extendPiston(RorySession session, Vector3i position, float progress, float lastProgress) {
         BlockEntityDataPacket blockEntityDataPacket = new BlockEntityDataPacket();
         blockEntityDataPacket.setBlockPosition(position);
         byte state = (byte) ((progress == 1.0f && lastProgress == 1.0f) ? 2 : 1);
@@ -135,12 +135,12 @@ public class JavaBlockValueTranslator extends PacketTranslator<ServerBlockValueP
 
     /**
      * Emulate a piston retracting.
-     * @param session GeyserSession
+     * @param session RorySession
      * @param position Block position
      * @param progress Current progress of piston
      * @param lastProgress Last progress of piston
      */
-    private void retractPiston(GeyserSession session, Vector3i position, float progress, float lastProgress) {
+    private void retractPiston(RorySession session, Vector3i position, float progress, float lastProgress) {
         BlockEntityDataPacket blockEntityDataPacket = new BlockEntityDataPacket();
         blockEntityDataPacket.setBlockPosition(position);
         byte state = (byte) ((progress == 0.0f && lastProgress == 0.0f) ? 0 : 3);

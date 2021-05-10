@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,21 +19,21 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.inventory;
 
 import com.github.steveice10.mc.protocol.data.game.window.WindowType;
 import lombok.Getter;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class Generic3X3Container extends Container {
     /**
      * Whether we need to set the container type as {@link com.nukkitx.protocol.bedrock.data.inventory.ContainerType#DROPPER}.
      *
-     * Used at {@link org.geysermc.connector.network.translators.inventory.translators.Generic3X3InventoryTranslator#openInventory(GeyserSession, Inventory)}
+     * Used at {@link org.geysermc.connector.network.translators.inventory.translators.Generic3X3InventoryTranslator#openInventory(RorySession, Inventory)}
      */
     @Getter
     private boolean isDropper = false;

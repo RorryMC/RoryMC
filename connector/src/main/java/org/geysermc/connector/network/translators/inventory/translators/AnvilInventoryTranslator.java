@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.inventory.translators;
@@ -34,10 +34,10 @@ import com.nukkitx.protocol.bedrock.data.inventory.stackrequestactions.StackRequ
 import com.nukkitx.protocol.bedrock.data.inventory.stackrequestactions.StackRequestActionType;
 import com.nukkitx.protocol.bedrock.packet.ItemStackResponsePacket;
 import org.geysermc.connector.inventory.AnvilContainer;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.Inventory;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.BedrockContainerSlot;
 import org.geysermc.connector.network.translators.inventory.updater.UIInventoryUpdater;
 import org.geysermc.connector.network.translators.item.ItemTranslator;
@@ -57,7 +57,7 @@ public class AnvilInventoryTranslator extends AbstractBlockInventoryTranslator {
 
     @Override
     @Deprecated
-    public ItemStackResponsePacket.Response translateSpecialRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateSpecialRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         if (!(request.getActions()[1] instanceof CraftResultsDeprecatedStackRequestActionData)) {
             // Just silently log an error
             session.getConnector().getLogger().debug("Something isn't quite right with taking an item out of an anvil.");
@@ -90,9 +90,9 @@ public class AnvilInventoryTranslator extends AbstractBlockInventoryTranslator {
         return translateRequest(session, inventory, request);
     }
 
-    private void sendRenamePacket(GeyserSession session, Inventory inventory, ItemData outputItem, String name) {
+    private void sendRenamePacket(RorySession session, Inventory inventory, ItemData outputItem, String name) {
         session.sendDownstreamPacket(new ClientRenameItemPacket(name));
-        inventory.setItem(2, GeyserItemStack.from(ItemTranslator.translateToJava(outputItem)), session);
+        inventory.setItem(2, RoryItemStack.from(ItemTranslator.translateToJava(outputItem)), session);
     }
 
     /* 1.16.100 support end */

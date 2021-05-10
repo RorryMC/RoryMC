@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.entity;
@@ -37,7 +37,7 @@ import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.living.ArmorStandEntity;
 import org.geysermc.connector.entity.living.animal.AnimalEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -47,7 +47,7 @@ import java.util.Arrays;
 public class JavaEntitySetPassengersTranslator extends PacketTranslator<ServerEntitySetPassengersPacket> {
 
     @Override
-    public void translate(ServerEntitySetPassengersPacket packet, GeyserSession session) {
+    public void translate(ServerEntitySetPassengersPacket packet, RorySession session) {
         Entity entity;
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();
@@ -80,7 +80,7 @@ public class JavaEntitySetPassengersTranslator extends PacketTranslator<ServerEn
 
             EntityLinkData.Type type = rider ? EntityLinkData.Type.RIDER : EntityLinkData.Type.PASSENGER;
             SetEntityLinkPacket linkPacket = new SetEntityLinkPacket();
-            linkPacket.setEntityLink(new EntityLinkData(entity.getGeyserId(), passenger.getGeyserId(), type, false));
+            linkPacket.setEntityLink(new EntityLinkData(entity.getRoryId(), passenger.getRoryId(), type, false));
             session.sendUpstreamPacket(linkPacket);
             passengers.add(passengerId);
 
@@ -117,7 +117,7 @@ public class JavaEntitySetPassengersTranslator extends PacketTranslator<ServerEn
             }
             if (Arrays.stream(packet.getPassengerIds()).noneMatch(id -> id == passengerId)) {
                 SetEntityLinkPacket linkPacket = new SetEntityLinkPacket();
-                linkPacket.setEntityLink(new EntityLinkData(entity.getGeyserId(), passenger.getGeyserId(), EntityLinkData.Type.REMOVE, false));
+                linkPacket.setEntityLink(new EntityLinkData(entity.getRoryId(), passenger.getRoryId(), EntityLinkData.Type.REMOVE, false));
                 session.sendUpstreamPacket(linkPacket);
                 passengers.remove(passenger.getEntityId());
                 passenger.getMetadata().put(EntityData.RIDER_ROTATION_LOCKED, (byte) 0);
@@ -236,7 +236,7 @@ public class JavaEntitySetPassengersTranslator extends PacketTranslator<ServerEn
         return 0f;
     }
 
-    private void updateOffset(Entity passenger, Entity mount, GeyserSession session, boolean rider, boolean riding, boolean moreThanOneEntity) {
+    private void updateOffset(Entity passenger, Entity mount, RorySession session, boolean rider, boolean riding, boolean moreThanOneEntity) {
         passenger.getMetadata().getFlags().setFlag(EntityFlag.RIDING, riding);
         if (riding) {
             // Without the Y offset, Bedrock players will find themselves in the floor when mounting

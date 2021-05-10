@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.entity;
@@ -31,7 +31,7 @@ import com.nukkitx.protocol.bedrock.packet.AnimateEntityPacket;
 import com.nukkitx.protocol.bedrock.packet.AnimatePacket;
 import com.nukkitx.protocol.bedrock.packet.SpawnParticleEffectPacket;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.DimensionUtils;
@@ -40,7 +40,7 @@ import org.geysermc.connector.utils.DimensionUtils;
 public class JavaEntityAnimationTranslator extends PacketTranslator<ServerEntityAnimationPacket> {
 
     @Override
-    public void translate(ServerEntityAnimationPacket packet, GeyserSession session) {
+    public void translate(ServerEntityAnimationPacket packet, RorySession session) {
         Entity entity;
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();
@@ -51,7 +51,7 @@ public class JavaEntityAnimationTranslator extends PacketTranslator<ServerEntity
             return;
 
         AnimatePacket animatePacket = new AnimatePacket();
-        animatePacket.setRuntimeEntityId(entity.getGeyserId());
+        animatePacket.setRuntimeEntityId(entity.getRoryId());
         switch (packet.getAnimation()) {
             case SWING_ARM:
                 animatePacket.setAction(AnimatePacket.Action.SWING_ARM);
@@ -64,7 +64,7 @@ public class JavaEntityAnimationTranslator extends PacketTranslator<ServerEntity
                 offHandPacket.setBlendOutTime(0.0f);
                 offHandPacket.setStopExpression("query.any_animation_finished");
                 offHandPacket.setController("__runtime_controller");
-                offHandPacket.getRuntimeEntityIds().add(entity.getGeyserId());
+                offHandPacket.getRuntimeEntityIds().add(entity.getRoryId());
 
                 session.sendUpstreamPacket(offHandPacket);
                 return;
@@ -78,7 +78,7 @@ public class JavaEntityAnimationTranslator extends PacketTranslator<ServerEntity
                 stringPacket.setIdentifier("geyseropt:enchanted_hit_multiple");
                 stringPacket.setDimensionId(DimensionUtils.javaToBedrock(session.getDimension()));
                 stringPacket.setPosition(Vector3f.ZERO);
-                stringPacket.setUniqueEntityId(entity.getGeyserId());
+                stringPacket.setUniqueEntityId(entity.getRoryId());
                 session.sendUpstreamPacket(stringPacket);
                 break;
             case LEAVE_BED:

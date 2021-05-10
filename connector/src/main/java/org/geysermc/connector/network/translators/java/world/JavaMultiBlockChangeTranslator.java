@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,13 +19,13 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.world;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.ChunkUtils;
@@ -37,7 +37,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.world.ServerMultiB
 public class JavaMultiBlockChangeTranslator extends PacketTranslator<ServerMultiBlockChangePacket> {
 
     @Override
-    public void translate(ServerMultiBlockChangePacket packet, GeyserSession session) {
+    public void translate(ServerMultiBlockChangePacket packet, RorySession session) {
         for (BlockChangeRecord record : packet.getRecords()) {
             ChunkUtils.updateBlock(session, record.getBlock(), record.getPosition());
         }

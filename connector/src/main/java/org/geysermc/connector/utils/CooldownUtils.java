@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,15 +19,15 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.utils;
 
 import com.nukkitx.protocol.bedrock.packet.SetTitlePacket;
 import lombok.Getter;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 import java.util.concurrent.TimeUnit;
 
@@ -44,9 +44,9 @@ public class CooldownUtils {
 
     /**
      * Starts sending the fake cooldown to the Bedrock client.
-     * @param session GeyserSession
+     * @param session RorySession
      */
-    public static void sendCooldown(GeyserSession session) {
+    public static void sendCooldown(RorySession session) {
         if (SHOW_COOLDOWN == CooldownType.DISABLED) return;
         if (session.getAttackSpeed() == 0.0 || session.getAttackSpeed() > 20) return; // 0.0 usually happens on login and causes issues with visuals; anything above 20 means a plugin like OldCombatMechanics is being used
         // Needs to be sent or no subtitle packet is recognized by the client
@@ -61,10 +61,10 @@ public class CooldownUtils {
 
     /**
      * Keeps updating the cooldown until the bar is complete.
-     * @param session GeyserSession
+     * @param session RorySession
      * @param lastHitTime The time of the last hit. Used to gauge how long the cooldown is taking.
      */
-    private static void computeCooldown(GeyserSession session, long lastHitTime) {
+    private static void computeCooldown(RorySession session, long lastHitTime) {
         if (session.isClosed()) return; // Don't run scheduled tasks if the client left
         if (lastHitTime != session.getLastHitTime()) return; // Means another cooldown has started so there's no need to continue this one
         SetTitlePacket titlePacket = new SetTitlePacket();
@@ -92,7 +92,7 @@ public class CooldownUtils {
         }
     }
 
-    private static boolean hasCooldown(GeyserSession session) {
+    private static boolean hasCooldown(RorySession session) {
         long time = System.currentTimeMillis() - session.getLastHitTime();
         double cooldown = restrain(((double) time) * session.getAttackSpeed() / 1000d, 1.5);
         return cooldown < 1.1;
@@ -105,7 +105,7 @@ public class CooldownUtils {
         return Math.min(x, max);
     }
 
-    private static String getTitle(GeyserSession session) {
+    private static String getTitle(RorySession session) {
         long time = System.currentTimeMillis() - session.getLastHitTime();
         double cooldown = restrain(((double) time) * session.getAttackSpeed() / 1000d, 1);
 

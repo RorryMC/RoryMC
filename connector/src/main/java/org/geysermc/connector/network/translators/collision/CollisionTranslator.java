@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.collision;
@@ -29,8 +29,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.google.common.collect.BiMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.collision.translators.BlockCollision;
 import org.geysermc.connector.network.translators.collision.translators.EmptyCollision;
 import org.geysermc.connector.network.translators.collision.translators.OtherCollision;
@@ -49,7 +49,7 @@ public class CollisionTranslator {
 
     public static void init() {
         // If chunk caching is off then don't initialize
-        if (!GeyserConnector.getInstance().getConfig().isCacheChunks()) {
+        if (!RoryConnector.getInstance().getConfig().isCacheChunks()) {
             return;
         }
 
@@ -57,9 +57,9 @@ public class CollisionTranslator {
 
         Map<Class<?>, CollisionRemapper> annotationMap = new HashMap<>();
 
-        Reflections ref = GeyserConnector.getInstance().useXmlReflections() ? FileUtils.getReflections("org.geysermc.connector.network.translators.collision.translators") : new Reflections("org.geysermc.connector.network.translators.collision.translators");
+        Reflections ref = RoryConnector.getInstance().useXmlReflections() ? FileUtils.getReflections("org.geysermc.connector.network.translators.collision.translators") : new Reflections("org.geysermc.connector.network.translators.collision.translators");
         for (Class<?> clazz : ref.getTypesAnnotatedWith(CollisionRemapper.class)) {
-            GeyserConnector.getInstance().getLogger().debug("Found annotated collision translator: " + clazz.getCanonicalName());
+            RoryConnector.getInstance().getLogger().debug("Found annotated collision translator: " + clazz.getCanonicalName());
 
             collisionTypes.add(clazz);
             annotationMap.put(clazz, clazz.getAnnotation(CollisionRemapper.class));
@@ -70,7 +70,7 @@ public class CollisionTranslator {
 
         ArrayNode collisionList;
         try {
-            collisionList = (ArrayNode) GeyserConnector.JSON_MAPPER.readTree(stream);
+            collisionList = (ArrayNode) RoryConnector.JSON_MAPPER.readTree(stream);
         } catch (Exception e) {
             throw new AssertionError("Unable to load collision data", e);
         }
@@ -180,7 +180,7 @@ public class CollisionTranslator {
     }
 
 
-    public static BlockCollision getCollisionAt(GeyserSession session, int x, int y, int z) {
+    public static BlockCollision getCollisionAt(RorySession session, int x, int y, int z) {
         try {
             return getCollision(session.getConnector().getWorldManager().getBlockAt(session, x, y, z), x, y, z);
         } catch (ArrayIndexOutOfBoundsException e) {

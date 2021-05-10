@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,17 +19,17 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.command;
 
 import lombok.Getter;
 
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.command.defaults.*;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.LanguageUtils;
 
 import java.util.*;
@@ -37,11 +37,11 @@ import java.util.*;
 public abstract class CommandManager {
 
     @Getter
-    private final Map<String, GeyserCommand> commands = Collections.synchronizedMap(new HashMap<>());
+    private final Map<String, RoryCommand> commands = Collections.synchronizedMap(new HashMap<>());
 
-    private final GeyserConnector connector;
+    private final RoryConnector connector;
 
-    public CommandManager(GeyserConnector connector) {
+    public CommandManager(RoryConnector connector) {
         this.connector = connector;
 
         registerCommand(new HelpCommand(connector, "help", "geyser.commands.help.desc", "geyser.command.help"));
@@ -56,7 +56,7 @@ public abstract class CommandManager {
         registerCommand(new AdvancementsCommand(connector, "advancements", "geyser.commands.advancements.desc", "geyser.command.advancements"));
     }
 
-    public void registerCommand(GeyserCommand command) {
+    public void registerCommand(RoryCommand command) {
         commands.put(command.getName(), command);
         connector.getLogger().debug(LanguageUtils.getLocaleStringLog("geyser.commands.registered", command.getName()));
 
@@ -84,14 +84,14 @@ public abstract class CommandManager {
             args = argLine.contains(" ") ? argLine.split(" ") : new String[] { argLine };
         }
 
-        GeyserCommand cmd = commands.get(label);
+        RoryCommand cmd = commands.get(label);
         if (cmd == null) {
             connector.getLogger().error(LanguageUtils.getLocaleStringLog("geyser.commands.invalid"));
             return;
         }
 
-        if (sender instanceof GeyserSession) {
-            cmd.execute((GeyserSession) sender, sender, args);
+        if (sender instanceof RorySession) {
+            cmd.execute((RorySession) sender, sender, args);
         } else {
             if (!cmd.isBedrockOnly()) {
                 cmd.execute(null, sender, args);

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.entity.living.monster.raid;
@@ -30,7 +30,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class SpellcasterIllagerEntity extends AbstractIllagerEntity {
     private static final int SUMMON_VEX_PARTICLE_COLOR = (179 << 16) | (179 << 8) | 204;
@@ -44,7 +44,7 @@ public class SpellcasterIllagerEntity extends AbstractIllagerEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 16) {
             int spellType = (int) (byte) entityMetadata.getValue();
             // Summon vex, attack, or wololo

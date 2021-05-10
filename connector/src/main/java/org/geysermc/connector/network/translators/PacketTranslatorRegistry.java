@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators;
@@ -31,8 +31,8 @@ import com.github.steveice10.packetlib.packet.Packet;
 import com.nukkitx.protocol.bedrock.BedrockPacket;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
 import org.geysermc.common.PlatformType;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.FileUtils;
 import org.geysermc.connector.utils.LanguageUtils;
 import org.reflections.Reflections;
@@ -49,12 +49,12 @@ public class PacketTranslatorRegistry<T> {
     private static final ObjectArrayList<Class<?>> IGNORED_PACKETS = new ObjectArrayList<>();
 
     static {
-        Reflections ref = GeyserConnector.getInstance().useXmlReflections() ? FileUtils.getReflections("org.geysermc.connector.network.translators") : new Reflections("org.geysermc.connector.network.translators");
+        Reflections ref = RoryConnector.getInstance().useXmlReflections() ? FileUtils.getReflections("org.geysermc.connector.network.translators") : new Reflections("org.geysermc.connector.network.translators");
 
         for (Class<?> clazz : ref.getTypesAnnotatedWith(Translator.class)) {
             Class<?> packet = clazz.getAnnotation(Translator.class).packet();
 
-            GeyserConnector.getInstance().getLogger().debug("Found annotated translator: " + clazz.getCanonicalName() + " : " + packet.getSimpleName());
+            RoryConnector.getInstance().getLogger().debug("Found annotated translator: " + clazz.getCanonicalName() + " : " + packet.getSimpleName());
 
             try {
                 if (Packet.class.isAssignableFrom(packet)) {
@@ -68,10 +68,10 @@ public class PacketTranslatorRegistry<T> {
 
                     BEDROCK_TRANSLATOR.translators.put(targetPacket, translator);
                 } else {
-                    GeyserConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.network.translator.invalid_target", clazz.getCanonicalName()));
+                    RoryConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.network.translator.invalid_target", clazz.getCanonicalName()));
                 }
             } catch (InstantiationException | IllegalAccessException e) {
-                GeyserConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.network.translator.failed", clazz.getCanonicalName()));
+                RoryConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.network.translator.failed", clazz.getCanonicalName()));
             }
         }
 
@@ -87,7 +87,7 @@ public class PacketTranslatorRegistry<T> {
     }
 
     @SuppressWarnings("unchecked")
-    public <P extends T> boolean translate(Class<? extends P> clazz, P packet, GeyserSession session) {
+    public <P extends T> boolean translate(Class<? extends P> clazz, P packet, RorySession session) {
         if (!session.getUpstream().isClosed() && !session.isClosed()) {
             try {
                 PacketTranslator<P> translator = (PacketTranslator<P>) translators.get(clazz);
@@ -95,13 +95,13 @@ public class PacketTranslatorRegistry<T> {
                     translator.translate(packet, session);
                     return true;
                 } else {
-                    if ((GeyserConnector.getInstance().getPlatformType() != PlatformType.STANDALONE || !(packet instanceof BedrockPacket)) && !IGNORED_PACKETS.contains(clazz)) {
+                    if ((RoryConnector.getInstance().getPlatformType() != PlatformType.STANDALONE || !(packet instanceof BedrockPacket)) && !IGNORED_PACKETS.contains(clazz)) {
                         // Other debug logs already take care of Bedrock packets for us if on standalone
-                        GeyserConnector.getInstance().getLogger().debug("Could not find packet for " + (packet.toString().length() > 25 ? packet.getClass().getSimpleName() : packet));
+                        RoryConnector.getInstance().getLogger().debug("Could not find packet for " + (packet.toString().length() > 25 ? packet.getClass().getSimpleName() : packet));
                     }
                 }
             } catch (Throwable ex) {
-                GeyserConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.network.translator.packet.failed", packet.getClass().getSimpleName()), ex);
+                RoryConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.network.translator.packet.failed", packet.getClass().getSimpleName()), ex);
                 ex.printStackTrace();
             }
         }

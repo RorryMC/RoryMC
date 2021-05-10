@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.world;
@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.data.game.world.sound.BuiltinSound;
 import com.github.steveice10.mc.protocol.data.game.world.sound.CustomSound;
 import com.github.steveice10.mc.protocol.packet.ingame.server.ServerStopSoundPacket;
 import com.nukkitx.protocol.bedrock.packet.StopSoundPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.sound.SoundRegistry;
@@ -38,7 +38,7 @@ import org.geysermc.connector.network.translators.sound.SoundRegistry;
 public class JavaStopSoundTranslator extends PacketTranslator<ServerStopSoundPacket> {
 
     @Override
-    public void translate(ServerStopSoundPacket packet, GeyserSession session) {
+    public void translate(ServerStopSoundPacket packet, RorySession session) {
         // Runs if all sounds are stopped
         if (packet.getSound() == null) {
             StopSoundPacket stopPacket = new StopSoundPacket();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.world;
@@ -31,8 +31,8 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.world.ServerUpdate
 import com.nukkitx.math.vector.Vector3i;
 import com.nukkitx.protocol.bedrock.data.inventory.ContainerType;
 import com.nukkitx.protocol.bedrock.packet.ContainerOpenPacket;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.world.block.entity.BlockEntityTranslator;
@@ -45,11 +45,11 @@ public class JavaUpdateTileEntityTranslator extends PacketTranslator<ServerUpdat
     private final boolean cacheChunks;
 
     public JavaUpdateTileEntityTranslator() {
-        cacheChunks = GeyserConnector.getInstance().getConfig().isCacheChunks();
+        cacheChunks = RoryConnector.getInstance().getConfig().isCacheChunks();
     }
 
     @Override
-    public void translate(ServerUpdateTileEntityPacket packet, GeyserSession session) {
+    public void translate(ServerUpdateTileEntityPacket packet, RorySession session) {
         String id = BlockEntityUtils.getBedrockBlockEntityId(packet.getType().name());
         if (packet.getNbt().isEmpty()) { // Fixes errors in CubeCraft sending empty NBT
             BlockEntityUtils.updateBlockEntity(session, null, packet.getPosition());

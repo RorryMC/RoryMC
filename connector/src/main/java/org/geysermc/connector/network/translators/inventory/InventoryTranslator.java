@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.inventory;
@@ -41,12 +41,12 @@ import com.nukkitx.protocol.bedrock.data.inventory.stackrequestactions.*;
 import com.nukkitx.protocol.bedrock.packet.ItemStackResponsePacket;
 import it.unimi.dsi.fastutil.ints.*;
 import lombok.AllArgsConstructor;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.inventory.CartographyContainer;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.Inventory;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.click.Click;
 import org.geysermc.connector.network.translators.inventory.click.ClickPlan;
 import org.geysermc.connector.network.translators.inventory.translators.*;
@@ -107,12 +107,12 @@ public abstract class InventoryTranslator {
 
     public final int size;
 
-    public abstract void prepareInventory(GeyserSession session, Inventory inventory);
-    public abstract void openInventory(GeyserSession session, Inventory inventory);
-    public abstract void closeInventory(GeyserSession session, Inventory inventory);
-    public abstract void updateProperty(GeyserSession session, Inventory inventory, int key, int value);
-    public abstract void updateInventory(GeyserSession session, Inventory inventory);
-    public abstract void updateSlot(GeyserSession session, Inventory inventory, int slot);
+    public abstract void prepareInventory(RorySession session, Inventory inventory);
+    public abstract void openInventory(RorySession session, Inventory inventory);
+    public abstract void closeInventory(RorySession session, Inventory inventory);
+    public abstract void updateProperty(RorySession session, Inventory inventory, int key, int value);
+    public abstract void updateInventory(RorySession session, Inventory inventory);
+    public abstract void updateSlot(RorySession session, Inventory inventory, int slot);
     public abstract int bedrockSlotToJava(StackRequestSlotInfoData slotInfoData);
     public abstract int javaSlotToBedrock(int javaSlot);
     public abstract BedrockContainerSlot javaSlotToBedrockContainer(int javaSlot);
@@ -127,7 +127,7 @@ public abstract class InventoryTranslator {
      *
      * @return true if this transfer should be rejected
      */
-    public boolean shouldRejectItemPlace(GeyserSession session, Inventory inventory, ContainerSlotType bedrockSourceContainer,
+    public boolean shouldRejectItemPlace(RorySession session, Inventory inventory, ContainerSlotType bedrockSourceContainer,
                                          int javaSourceSlot, ContainerSlotType bedrockDestinationContainer, int javaDestinationSlot) {
         return false;
     }
@@ -143,11 +143,11 @@ public abstract class InventoryTranslator {
     /**
      * If {@link #shouldHandleRequestFirst(StackRequestActionData, Inventory)} returns true, this will be called
      */
-    public ItemStackResponsePacket.Response translateSpecialRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateSpecialRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         return rejectRequest(request);
     }
 
-    public void translateRequests(GeyserSession session, Inventory inventory, List<ItemStackRequest> requests) {
+    public void translateRequests(RorySession session, Inventory inventory, List<ItemStackRequest> requests) {
         boolean refresh = false;
         ItemStackResponsePacket responsePacket = new ItemStackResponsePacket();
         for (ItemStackRequest request : requests) {
@@ -193,11 +193,11 @@ public abstract class InventoryTranslator {
         }
     }
 
-    public ItemStackResponsePacket.Response translateRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         ClickPlan plan = new ClickPlan(session, this, inventory);
         IntSet affectedSlots = new IntOpenHashSet();
         for (StackRequestActionData action : request.getActions()) {
-            GeyserItemStack cursor = session.getPlayerInventory().getCursor();
+            RoryItemStack cursor = session.getPlayerInventory().getCursor();
             switch (action.getType()) {
                 case TAKE:
                 case PLACE: {
@@ -236,7 +236,7 @@ public abstract class InventoryTranslator {
                             }
                         }
                     } else if (isCursor(transferAction.getDestination())) { //picking up into cursor
-                        GeyserItemStack sourceItem = plan.getItem(sourceSlot);
+                        RoryItemStack sourceItem = plan.getItem(sourceSlot);
                         int sourceAmount = sourceItem.getAmount();
                         if (cursor.isEmpty()) { //picking up into empty cursor
                             if (transferAction.getCount() == sourceAmount) { //pickup all
@@ -382,16 +382,16 @@ public abstract class InventoryTranslator {
                         if (sourceSlot == 1) {
                             // Decrease the item count, but only after both slots are checked.
                             // Otherwise, the slot 1 check will fail
-                            GeyserItemStack item = inventory.getItem(sourceSlot);
+                            RoryItemStack item = inventory.getItem(sourceSlot);
                             item.setAmount(item.getAmount() - consumeData.getCount());
                             if (item.isEmpty()) {
-                                inventory.setItem(sourceSlot, GeyserItemStack.EMPTY, session);
+                                inventory.setItem(sourceSlot, RoryItemStack.EMPTY, session);
                             }
 
-                            GeyserItemStack itemZero = inventory.getItem(0);
+                            RoryItemStack itemZero = inventory.getItem(0);
                             itemZero.setAmount(itemZero.getAmount() - consumeData.getCount());
                             if (itemZero.isEmpty()) {
-                                inventory.setItem(0, GeyserItemStack.EMPTY, session);
+                                inventory.setItem(0, RoryItemStack.EMPTY, session);
                             }
                         }
                         affectedSlots.add(sourceSlot);
@@ -413,7 +413,7 @@ public abstract class InventoryTranslator {
         return acceptRequest(request, makeContainerEntries(session, inventory, affectedSlots));
     }
     
-    public ItemStackResponsePacket.Response translateCraftingRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateCraftingRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         int resultSize = 0;
         int timesCrafted;
         CraftState craftState = CraftState.START;
@@ -514,7 +514,7 @@ public abstract class InventoryTranslator {
         return acceptRequest(request, makeContainerEntries(session, inventory, plan.getAffectedSlots()));
     }
 
-    public ItemStackResponsePacket.Response translateAutoCraftingRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateAutoCraftingRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         int gridSize;
         int gridDimensions;
         if (this instanceof PlayerInventoryTranslator) {
@@ -654,7 +654,7 @@ public abstract class InventoryTranslator {
                     int javaSlot = bedrockSlotToJava(transferAction.getDestination());
                     if (isCursor(transferAction.getDestination())) { //TODO
                         if (timesCrafted > 1) {
-                            tempSlot = findTempSlot(inventory, GeyserItemStack.from(output), true);
+                            tempSlot = findTempSlot(inventory, RoryItemStack.from(output), true);
                             if (tempSlot == -1) {
                                 return rejectRequest(request);
                             }
@@ -702,7 +702,7 @@ public abstract class InventoryTranslator {
             }
         }
 
-        inventory.setItem(0, GeyserItemStack.from(output), session);
+        inventory.setItem(0, RoryItemStack.from(output), session);
         plan.execute(true);
         return acceptRequest(request, makeContainerEntries(session, inventory, plan.getAffectedSlots()));
     }
@@ -710,7 +710,7 @@ public abstract class InventoryTranslator {
     /**
      * Handled in {@link PlayerInventoryTranslator}
      */
-    public ItemStackResponsePacket.Response translateCreativeRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateCreativeRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         return rejectRequest(request);
     }
 
@@ -763,7 +763,7 @@ public abstract class InventoryTranslator {
      *                   as bad (false).
      */
     public static ItemStackResponsePacket.Response rejectRequest(ItemStackRequest request, boolean throwError) {
-        if (throwError && GeyserConnector.getInstance().getConfig().isDebugMode()) {
+        if (throwError && RoryConnector.getInstance().getConfig().isDebugMode()) {
             new Throwable("DEBUGGING: ItemStackRequest rejected " + request.toString()).printStackTrace();
         }
         return new ItemStackResponsePacket.Response(ItemStackResponsePacket.ResponseStatus.ERROR, request.getRequestId(), Collections.emptyList());
@@ -772,21 +772,21 @@ public abstract class InventoryTranslator {
     /**
      * Print out the contents of an ItemStackRequest, should the net ID check fail.
      */
-    protected void dumpStackRequestDetails(GeyserSession session, Inventory inventory, StackRequestSlotInfoData source, StackRequestSlotInfoData destination) {
+    protected void dumpStackRequestDetails(RorySession session, Inventory inventory, StackRequestSlotInfoData source, StackRequestSlotInfoData destination) {
         session.getConnector().getLogger().error("Source: " + source.toString() + " Result: " + checkNetId(session, inventory, source));
         session.getConnector().getLogger().error("Destination: " + destination.toString() + " Result: " + checkNetId(session, inventory, destination));
-        session.getConnector().getLogger().error("Geyser's record of source slot: " + inventory.getItem(bedrockSlotToJava(source)));
-        session.getConnector().getLogger().error("Geyser's record of destination slot: " + inventory.getItem(bedrockSlotToJava(destination)));
+        session.getConnector().getLogger().error("Rory's record of source slot: " + inventory.getItem(bedrockSlotToJava(source)));
+        session.getConnector().getLogger().error("Rory's record of destination slot: " + inventory.getItem(bedrockSlotToJava(destination)));
     }
 
-    public boolean checkNetId(GeyserSession session, Inventory inventory, StackRequestSlotInfoData slotInfoData) {
+    public boolean checkNetId(RorySession session, Inventory inventory, StackRequestSlotInfoData slotInfoData) {
         int netId = slotInfoData.getStackNetworkId();
         // "In my testing, sometimes the client thinks the netId of an item in the crafting grid is 1, even though we never said it was.
         // I think it only happens when we manually set the grid but that was my quick fix"
         if (netId < 0 || netId == 1)
             return true;
 
-        GeyserItemStack currentItem = isCursor(slotInfoData) ? session.getPlayerInventory().getCursor() : inventory.getItem(bedrockSlotToJava(slotInfoData));
+        RoryItemStack currentItem = isCursor(slotInfoData) ? session.getPlayerInventory().getCursor() : inventory.getItem(bedrockSlotToJava(slotInfoData));
         return currentItem.getNetId() == netId;
     }
 
@@ -798,9 +798,9 @@ public abstract class InventoryTranslator {
      * @return java id for the temporary slot, or -1 if no viable slot was found
      */
     //TODO: compatibility for simulated inventory (ClickPlan)
-    private static int findTempSlot(Inventory inventory, GeyserItemStack item, boolean emptyOnly, int... slotBlacklist) {
+    private static int findTempSlot(Inventory inventory, RoryItemStack item, boolean emptyOnly, int... slotBlacklist) {
         int offset = inventory.getId() == 0 ? 1 : 0; //offhand is not a viable temp slot
-        HashSet<GeyserItemStack> itemBlacklist = new HashSet<>(slotBlacklist.length + 1);
+        HashSet<RoryItemStack> itemBlacklist = new HashSet<>(slotBlacklist.length + 1);
         itemBlacklist.add(item);
 
         IntSet potentialSlots = new IntOpenHashSet(36);
@@ -809,20 +809,20 @@ public abstract class InventoryTranslator {
         }
         for (int i : slotBlacklist) {
             potentialSlots.remove(i);
-            GeyserItemStack blacklistedItem = inventory.getItem(i);
+            RoryItemStack blacklistedItem = inventory.getItem(i);
             if (!blacklistedItem.isEmpty()) {
                 itemBlacklist.add(blacklistedItem);
             }
         }
 
         for (int i : potentialSlots) {
-            GeyserItemStack testItem = inventory.getItem(i);
+            RoryItemStack testItem = inventory.getItem(i);
             if ((emptyOnly && !testItem.isEmpty())) {
                 continue;
             }
 
             boolean viable = true;
-            for (GeyserItemStack blacklistedItem : itemBlacklist) {
+            for (RoryItemStack blacklistedItem : itemBlacklist) {
                 if (InventoryUtils.canStack(testItem, blacklistedItem)) {
                     viable = false;
                     break;
@@ -837,7 +837,7 @@ public abstract class InventoryTranslator {
         return -1;
     }
 
-    public List<ItemStackResponsePacket.ContainerEntry> makeContainerEntries(GeyserSession session, Inventory inventory, Set<Integer> affectedSlots) {
+    public List<ItemStackResponsePacket.ContainerEntry> makeContainerEntries(RorySession session, Inventory inventory, Set<Integer> affectedSlots) {
         Map<ContainerSlotType, List<ItemStackResponsePacket.ItemEntry>> containerMap = new HashMap<>();
         for (int slot : affectedSlots) {
             BedrockContainerSlot bedrockSlot = javaSlotToBedrockContainer(slot);
@@ -856,7 +856,7 @@ public abstract class InventoryTranslator {
         return containerEntries;
     }
 
-    public static ItemStackResponsePacket.ItemEntry makeItemEntry(int bedrockSlot, GeyserItemStack itemStack) {
+    public static ItemStackResponsePacket.ItemEntry makeItemEntry(int bedrockSlot, RoryItemStack itemStack) {
         ItemStackResponsePacket.ItemEntry itemEntry;
         if (!itemStack.isEmpty()) {
             // As of 1.16.210: Bedrock needs confirmation on what the current item durability is.

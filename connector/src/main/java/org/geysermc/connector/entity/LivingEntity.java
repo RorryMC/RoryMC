@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.entity;
@@ -41,7 +41,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.geysermc.connector.entity.attribute.AttributeType;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
 import org.geysermc.connector.utils.AttributeUtils;
 import org.geysermc.connector.utils.ChunkUtils;
@@ -66,7 +66,7 @@ public class LivingEntity extends Entity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         switch (entityMetadata.getId()) {
             case 7: // blocking
                 byte xd = (byte) entityMetadata.getValue();
@@ -113,7 +113,7 @@ public class LivingEntity extends Entity {
         super.updateBedrockMetadata(entityMetadata, session);
     }
 
-    public void updateAllEquipment(GeyserSession session) {
+    public void updateAllEquipment(RorySession session) {
         if (!valid) return;
 
         updateArmor(session);
@@ -121,7 +121,7 @@ public class LivingEntity extends Entity {
         updateOffHand(session);
     }
 
-    public void updateArmor(GeyserSession session) {
+    public void updateArmor(RorySession session) {
         if (!valid) return;
 
         ItemData helmet = this.helmet;
@@ -146,7 +146,7 @@ public class LivingEntity extends Entity {
         session.sendUpstreamPacket(armorEquipmentPacket);
     }
 
-    public void updateMainHand(GeyserSession session) {
+    public void updateMainHand(RorySession session) {
         if (!valid) return;
 
         MobEquipmentPacket handPacket = new MobEquipmentPacket();
@@ -159,7 +159,7 @@ public class LivingEntity extends Entity {
         session.sendUpstreamPacket(handPacket);
     }
 
-    public void updateOffHand(GeyserSession session) {
+    public void updateOffHand(RorySession session) {
         if (!valid) return;
 
         MobEquipmentPacket offHandPacket = new MobEquipmentPacket();
@@ -173,7 +173,7 @@ public class LivingEntity extends Entity {
     }
 
     @Override
-    public void updateBedrockAttributes(GeyserSession session) {
+    public void updateBedrockAttributes(RorySession session) {
         if (!valid) return;
 
         float maxHealth = this.attributes.containsKey(AttributeType.MAX_HEALTH) ? this.attributes.get(AttributeType.MAX_HEALTH).getValue() : getDefaultMaxHealth();

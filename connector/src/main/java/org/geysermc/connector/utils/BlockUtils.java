@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.utils;
@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.data.game.entity.Effect;
 import com.github.steveice10.mc.protocol.data.game.entity.metadata.Position;
 import com.github.steveice10.opennbt.tag.builtin.CompoundTag;
 import com.nukkitx.math.vector.Vector3i;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemEntry;
 import org.geysermc.connector.network.translators.item.ToolItemEntry;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
@@ -109,7 +109,7 @@ public class BlockUtils {
         return 1.0 / speed;
     }
 
-    public static double getBreakTime(GeyserSession session, BlockMapping blockMapping, ItemEntry item, CompoundTag nbtData, boolean isSessionPlayer) {
+    public static double getBreakTime(RorySession session, BlockMapping blockMapping, ItemEntry item, CompoundTag nbtData, boolean isSessionPlayer) {
         boolean isWoolBlock = session.getTagCache().isWool(blockMapping);
         boolean isCobweb = blockMapping.getJavaBlockId() == BlockTranslator.JAVA_COBWEB_BLOCK_ID;
         String blockToolType = blockMapping.getToolType();

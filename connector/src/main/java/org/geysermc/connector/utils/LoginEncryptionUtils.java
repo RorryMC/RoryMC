@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.utils;
@@ -42,8 +42,8 @@ import org.geysermc.common.window.component.LabelComponent;
 import org.geysermc.common.window.response.CustomFormResponse;
 import org.geysermc.common.window.response.ModalFormResponse;
 import org.geysermc.common.window.response.SimpleFormResponse;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.session.auth.AuthData;
 import org.geysermc.connector.network.session.auth.BedrockClientData;
 import org.geysermc.connector.network.session.cache.WindowCache;
@@ -84,7 +84,7 @@ public class LoginEncryptionUtils {
         return validChain;
     }
 
-    public static void encryptPlayerConnection(GeyserConnector connector, GeyserSession session, LoginPacket loginPacket) {
+    public static void encryptPlayerConnection(RoryConnector connector, RorySession session, LoginPacket loginPacket) {
         JsonNode certData;
         try {
             certData = JSON_MAPPER.readTree(loginPacket.getChainData().toByteArray());
@@ -100,7 +100,7 @@ public class LoginEncryptionUtils {
         encryptConnectionWithCert(connector, session, loginPacket.getSkinData().toString(), certChainData);
     }
 
-    private static void encryptConnectionWithCert(GeyserConnector connector, GeyserSession session, String clientData, JsonNode certChainData) {
+    private static void encryptConnectionWithCert(RoryConnector connector, RorySession session, String clientData, JsonNode certChainData) {
         try {
             boolean validChain = validateChainData(certChainData);
 
@@ -154,7 +154,7 @@ public class LoginEncryptionUtils {
         }
     }
 
-    private static void startEncryptionHandshake(GeyserSession session, PublicKey key) throws Exception {
+    private static void startEncryptionHandshake(RorySession session, PublicKey key) throws Exception {
         KeyPairGenerator generator = KeyPairGenerator.getInstance("EC");
         generator.initialize(new ECGenParameterSpec("secp384r1"));
         KeyPair serverKeyPair = generator.generateKeyPair();
@@ -168,7 +168,7 @@ public class LoginEncryptionUtils {
         session.sendUpstreamPacketImmediately(packet);
     }
 
-    private static void sendEncryptionFailedMessage(GeyserConnector connector) {
+    private static void sendEncryptionFailedMessage(RoryConnector connector) {
         if (!HAS_SENT_ENCRYPTION_MESSAGE) {
             connector.getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.network.encryption.line_1"));
             connector.getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.network.encryption.line_2", "https://geysermc.org/supported_java"));
@@ -181,7 +181,7 @@ public class LoginEncryptionUtils {
     private static final int AUTH_FORM_ID = 1336;
     private static final int AUTH_DETAILS_FORM_ID = 1337;
 
-    public static void showLoginWindow(GeyserSession session) {
+    public static void showLoginWindow(RorySession session) {
         // Set DoDaylightCycle to false so the time doesn't accelerate while we're here
         session.setDaylightCycle(false);
 
@@ -196,7 +196,7 @@ public class LoginEncryptionUtils {
         session.sendForm(window, AUTH_FORM_ID);
     }
 
-    public static void showLoginDetailsWindow(GeyserSession session) {
+    public static void showLoginDetailsWindow(RorySession session) {
         String userLanguage = session.getLocale();
         CustomFormWindow window = new CustomFormBuilder(LanguageUtils.getPlayerLocaleString("geyser.auth.login.form.details.title", userLanguage))
                 .addComponent(new LabelComponent(LanguageUtils.getPlayerLocaleString("geyser.auth.login.form.details.desc", userLanguage)))
@@ -210,7 +210,7 @@ public class LoginEncryptionUtils {
     /**
      * Prompts the user between either OAuth code login or manual password authentication
      */
-    public static void showMicrosoftAuthenticationWindow(GeyserSession session) {
+    public static void showMicrosoftAuthenticationWindow(RorySession session) {
         String userLanguage = session.getLocale();
         SimpleFormWindow window = new SimpleFormWindow(LanguageUtils.getPlayerLocaleString("geyser.auth.login.form.notice.btn_login.microsoft", userLanguage), "");
         window.getButtons().add(new FormButton(LanguageUtils.getPlayerLocaleString("geyser.auth.login.method.browser", userLanguage)));
@@ -222,13 +222,13 @@ public class LoginEncryptionUtils {
     /**
      * Shows the code that a user must input into their browser
      */
-    public static void showMicrosoftCodeWindow(GeyserSession session, MsaAuthenticationService.MsCodeResponse response) {
+    public static void showMicrosoftCodeWindow(RorySession session, MsaAuthenticationService.MsCodeResponse response) {
         ModalFormWindow msaCodeWindow = new ModalFormWindow("%xbox.signin", "%xbox.signin.website\n%xbox.signin.url\n%xbox.signin.enterCode\n" +
                 response.user_code, "%gui.done", "%menu.disconnect");
         session.sendForm(msaCodeWindow, LoginEncryptionUtils.AUTH_MSA_CODE_FORM_ID);
     }
 
-    public static boolean authenticateFromForm(GeyserSession session, GeyserConnector connector, int formId, String formData) {
+    public static boolean authenticateFromForm(RorySession session, RoryConnector connector, int formId, String formData) {
         WindowCache windowCache = session.getWindowCache();
         if (!windowCache.getWindows().containsKey(formId))
             return false;

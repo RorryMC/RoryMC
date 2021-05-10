@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.world;
@@ -33,7 +33,7 @@ import com.nukkitx.protocol.bedrock.data.SoundEvent;
 import com.nukkitx.protocol.bedrock.packet.LevelEventPacket;
 import com.nukkitx.protocol.bedrock.packet.LevelSoundEventPacket;
 import com.nukkitx.protocol.bedrock.packet.SetEntityMotionPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
@@ -43,7 +43,7 @@ import org.geysermc.connector.utils.ChunkUtils;
 public class JavaExplosionTranslator extends PacketTranslator<ServerExplosionPacket> {
 
     @Override
-    public void translate(ServerExplosionPacket packet, GeyserSession session) {
+    public void translate(ServerExplosionPacket packet, RorySession session) {
         for (ExplodedBlockRecord record : packet.getExploded()) {
             Vector3f pos = Vector3f.from(packet.getX() + record.getX(), packet.getY() + record.getY(), packet.getZ() + record.getZ());
             ChunkUtils.updateBlock(session, BlockTranslator.JAVA_AIR_ID, pos.toInt());
@@ -68,7 +68,7 @@ public class JavaExplosionTranslator extends PacketTranslator<ServerExplosionPac
 
         if (packet.getPushX() > 0f || packet.getPushY() > 0f || packet.getPushZ() > 0f) {
             SetEntityMotionPacket motionPacket = new SetEntityMotionPacket();
-            motionPacket.setRuntimeEntityId(session.getPlayerEntity().getGeyserId());
+            motionPacket.setRuntimeEntityId(session.getPlayerEntity().getRoryId());
             motionPacket.setMotion(Vector3f.from(packet.getPushX(), packet.getPushY(), packet.getPushZ()));
             session.sendUpstreamPacket(motionPacket);
         }

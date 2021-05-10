@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.inventory.translators;
@@ -42,7 +42,7 @@ import com.nukkitx.protocol.bedrock.packet.ItemStackResponsePacket;
 import org.geysermc.connector.inventory.BeaconContainer;
 import org.geysermc.connector.inventory.Inventory;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.BedrockContainerSlot;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
 import org.geysermc.connector.network.translators.inventory.holder.BlockInventoryHolder;
@@ -55,7 +55,7 @@ public class BeaconInventoryTranslator extends AbstractBlockInventoryTranslator 
     public BeaconInventoryTranslator() {
         super(1, new BlockInventoryHolder("minecraft:beacon", ContainerType.BEACON) {
             @Override
-            public void prepareInventory(InventoryTranslator translator, GeyserSession session, Inventory inventory) {
+            public void prepareInventory(InventoryTranslator translator, RorySession session, Inventory inventory) {
                 if (!session.getConnector().getConfig().isCacheChunks()) {
                     // Beacons cannot work without knowing their physical location
                     return;
@@ -64,13 +64,13 @@ public class BeaconInventoryTranslator extends AbstractBlockInventoryTranslator 
             }
 
             @Override
-            protected boolean checkInteractionPosition(GeyserSession session) {
+            protected boolean checkInteractionPosition(RorySession session) {
                 // Since we can't fall back to a virtual inventory, let's make opening one easier
                 return true;
             }
 
             @Override
-            public void openInventory(InventoryTranslator translator, GeyserSession session, Inventory inventory) {
+            public void openInventory(InventoryTranslator translator, RorySession session, Inventory inventory) {
                 if (!session.getConnector().getConfig().isCacheChunks() || !((BeaconContainer) inventory).isUsingRealBlock()) {
                     InventoryUtils.closeInventory(session, inventory.getId(), false);
                     return;
@@ -81,7 +81,7 @@ public class BeaconInventoryTranslator extends AbstractBlockInventoryTranslator 
     }
 
     @Override
-    public void updateProperty(GeyserSession session, Inventory inventory, int key, int value) {
+    public void updateProperty(RorySession session, Inventory inventory, int key, int value) {
         //FIXME?: Beacon graphics look weird after inputting an item. This might be a Bedrock bug, since it resets to nothing
         // on BDS
         BeaconContainer beaconContainer = (BeaconContainer) inventory;
@@ -120,7 +120,7 @@ public class BeaconInventoryTranslator extends AbstractBlockInventoryTranslator 
     }
 
     @Override
-    public ItemStackResponsePacket.Response translateSpecialRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateSpecialRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         // Input a beacon payment
         BeaconPaymentStackRequestActionData beaconPayment = (BeaconPaymentStackRequestActionData) request.getActions()[0];
         ClientSetBeaconEffectPacket packet = new ClientSetBeaconEffectPacket(beaconPayment.getPrimaryEffect(), beaconPayment.getSecondaryEffect());

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.entity;
@@ -44,7 +44,7 @@ import org.geysermc.connector.entity.attribute.AttributeType;
 import org.geysermc.connector.entity.living.ArmorStandEntity;
 import org.geysermc.connector.entity.player.PlayerEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.chat.MessageTranslator;
 import org.geysermc.connector.utils.AttributeUtils;
 
@@ -108,7 +108,7 @@ public class Entity {
         metadata.putFlags(flags);
     }
 
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         AddEntityPacket addEntityPacket = new AddEntityPacket();
         addEntityPacket.setIdentifier(entityType.getIdentifier());
         addEntityPacket.setRuntimeEntityId(geyserId);
@@ -128,10 +128,10 @@ public class Entity {
     /**
      * Despawns the entity
      *
-     * @param session The GeyserSession
+     * @param session The RorySession
      * @return can be deleted
      */
-    public boolean despawnEntity(GeyserSession session) {
+    public boolean despawnEntity(RorySession session) {
         if (!valid) return true;
 
         for (long passenger : passengers) { // Make sure all passengers on the despawned entity are updated
@@ -149,11 +149,11 @@ public class Entity {
         return true;
     }
 
-    public void moveRelative(GeyserSession session, double relX, double relY, double relZ, float yaw, float pitch, boolean isOnGround) {
+    public void moveRelative(RorySession session, double relX, double relY, double relZ, float yaw, float pitch, boolean isOnGround) {
         moveRelative(session, relX, relY, relZ, Vector3f.from(yaw, pitch, this.rotation.getZ()), isOnGround);
     }
 
-    public void moveRelative(GeyserSession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
+    public void moveRelative(RorySession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
         setRotation(rotation);
         setOnGround(isOnGround);
         this.position = Vector3f.from(position.getX() + relX, position.getY() + relY, position.getZ() + relZ);
@@ -168,11 +168,11 @@ public class Entity {
         session.sendUpstreamPacket(moveEntityPacket);
     }
 
-    public void moveAbsolute(GeyserSession session, Vector3f position, float yaw, float pitch, boolean isOnGround, boolean teleported) {
+    public void moveAbsolute(RorySession session, Vector3f position, float yaw, float pitch, boolean isOnGround, boolean teleported) {
         moveAbsolute(session, position, Vector3f.from(yaw, pitch, this.rotation.getZ()), isOnGround, teleported);
     }
 
-    public void moveAbsolute(GeyserSession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
+    public void moveAbsolute(RorySession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
         setPosition(position);
         setRotation(rotation);
         setOnGround(isOnGround);
@@ -189,28 +189,28 @@ public class Entity {
 
     /**
      * Teleports an entity to a new location. Used in JavaEntityTeleportTranslator.
-     * @param session GeyserSession.
+     * @param session RorySession.
      * @param position The new position of the entity.
      * @param yaw The new yaw of the entity.
      * @param pitch The new pitch of the entity.
      * @param isOnGround Whether the entity is currently on the ground.
      */
-    public void teleport(GeyserSession session, Vector3f position, float yaw, float pitch, boolean isOnGround) {
+    public void teleport(RorySession session, Vector3f position, float yaw, float pitch, boolean isOnGround) {
         moveAbsolute(session, position, yaw, pitch, isOnGround, false);
     }
 
     /**
      * Updates an entity's head position. Used in JavaEntityHeadLookTranslator.
-     * @param session GeyserSession.
+     * @param session RorySession.
      * @param headYaw The new head rotation of the entity.
      */
-    public void updateHeadLookRotation(GeyserSession session, float headYaw) {
+    public void updateHeadLookRotation(RorySession session, float headYaw) {
         moveRelative(session, 0, 0, 0, Vector3f.from(headYaw, rotation.getY(), rotation.getZ()), onGround);
     }
 
     /**
      * Updates an entity's position and rotation. Used in JavaEntityPositionRotationTranslator.
-     * @param session GeyserSession
+     * @param session RorySession
      * @param moveX The new X offset of the current position.
      * @param moveY The new Y offset of the current position.
      * @param moveZ The new Z offset of the current position.
@@ -218,22 +218,22 @@ public class Entity {
      * @param pitch The new pitch of the entity.
      * @param isOnGround Whether the entity is currently on the ground.
      */
-    public void updatePositionAndRotation(GeyserSession session, double moveX, double moveY, double moveZ, float yaw, float pitch, boolean isOnGround) {
+    public void updatePositionAndRotation(RorySession session, double moveX, double moveY, double moveZ, float yaw, float pitch, boolean isOnGround) {
         moveRelative(session, moveX, moveY, moveZ, Vector3f.from(rotation.getX(), pitch, yaw), isOnGround);
     }
 
     /**
      * Updates an entity's rotation. Used in JavaEntityRotationTranslator.
-     * @param session GeyserSession.
+     * @param session RorySession.
      * @param yaw The new yaw of the entity.
      * @param pitch The new pitch of the entity.
      * @param isOnGround Whether the entity is currently on the ground.
      */
-    public void updateRotation(GeyserSession session, float yaw, float pitch, boolean isOnGround) {
+    public void updateRotation(RorySession session, float yaw, float pitch, boolean isOnGround) {
         updatePositionAndRotation(session, 0, 0, 0, yaw, pitch, isOnGround);
     }
 
-    public void updateBedrockAttributes(GeyserSession session) {
+    public void updateBedrockAttributes(RorySession session) {
         if (!valid) return;
 
         List<AttributeData> attributes = new ArrayList<>();
@@ -253,9 +253,9 @@ public class Entity {
     /**
      * Applies the Java metadata to the local Bedrock metadata copy
      * @param entityMetadata the Java entity metadata
-     * @param session GeyserSession
+     * @param session RorySession
      */
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         switch (entityMetadata.getId()) {
             case 0:
                 if (entityMetadata.getType() == MetadataType.BYTE) {
@@ -334,9 +334,9 @@ public class Entity {
 
     /**
      * Sends the Bedrock metadata to the client
-     * @param session GeyserSession
+     * @param session RorySession
      */
-    public void updateBedrockMetadata(GeyserSession session) {
+    public void updateBedrockMetadata(RorySession session) {
         if (!valid) return;
 
         SetEntityDataPacket entityDataPacket = new SetEntityDataPacket();

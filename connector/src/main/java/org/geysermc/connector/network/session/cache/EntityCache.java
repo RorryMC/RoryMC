@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.session.cache;
@@ -31,7 +31,7 @@ import lombok.Getter;
 import org.geysermc.connector.entity.Tickable;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.player.PlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * for that player (e.g. seeing vanished players from /vanish)
  */
 public class EntityCache {
-    private final GeyserSession session;
+    private final RorySession session;
 
     @Getter
     private Long2ObjectMap<Entity> entities = Long2ObjectMaps.synchronize(new Long2ObjectOpenHashMap<>());
@@ -57,7 +57,7 @@ public class EntityCache {
     @Getter
     private final AtomicLong nextEntityId = new AtomicLong(2L);
 
-    public EntityCache(GeyserSession session) {
+    public EntityCache(RorySession session) {
         this.session = session;
         cachedPlayerEntityLinks.defaultReturnValue(-1L);
     }
@@ -76,8 +76,8 @@ public class EntityCache {
     public boolean cacheEntity(Entity entity) {
         // Check to see if the entity exists, otherwise we can end up with duplicated mobs
         if (!entityIdTranslations.containsKey(entity.getEntityId())) {
-            entityIdTranslations.put(entity.getEntityId(), entity.getGeyserId());
-            entities.put(entity.getGeyserId(), entity);
+            entityIdTranslations.put(entity.getEntityId(), entity.getRoryId());
+            entities.put(entity.getRoryId(), entity);
             return true;
         }
         return false;
@@ -106,7 +106,7 @@ public class EntityCache {
         cachedPlayerEntityLinks.clear();
     }
 
-    public Entity getEntityByGeyserId(long geyserId) {
+    public Entity getEntityByRoryId(long geyserId) {
         return entities.get(geyserId);
     }
 

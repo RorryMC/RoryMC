@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.world.block;
@@ -35,7 +35,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.Getter;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.network.translators.world.chunk.ChunkSection;
 import org.geysermc.connector.network.translators.world.chunk.EmptyChunkProvider;
 import org.geysermc.connector.registry.type.BlockMapping;
@@ -111,7 +111,7 @@ public abstract class BlockTranslator {
     static {
         InputStream stream = FileUtils.getResource("mappings/blocks.json");
         try {
-            BLOCKS_JSON = GeyserConnector.JSON_MAPPER.readTree(stream);
+            BLOCKS_JSON = RoryConnector.JSON_MAPPER.readTree(stream);
         } catch (Exception e) {
             throw new AssertionError("Unable to load Java block mappings", e);
         }
@@ -373,7 +373,7 @@ public abstract class BlockTranslator {
     }
 
     /**
-     * @return an adjusted state list, if necessary, that converts Geyser's new mapping to Bedrock's older version
+     * @return an adjusted state list, if necessary, that converts Rory's new mapping to Bedrock's older version
      * of the mapping.
      */
     protected NbtMapBuilder adjustBlockStateForVersion(String bedrockIdentifier, NbtMapBuilder statesBuilder) {

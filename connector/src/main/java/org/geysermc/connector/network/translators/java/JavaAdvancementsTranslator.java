@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java;
@@ -28,12 +28,12 @@ package org.geysermc.connector.network.translators.java;
 import com.github.steveice10.mc.protocol.data.game.advancement.Advancement;
 import com.github.steveice10.mc.protocol.packet.ingame.server.ServerAdvancementsPacket;
 import com.nukkitx.protocol.bedrock.packet.SetTitlePacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.chat.MessageTranslator;
 import org.geysermc.connector.network.session.cache.AdvancementsCache;
-import org.geysermc.connector.utils.GeyserAdvancement;
+import org.geysermc.connector.utils.RoryAdvancement;
 import org.geysermc.connector.utils.LocaleUtils;
 
 import java.util.Map;
@@ -42,7 +42,7 @@ import java.util.Map;
 public class JavaAdvancementsTranslator extends PacketTranslator<ServerAdvancementsPacket> {
 
     @Override
-    public void translate(ServerAdvancementsPacket packet, GeyserSession session) {
+    public void translate(ServerAdvancementsPacket packet, RorySession session) {
         AdvancementsCache advancementsCache = session.getAdvancementsCache();
         if (packet.isReset()) {
             advancementsCache.getStoredAdvancements().clear();
@@ -61,7 +61,7 @@ public class JavaAdvancementsTranslator extends PacketTranslator<ServerAdvanceme
         // Adds advancements to the player's stored advancements when advancements are sent
         for (Advancement advancement : packet.getAdvancements()) {
             if (advancement.getDisplayData() != null && !advancement.getDisplayData().isHidden()) {
-                GeyserAdvancement geyserAdvancement = GeyserAdvancement.from(advancement);
+                RoryAdvancement geyserAdvancement = RoryAdvancement.from(advancement);
                 advancementsCache.getStoredAdvancements().put(advancement.getId(), geyserAdvancement);
             } else {
                 advancementsCache.getStoredAdvancements().remove(advancement.getId());
@@ -72,13 +72,13 @@ public class JavaAdvancementsTranslator extends PacketTranslator<ServerAdvanceme
     /**
      * Handle all advancements progress updates
      */
-    public void sendToolbarAdvancementUpdates(GeyserSession session, ServerAdvancementsPacket packet) {
+    public void sendToolbarAdvancementUpdates(RorySession session, ServerAdvancementsPacket packet) {
         if (packet.isReset()) {
             // Advancements are being cleared, so they can't be granted
             return;
         }
         for (Map.Entry<String, Map<String, Long>> progress : packet.getProgress().entrySet()) {
-            GeyserAdvancement advancement = session.getAdvancementsCache().getStoredAdvancements().get(progress.getKey());
+            RoryAdvancement advancement = session.getAdvancementsCache().getStoredAdvancements().get(progress.getKey());
             if (advancement != null && advancement.getDisplayData() != null) {
                 if (session.getAdvancementsCache().isEarned(advancement)) {
                     // Java uses some pink color for toast challenge completes

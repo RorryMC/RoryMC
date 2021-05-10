@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.bedrock.entity.player;
@@ -41,9 +41,9 @@ import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket;
 import com.nukkitx.protocol.bedrock.packet.PlayerActionPacket;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.ItemFrameEntity;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.item.ItemEntry;
@@ -57,7 +57,7 @@ import java.util.concurrent.TimeUnit;
 public class BedrockActionTranslator extends PacketTranslator<PlayerActionPacket> {
 
     @Override
-    public void translate(PlayerActionPacket packet, GeyserSession session) {
+    public void translate(PlayerActionPacket packet, RorySession session) {
         Entity entity = session.getPlayerEntity();
 
         // Send book update before any player action
@@ -72,7 +72,7 @@ public class BedrockActionTranslator extends PacketTranslator<PlayerActionPacket
             case RESPAWN:
                 // Respawn process is finished and the server and client are both OK with respawning.
                 EntityEventPacket eventPacket = new EntityEventPacket();
-                eventPacket.setRuntimeEntityId(entity.getGeyserId());
+                eventPacket.setRuntimeEntityId(entity.getRoryId());
                 eventPacket.setType(EntityEventType.RESPAWN);
                 eventPacket.setData(0);
                 session.sendUpstreamPacket(eventPacket);
@@ -170,7 +170,7 @@ public class BedrockActionTranslator extends PacketTranslator<PlayerActionPacket
                         startBreak.setType(LevelEventType.BLOCK_START_BREAK);
                         startBreak.setPosition(vector.toFloat());
                         PlayerInventory inventory = session.getPlayerInventory();
-                        GeyserItemStack item = inventory.getItemInHand();
+                        RoryItemStack item = inventory.getItemInHand();
                         ItemEntry itemEntry;
                         CompoundTag nbtData;
                         if (item != null) {

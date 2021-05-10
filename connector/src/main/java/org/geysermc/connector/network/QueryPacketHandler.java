@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,16 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import org.geysermc.connector.common.ping.GeyserPingInfo;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.common.ping.RoryPingInfo;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.network.translators.chat.MessageTranslator;
 
 import java.io.ByteArrayOutputStream;
@@ -50,7 +50,7 @@ public class QueryPacketHandler {
     public static final byte HANDSHAKE = 0x09;
     public static final byte STATISTICS = 0x00;
 
-    private GeyserConnector connector;
+    private RoryConnector connector;
     private InetSocketAddress sender;
     private byte type;
     private int sessionId;
@@ -59,11 +59,11 @@ public class QueryPacketHandler {
     /**
      * The Query packet handler instance
      *
-     * @param connector Geyser Connector
+     * @param connector Rory Connector
      * @param sender The Sender IP/Port for the Query
      * @param buffer The Query data
      */
-    public QueryPacketHandler(GeyserConnector connector, InetSocketAddress sender, ByteBuf buffer) {
+    public QueryPacketHandler(RoryConnector connector, InetSocketAddress sender, ByteBuf buffer) {
         if (!isQueryPacket(buffer))
             return;
 
@@ -136,14 +136,14 @@ public class QueryPacketHandler {
     private byte[] getGameData() {
         ByteArrayOutputStream query = new ByteArrayOutputStream();
 
-        GeyserPingInfo pingInfo = null;
+        RoryPingInfo pingInfo = null;
         String motd;
         String currentPlayerCount;
         String maxPlayerCount;
         String map;
 
         if (connector.getConfig().isPassthroughMotd() || connector.getConfig().isPassthroughPlayerCounts()) {
-            pingInfo = connector.getBootstrap().getGeyserPingPassthrough().getPingInformation();
+            pingInfo = connector.getBootstrap().getRoryPingPassthrough().getPingInformation();
         }
 
         if (connector.getConfig().isPassthroughMotd() && pingInfo != null) {
@@ -166,7 +166,7 @@ public class QueryPacketHandler {
         if (connector.getConfig().isPassthroughProtocolName() && pingInfo != null) {
             map = String.valueOf((pingInfo.getVersion().getName()));
         } else {
-            map = GeyserConnector.NAME;
+            map = RoryConnector.NAME;
         }
 
         // Create a hashmap of all game data needed in the query
@@ -174,7 +174,7 @@ public class QueryPacketHandler {
         gameData.put("hostname", motd);
         gameData.put("gametype", "SMP");
         gameData.put("game_id", "MINECRAFT");
-        gameData.put("version", GeyserConnector.NAME + " (" + GeyserConnector.GIT_VERSION + ") " + BedrockProtocol.DEFAULT_BEDROCK_CODEC.getMinecraftVersion());
+        gameData.put("version", RoryConnector.NAME + " (" + RoryConnector.GIT_VERSION + ") " + BedrockProtocol.DEFAULT_BEDROCK_CODEC.getMinecraftVersion());
         gameData.put("plugins", "");
         gameData.put("map", map);
         gameData.put("numplayers", currentPlayerCount);
@@ -184,7 +184,7 @@ public class QueryPacketHandler {
 
         try {
             // Blank Buffer Bytes
-            query.write("GeyserMC".getBytes());
+            query.write("RoryMC".getBytes());
             query.write((byte) 0x00);
             query.write((byte) 0x80);
             query.write((byte) 0x00);
@@ -214,9 +214,9 @@ public class QueryPacketHandler {
     private byte[] getPlayers() {
         ByteArrayOutputStream query = new ByteArrayOutputStream();
 
-        GeyserPingInfo pingInfo = null;
+        RoryPingInfo pingInfo = null;
         if (connector.getConfig().isPassthroughMotd() || connector.getConfig().isPassthroughPlayerCounts()) {
-            pingInfo = connector.getBootstrap().getGeyserPingPassthrough().getPingInformation();
+            pingInfo = connector.getBootstrap().getRoryPingPassthrough().getPingInformation();
         }
 
         try {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.chat;
@@ -34,8 +34,8 @@ import net.kyori.adventure.text.renderer.TranslatableComponentRenderer;
 import net.kyori.adventure.text.serializer.gson.GsonComponentSerializer;
 import net.kyori.adventure.text.serializer.gson.legacyimpl.NBTLegacyHoverEventSerializer;
 import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.LanguageUtils;
 
 import java.util.HashMap;
@@ -97,8 +97,8 @@ public class MessageTranslator {
 
             return legacy;
         } catch (Exception e) {
-            GeyserConnector.getInstance().getLogger().debug(GSON_SERIALIZER.serialize(message));
-            GeyserConnector.getInstance().getLogger().error("Failed to parse message", e);
+            RoryConnector.getInstance().getLogger().debug(GSON_SERIALIZER.serialize(message));
+            RoryConnector.getInstance().getLogger().error("Failed to parse message", e);
 
             return "";
         }
@@ -259,10 +259,10 @@ public class MessageTranslator {
      * Checks if the given message is over 256 characters (Java edition server chat limit) and sends a message to the user if it is
      *
      * @param message Message to check
-     * @param session {@link GeyserSession} for the user
+     * @param session {@link RorySession} for the user
      * @return True if the message is too long, false if not
      */
-    public static boolean isTooLong(String message, GeyserSession session) {
+    public static boolean isTooLong(String message, RorySession session) {
         if (message.length() > 256) {
             session.sendMessage(LanguageUtils.getPlayerLocaleString("geyser.chat.too_long", session.getLocale(), message.length()));
             return true;

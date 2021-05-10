@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.window;
@@ -37,9 +37,9 @@ import com.nukkitx.protocol.bedrock.data.inventory.CraftingData;
 import com.nukkitx.protocol.bedrock.data.inventory.ItemData;
 import com.nukkitx.protocol.bedrock.packet.CraftingDataPacket;
 import com.nukkitx.protocol.bedrock.packet.InventorySlotPacket;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.Inventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
@@ -58,10 +58,10 @@ import java.util.concurrent.TimeUnit;
 public class JavaSetSlotTranslator extends PacketTranslator<ServerSetSlotPacket> {
 
     @Override
-    public void translate(ServerSetSlotPacket packet, GeyserSession session) {
+    public void translate(ServerSetSlotPacket packet, RorySession session) {
         session.addInventoryTask(() -> {
             if (packet.getWindowId() == 255) { //cursor
-                GeyserItemStack newItem = GeyserItemStack.from(packet.getItem());
+                RoryItemStack newItem = RoryItemStack.from(packet.getItem());
                 session.getPlayerInventory().setCursor(newItem, session);
                 InventoryUtils.updateCursor(session);
                 return;
@@ -79,7 +79,7 @@ public class JavaSetSlotTranslator extends PacketTranslator<ServerSetSlotPacket>
                 }
                 session.setCraftingGridFuture(session.getConnector().getGeneralThreadPool().schedule(() -> session.addInventoryTask(() -> updateCraftingGrid(session, packet, inventory, translator)), 150, TimeUnit.MILLISECONDS));
 
-                GeyserItemStack newItem = GeyserItemStack.from(packet.getItem());
+                RoryItemStack newItem = RoryItemStack.from(packet.getItem());
                 if (packet.getWindowId() == 0 && !(translator instanceof PlayerInventoryTranslator)) {
                     // In rare cases, the window ID can still be 0 but Java treats it as valid
                     session.getPlayerInventory().setItem(packet.getSlot(), newItem, session);
@@ -92,7 +92,7 @@ public class JavaSetSlotTranslator extends PacketTranslator<ServerSetSlotPacket>
         });
     }
 
-    private static void updateCraftingGrid(GeyserSession session, ServerSetSlotPacket packet, Inventory inventory, InventoryTranslator translator) {
+    private static void updateCraftingGrid(RorySession session, ServerSetSlotPacket packet, Inventory inventory, InventoryTranslator translator) {
         if (packet.getSlot() == 0) {
             int gridSize;
             if (translator instanceof PlayerInventoryTranslator) {
@@ -171,7 +171,7 @@ public class JavaSetSlotTranslator extends PacketTranslator<ServerSetSlotPacket>
                         for (ItemStack itemStack : ingredient.getOptions()) {
                             boolean inventoryHasItem = false;
                             for (int j = 0; j < inventory.getSize(); j++) {
-                                GeyserItemStack geyserItemStack = inventory.getItem(j);
+                                RoryItemStack geyserItemStack = inventory.getItem(j);
                                 if (geyserItemStack.isEmpty()) {
                                     inventoryHasItem = itemStack == null || itemStack.getId() == 0;
                                     if (inventoryHasItem) {
@@ -201,7 +201,7 @@ public class JavaSetSlotTranslator extends PacketTranslator<ServerSetSlotPacket>
             int index = 0;
             for (int row = firstRow; row < height + firstRow; row++) {
                 for (int col = firstCol; col < width + firstCol; col++) {
-                    GeyserItemStack geyserItemStack = inventory.getItem(col + (row * gridDimensions) + 1);
+                    RoryItemStack geyserItemStack = inventory.getItem(col + (row * gridDimensions) + 1);
                     ingredients[index] = geyserItemStack.getItemData(session);
                     ItemStack[] itemStacks = new ItemStack[] {geyserItemStack.isEmpty() ? null : geyserItemStack.getItemStack(1)};
                     javaIngredients[index] = new Ingredient(itemStacks);
@@ -252,7 +252,7 @@ public class JavaSetSlotTranslator extends PacketTranslator<ServerSetSlotPacket>
         int ingredientIndex = 0;
         for (int row = firstRow; row < height + firstRow; row++) {
             for (int col = firstCol; col < width + firstCol; col++) {
-                GeyserItemStack geyserItemStack = inventory.getItem(col + (row * gridDimensions) + 1);
+                RoryItemStack geyserItemStack = inventory.getItem(col + (row * gridDimensions) + 1);
                 Ingredient ingredient = ingredients[ingredientIndex++];
                 if (ingredient.getOptions().length == 0) {
                     if (!geyserItemStack.isEmpty()) {

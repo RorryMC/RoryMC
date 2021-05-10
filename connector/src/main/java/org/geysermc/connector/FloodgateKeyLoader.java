@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,20 +19,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector;
 
-import org.geysermc.connector.configuration.GeyserJacksonConfiguration;
+import org.geysermc.connector.configuration.RoryJacksonConfiguration;
 import org.geysermc.connector.utils.LanguageUtils;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class FloodgateKeyLoader {
-    public static Path getKeyPath(GeyserJacksonConfiguration config, Object floodgate, Path floodgateDataFolder, Path geyserDataFolder, GeyserLogger logger) {
+    public static Path getKeyPath(RoryJacksonConfiguration config, Object floodgate, Path floodgateDataFolder, Path geyserDataFolder, RoryLogger logger) {
         Path floodgateKey = geyserDataFolder.resolve(config.getFloodgateKeyFile());
 
         if (!Files.exists(floodgateKey) && config.getRemote().getAuthType().equals("floodgate")) {

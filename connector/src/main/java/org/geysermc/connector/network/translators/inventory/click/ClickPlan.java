@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.inventory.click;
@@ -34,9 +34,9 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.ints.IntOpenHashSet;
 import it.unimi.dsi.fastutil.ints.IntSet;
 import lombok.Value;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.Inventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
 import org.geysermc.connector.network.translators.inventory.SlotType;
 import org.geysermc.connector.network.translators.inventory.translators.CraftingInventoryTranslator;
@@ -47,16 +47,16 @@ import java.util.*;
 
 public class ClickPlan {
     private final List<ClickAction> plan = new ArrayList<>();
-    private final Int2ObjectMap<GeyserItemStack> simulatedItems;
-    private GeyserItemStack simulatedCursor;
+    private final Int2ObjectMap<RoryItemStack> simulatedItems;
+    private RoryItemStack simulatedCursor;
     private boolean simulating;
 
-    private final GeyserSession session;
+    private final RorySession session;
     private final InventoryTranslator translator;
     private final Inventory inventory;
     private final int gridSize;
 
-    public ClickPlan(GeyserSession session, InventoryTranslator translator, Inventory inventory) {
+    public ClickPlan(RorySession session, InventoryTranslator translator, Inventory inventory) {
         this.session = session;
         this.translator = translator;
         this.inventory = inventory;
@@ -135,17 +135,17 @@ public class ClickPlan {
         }
 
         session.getPlayerInventory().setCursor(simulatedCursor, session);
-        for (Int2ObjectMap.Entry<GeyserItemStack> simulatedSlot : simulatedItems.int2ObjectEntrySet()) {
+        for (Int2ObjectMap.Entry<RoryItemStack> simulatedSlot : simulatedItems.int2ObjectEntrySet()) {
             inventory.setItem(simulatedSlot.getIntKey(), simulatedSlot.getValue(), session);
         }
         simulating = false;
     }
 
-    public GeyserItemStack getItem(int slot) {
+    public RoryItemStack getItem(int slot) {
         return getItem(slot, true);
     }
 
-    public GeyserItemStack getItem(int slot, boolean generate) {
+    public RoryItemStack getItem(int slot, boolean generate) {
         if (generate) {
             return simulatedItems.computeIfAbsent(slot, k -> inventory.getItem(slot).copy());
         } else {
@@ -153,11 +153,11 @@ public class ClickPlan {
         }
     }
 
-    public GeyserItemStack getCursor() {
+    public RoryItemStack getCursor() {
         return simulatedCursor;
     }
 
-    private void setItem(int slot, GeyserItemStack item) {
+    private void setItem(int slot, RoryItemStack item) {
         if (simulating) {
             simulatedItems.put(slot, item);
         } else {
@@ -165,7 +165,7 @@ public class ClickPlan {
         }
     }
 
-    private void setCursor(GeyserItemStack item) {
+    private void setCursor(RoryItemStack item) {
         if (simulating) {
             simulatedCursor = item;
         } else {
@@ -174,10 +174,10 @@ public class ClickPlan {
     }
 
     private void simulateAction(ClickAction action) {
-        GeyserItemStack cursor = simulating ? getCursor() : session.getPlayerInventory().getCursor();
+        RoryItemStack cursor = simulating ? getCursor() : session.getPlayerInventory().getCursor();
         switch (action.click) {
             case LEFT_OUTSIDE:
-                setCursor(GeyserItemStack.EMPTY);
+                setCursor(RoryItemStack.EMPTY);
                 return;
             case RIGHT_OUTSIDE:
                 if (!cursor.isEmpty()) {
@@ -186,7 +186,7 @@ public class ClickPlan {
                 return;
         }
 
-        GeyserItemStack clicked = simulating ? getItem(action.slot) : inventory.getItem(action.slot);
+        RoryItemStack clicked = simulating ? getItem(action.slot) : inventory.getItem(action.slot);
         if (translator.getSlotType(action.slot) == SlotType.OUTPUT) {
             switch (action.click) {
                 case LEFT:
@@ -209,7 +209,7 @@ public class ClickPlan {
                         setCursor(clicked);
                         setItem(action.slot, cursor);
                     } else {
-                        setCursor(GeyserItemStack.EMPTY);
+                        setCursor(RoryItemStack.EMPTY);
                         clicked.add(cursor.getAmount());
                     }
                     break;
@@ -235,7 +235,7 @@ public class ClickPlan {
                     }
                     break;
                 case DROP_ALL:
-                    setItem(action.slot, GeyserItemStack.EMPTY);
+                    setItem(action.slot, RoryItemStack.EMPTY);
                     break;
             }
         }
@@ -252,7 +252,7 @@ public class ClickPlan {
         } else {
             crafted = 0;
             for (int i = 0; i < gridSize; i++) {
-                GeyserItemStack item = getItem(i + 1);
+                RoryItemStack item = getItem(i + 1);
                 if (!item.isEmpty()) {
                     if (crafted == 0) {
                         crafted = item.getAmount();
@@ -263,7 +263,7 @@ public class ClickPlan {
         }
 
         for (int i = 0; i < gridSize; i++) {
-            GeyserItemStack item = getItem(i + 1);
+            RoryItemStack item = getItem(i + 1);
             if (!item.isEmpty())
                 item.sub(crafted);
         }

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.utils;
@@ -35,8 +35,8 @@ import org.geysermc.common.window.component.InputComponent;
 import org.geysermc.common.window.component.LabelComponent;
 import org.geysermc.common.window.component.ToggleComponent;
 import org.geysermc.common.window.response.CustomFormResponse;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 
 import java.util.ArrayList;
 
@@ -50,7 +50,7 @@ public class SettingsUtils {
      *
      * @param session The session to build the form for
      */
-    public static void buildForm(GeyserSession session) {
+    public static void buildForm(RorySession session) {
         // Cache the language for cleaner access
         String language = session.getLocale();
 
@@ -94,9 +94,9 @@ public class SettingsUtils {
 
                 // Add the relevant form item based on the gamerule type
                 if (Boolean.class.equals(gamerule.getType())) {
-                    builder.addComponent(new ToggleComponent(LocaleUtils.getLocaleString("gamerule." + gamerule.getJavaID(), language), GeyserConnector.getInstance().getWorldManager().getGameRuleBool(session, gamerule)));
+                    builder.addComponent(new ToggleComponent(LocaleUtils.getLocaleString("gamerule." + gamerule.getJavaID(), language), RoryConnector.getInstance().getWorldManager().getGameRuleBool(session, gamerule)));
                 } else if (Integer.class.equals(gamerule.getType())) {
-                    builder.addComponent(new InputComponent(LocaleUtils.getLocaleString("gamerule." + gamerule.getJavaID(), language), "", String.valueOf(GeyserConnector.getInstance().getWorldManager().getGameRuleInt(session, gamerule))));
+                    builder.addComponent(new InputComponent(LocaleUtils.getLocaleString("gamerule." + gamerule.getJavaID(), language), "", String.valueOf(RoryConnector.getInstance().getWorldManager().getGameRuleInt(session, gamerule))));
                 }
             }
         }
@@ -111,7 +111,7 @@ public class SettingsUtils {
      * @param response The response string to parse
      * @return True if the form was parsed correctly, false if not
      */
-    public static boolean handleSettingsForm(GeyserSession session, String response) {
+    public static boolean handleSettingsForm(RorySession session, String response) {
         CustomFormWindow settingsForm = session.getSettingsForm();
         settingsForm.setResponse(response);
 

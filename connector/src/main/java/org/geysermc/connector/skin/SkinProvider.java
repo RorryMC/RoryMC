@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.skin;
@@ -36,8 +36,8 @@ import com.google.common.cache.CacheBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.FileUtils;
 import org.geysermc.connector.utils.WebUtils;
 
@@ -56,7 +56,7 @@ import java.util.*;
 import java.util.concurrent.*;
 
 public class SkinProvider {
-    public static final boolean ALLOW_THIRD_PARTY_CAPES = GeyserConnector.getInstance().getConfig().isAllowThirdPartyCapes();
+    public static final boolean ALLOW_THIRD_PARTY_CAPES = RoryConnector.getInstance().getConfig().isAllowThirdPartyCapes();
     private static final ExecutorService EXECUTOR_SERVICE = Executors.newFixedThreadPool(ALLOW_THIRD_PARTY_CAPES ? 21 : 14);
 
     public static final byte[] STEVE_SKIN = new ProvidedSkin("bedrock/skin/skin_steve.png").getSkin();
@@ -81,7 +81,7 @@ public class SkinProvider {
 
     private static final Map<UUID, SkinGeometry> cachedGeometry = new ConcurrentHashMap<>();
 
-    public static final boolean ALLOW_THIRD_PARTY_EARS = GeyserConnector.getInstance().getConfig().isAllowThirdPartyEars();
+    public static final boolean ALLOW_THIRD_PARTY_EARS = RoryConnector.getInstance().getConfig().isAllowThirdPartyEars();
     public static final String EARS_GEOMETRY;
     public static final String EARS_GEOMETRY_SLIM;
     public static final SkinGeometry SKULL_GEOMETRY;
@@ -100,15 +100,15 @@ public class SkinProvider {
         SKULL_GEOMETRY = new SkinGeometry("{\"geometry\" :{\"default\" :\"geometry.humanoid.customskull\"}}", skullData, false);
 
         // Schedule Daily Image Expiry if we are caching them
-        if (GeyserConnector.getInstance().getConfig().getCacheImages() > 0) {
-            GeyserConnector.getInstance().getGeneralThreadPool().scheduleAtFixedRate(() -> {
-                File cacheFolder = GeyserConnector.getInstance().getBootstrap().getConfigFolder().resolve("cache").resolve("images").toFile();
+        if (RoryConnector.getInstance().getConfig().getCacheImages() > 0) {
+            RoryConnector.getInstance().getGeneralThreadPool().scheduleAtFixedRate(() -> {
+                File cacheFolder = RoryConnector.getInstance().getBootstrap().getConfigFolder().resolve("cache").resolve("images").toFile();
                 if (!cacheFolder.exists()) {
                     return;
                 }
 
                 int count = 0;
-                final long expireTime = ((long)GeyserConnector.getInstance().getConfig().getCacheImages()) * ((long)1000 * 60 * 60 * 24);
+                final long expireTime = ((long)RoryConnector.getInstance().getConfig().getCacheImages()) * ((long)1000 * 60 * 60 * 24);
                 for (File imageFile : Objects.requireNonNull(cacheFolder.listFiles())) {
                     if (imageFile.lastModified() < System.currentTimeMillis() - expireTime) {
                         //noinspection ResultOfMethodCallIgnored
@@ -118,7 +118,7 @@ public class SkinProvider {
                 }
 
                 if (count > 0) {
-                    GeyserConnector.getInstance().getLogger().debug(String.format("Removed %d cached image files as they have expired", count));
+                    RoryConnector.getInstance().getLogger().debug(String.format("Removed %d cached image files as they have expired", count));
                 }
             }, 10, 1440, TimeUnit.MINUTES);
         }
@@ -143,7 +143,7 @@ public class SkinProvider {
             String newSkinUrl = skinUrl;
 
             if ("steve".equals(skinUrl) || "alex".equals(skinUrl)) {
-                GeyserSession session = GeyserConnector.getInstance().getPlayerByUuid(playerId);
+                RorySession session = RoryConnector.getInstance().getPlayerByUuid(playerId);
 
                 if (session != null) {
                     newSkinUrl = session.getClientData().getSkinId();
@@ -156,7 +156,7 @@ public class SkinProvider {
                     getOrDefault(requestCape(capeUrl, provider, false), EMPTY_CAPE, 5)
             );
 
-            GeyserConnector.getInstance().getLogger().debug("Took " + (System.currentTimeMillis() - time) + "ms for " + playerId);
+            RoryConnector.getInstance().getLogger().debug("Took " + (System.currentTimeMillis() - time) + "ms for " + playerId);
             return skinAndCape;
         }, EXECUTOR_SERVICE);
     }
@@ -384,10 +384,10 @@ public class SkinProvider {
         BufferedImage image = null;
 
         // First see if we have a cached file. We also update the modification stamp so we know when the file was last used
-        File imageFile = GeyserConnector.getInstance().getBootstrap().getConfigFolder().resolve("cache").resolve("images").resolve(UUID.nameUUIDFromBytes(imageUrl.getBytes()).toString() + ".png").toFile();
+        File imageFile = RoryConnector.getInstance().getBootstrap().getConfigFolder().resolve("cache").resolve("images").resolve(UUID.nameUUIDFromBytes(imageUrl.getBytes()).toString() + ".png").toFile();
         if (imageFile.exists()) {
             try {
-                GeyserConnector.getInstance().getLogger().debug("Reading cached image from file " + imageFile.getPath() + " for " + imageUrl);
+                RoryConnector.getInstance().getLogger().debug("Reading cached image from file " + imageFile.getPath() + " for " + imageUrl);
                 imageFile.setLastModified(System.currentTimeMillis());
                 image = ImageIO.read(imageFile);
             } catch (IOException ignored) {}
@@ -396,16 +396,16 @@ public class SkinProvider {
         // If no image we download it
         if (image == null) {
             image = downloadImage(imageUrl, provider);
-            GeyserConnector.getInstance().getLogger().debug("Downloaded " + imageUrl);
+            RoryConnector.getInstance().getLogger().debug("Downloaded " + imageUrl);
 
             // Write to cache if we are allowed
-            if (GeyserConnector.getInstance().getConfig().getCacheImages() > 0) {
+            if (RoryConnector.getInstance().getConfig().getCacheImages() > 0) {
                 imageFile.getParentFile().mkdirs();
                 try {
                     ImageIO.write(image, "png", imageFile);
-                    GeyserConnector.getInstance().getLogger().debug("Writing cached skin to file " + imageFile.getPath() + " for " + imageUrl);
+                    RoryConnector.getInstance().getLogger().debug("Writing cached skin to file " + imageFile.getPath() + " for " + imageUrl);
                 } catch (IOException e) {
-                    GeyserConnector.getInstance().getLogger().error("Failed to write cached skin to file " + imageFile.getPath() + " for " + imageUrl);
+                    RoryConnector.getInstance().getLogger().error("Failed to write cached skin to file " + imageFile.getPath() + " for " + imageUrl);
                 }
             }
         }
@@ -473,7 +473,7 @@ public class SkinProvider {
                     node = WebUtils.getJson("https://api.mojang.com/users/profiles/minecraft/" + skullOwner.get("Name").getValue());
                     JsonNode id = node.get("id");
                     if (id == null) {
-                        GeyserConnector.getInstance().getLogger().debug("No UUID found in Mojang response for " + skullOwner.get("Name").getValue());
+                        RoryConnector.getInstance().getLogger().debug("No UUID found in Mojang response for " + skullOwner.get("Name").getValue());
                         return null;
                     }
                     uuidToString = id.asText();
@@ -484,14 +484,14 @@ public class SkinProvider {
                 List<GameProfile.Property> profileProperties = new ArrayList<>();
                 JsonNode properties = node.get("properties");
                 if (properties == null) {
-                    GeyserConnector.getInstance().getLogger().debug("No properties found in Mojang response for " + uuidToString);
+                    RoryConnector.getInstance().getLogger().debug("No properties found in Mojang response for " + uuidToString);
                     return null;
                 }
                 profileProperties.add(new GameProfile.Property("textures", node.get("properties").get(0).get("value").asText()));
                 gameProfile.setProperties(profileProperties);
                 return gameProfile;
             } catch (Exception e) {
-                if (GeyserConnector.getInstance().getConfig().isDebugMode()) {
+                if (RoryConnector.getInstance().getConfig().isDebugMode()) {
                     e.printStackTrace();
                 }
                 return null;
@@ -504,7 +504,7 @@ public class SkinProvider {
             return readFiveZigCape(imageUrl);
 
         HttpURLConnection con = (HttpURLConnection) new URL(imageUrl).openConnection();
-        con.setRequestProperty("User-Agent", "Geyser-" + GeyserConnector.getInstance().getPlatformType().toString() + "/" + GeyserConnector.VERSION);
+        con.setRequestProperty("User-Agent", "Rory-" + RoryConnector.getInstance().getPlatformType().toString() + "/" + RoryConnector.VERSION);
 
         BufferedImage image = ImageIO.read(con.getInputStream());
         if (image == null) throw new NullPointerException();

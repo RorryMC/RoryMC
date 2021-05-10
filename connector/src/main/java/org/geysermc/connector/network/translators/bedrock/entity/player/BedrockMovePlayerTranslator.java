@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.bedrock.entity.player;
@@ -36,7 +36,7 @@ import com.nukkitx.protocol.bedrock.packet.MovePlayerPacket;
 import org.geysermc.connector.common.ChatColor;
 import org.geysermc.connector.entity.player.PlayerEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -44,13 +44,13 @@ import org.geysermc.connector.network.translators.Translator;
 public class BedrockMovePlayerTranslator extends PacketTranslator<MovePlayerPacket> {
 
     @Override
-    public void translate(MovePlayerPacket packet, GeyserSession session) {
+    public void translate(MovePlayerPacket packet, RorySession session) {
         PlayerEntity entity = session.getPlayerEntity();
         if (!session.isSpawned()) return;
 
         if (!session.getUpstream().isInitialized()) {
             MoveEntityAbsolutePacket moveEntityBack = new MoveEntityAbsolutePacket();
-            moveEntityBack.setRuntimeEntityId(entity.getGeyserId());
+            moveEntityBack.setRuntimeEntityId(entity.getRoryId());
             moveEntityBack.setPosition(entity.getPosition());
             moveEntityBack.setRotation(entity.getBedrockRotation());
             moveEntityBack.setTeleported(true);
@@ -114,7 +114,7 @@ public class BedrockMovePlayerTranslator extends PacketTranslator<MovePlayerPack
                                 //TODO: This will need to be changed for 1.17
                                 entity.setPosition(entity.getPosition().sub(0, 4f, 0));
                                 MovePlayerPacket movePlayerPacket = new MovePlayerPacket();
-                                movePlayerPacket.setRuntimeEntityId(entity.getGeyserId());
+                                movePlayerPacket.setRuntimeEntityId(entity.getRoryId());
                                 movePlayerPacket.setPosition(entity.getPosition());
                                 movePlayerPacket.setRotation(entity.getBedrockRotation());
                                 movePlayerPacket.setMode(MovePlayerPacket.Mode.TELEPORT);
@@ -140,7 +140,7 @@ public class BedrockMovePlayerTranslator extends PacketTranslator<MovePlayerPack
         }
     }
 
-    private boolean isValidMove(GeyserSession session, MovePlayerPacket.Mode mode, Vector3f currentPosition, Vector3f newPosition) {
+    private boolean isValidMove(RorySession session, MovePlayerPacket.Mode mode, Vector3f currentPosition, Vector3f newPosition) {
         if (mode != MovePlayerPacket.Mode.NORMAL)
             return true;
 

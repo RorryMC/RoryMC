@@ -7,12 +7,12 @@
     <artifactId>geyser-parent</artifactId>
     <version>1.2.1-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Geyser</name>
+    <name>Rory</name>
     <description>Allows for players from Minecraft Bedrock Edition to join Minecraft Java Edition servers.</description>
     <url>https://geysermc.org</url>
 
     <properties>
-        <outputName>Geyser</outputName>
+        <outputName>Rory</outputName>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -20,14 +20,14 @@
     </properties>
 
     <organization>
-        <name>GeyserMC</name>
-        <url>https://github.com/GeyserMC/Geyser/blob/master/pom.xml</url>
+        <name>RoryMC</name>
+        <url>https://github.com/RoryMC/Rory/blob/master/pom.xml</url>
     </organization>
 
     <scm>
-        <connection>scm:git:https://github.com/GeyserMC/Geyser.git</connection>
-        <developerConnection>scm:git:git@github.com:GeyserMC/Geyser.git</developerConnection>
-        <url>https://github.com/GeyserMC/Geyser</url>
+        <connection>scm:git:https://github.com/RoryMC/Rory.git</connection>
+        <developerConnection>scm:git:git@github.com:RoryMC/Rory.git</developerConnection>
+        <url>https://github.com/RoryMC/Rory</url>
     </scm>
 
     <modules>

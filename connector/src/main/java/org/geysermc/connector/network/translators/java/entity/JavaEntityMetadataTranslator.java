@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,14 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.entity;
 
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -39,7 +39,7 @@ import org.geysermc.connector.utils.LanguageUtils;
 public class JavaEntityMetadataTranslator extends PacketTranslator<ServerEntityMetadataPacket> {
 
     @Override
-    public void translate(ServerEntityMetadataPacket packet, GeyserSession session) {
+    public void translate(ServerEntityMetadataPacket packet, RorySession session) {
         Entity entity;
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();
@@ -56,7 +56,7 @@ public class JavaEntityMetadataTranslator extends PacketTranslator<ServerEntityM
                 // Because some entity rewriters forget about some values
                 // Any other errors are actual bugs
                 session.getConnector().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.network.translator.metadata.failed", metadata, entity.getEntityType()));
-                session.getConnector().getLogger().debug("Entity Java ID: " + entity.getEntityId() + ", Geyser ID: " + entity.getGeyserId());
+                session.getConnector().getLogger().debug("Entity Java ID: " + entity.getEntityId() + ", Rory ID: " + entity.getRoryId());
                 if (session.getConnector().getConfig().isDebugMode()) {
                     e.printStackTrace();
                 }

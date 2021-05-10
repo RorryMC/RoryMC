@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.entity.living.monster;
@@ -38,7 +38,7 @@ import org.geysermc.connector.entity.Tickable;
 import org.geysermc.connector.entity.attribute.AttributeType;
 import org.geysermc.connector.entity.living.InsentientEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.AttributeUtils;
 import org.geysermc.connector.utils.DimensionUtils;
 
@@ -91,7 +91,7 @@ public class EnderDragonEntity extends InsentientEntity implements Tickable {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 15) { // Phase
             phase = (int) entityMetadata.getValue();
             phaseTicks = 0;
@@ -121,10 +121,10 @@ public class EnderDragonEntity extends InsentientEntity implements Tickable {
      * This is overwritten to allow the health attribute to differ from
      * the health specified in the metadata.
      *
-     * @param session GeyserSession
+     * @param session RorySession
      */
     @Override
-    public void updateBedrockAttributes(GeyserSession session) {
+    public void updateBedrockAttributes(RorySession session) {
         if (!valid) return;
 
         List<AttributeData> attributes = new ArrayList<>();
@@ -141,7 +141,7 @@ public class EnderDragonEntity extends InsentientEntity implements Tickable {
     }
 
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         super.spawnEntity(session);
 
         AtomicLong nextEntityId = session.getEntityCache().getNextEntityId();
@@ -169,7 +169,7 @@ public class EnderDragonEntity extends InsentientEntity implements Tickable {
     }
 
     @Override
-    public boolean despawnEntity(GeyserSession session) {
+    public boolean despawnEntity(RorySession session) {
         for (EnderDragonPartEntity part : allParts) {
             part.despawnEntity(session);
         }
@@ -177,7 +177,7 @@ public class EnderDragonEntity extends InsentientEntity implements Tickable {
     }
 
     @Override
-    public void tick(GeyserSession session) {
+    public void tick(RorySession session) {
         effectTick(session);
         if (!metadata.getFlags().getFlag(EntityFlag.NO_AI) && isAlive()) {
             pushSegment();
@@ -188,9 +188,9 @@ public class EnderDragonEntity extends InsentientEntity implements Tickable {
     /**
      * Updates the positions of the Ender Dragon's multiple bounding boxes
      *
-     * @param session GeyserSession.
+     * @param session RorySession.
      */
-    private void updateBoundingBoxes(GeyserSession session) {
+    private void updateBoundingBoxes(RorySession session) {
         Vector3f facingDir = Vector3f.createDirectionDeg(0, rotation.getZ());
         Segment baseSegment = getSegment(5);
         // Used to angle the head, neck, and tail when the dragon flies up/down
@@ -232,9 +232,9 @@ public class EnderDragonEntity extends InsentientEntity implements Tickable {
 
     /**
      * Handles the particles and sounds of the Ender Dragon
-     * @param session GeyserSession.
+     * @param session RorySession.
      */
-    private void effectTick(GeyserSession session) {
+    private void effectTick(RorySession session) {
         Random random = ThreadLocalRandom.current();
         if (!metadata.getFlags().getFlag(EntityFlag.SILENT)) {
             if (Math.cos(wingPosition * 2f * Math.PI) <= -0.3f && Math.cos(lastWingPosition * 2f * Math.PI) >= -0.3f) {
@@ -307,7 +307,7 @@ public class EnderDragonEntity extends InsentientEntity implements Tickable {
         }
     }
 
-    private void playGrowlSound(GeyserSession session) {
+    private void playGrowlSound(RorySession session) {
         Random random = ThreadLocalRandom.current();
         PlaySoundPacket playSoundPacket = new PlaySoundPacket();
         playSoundPacket.setSound("mob.enderdragon.growl");

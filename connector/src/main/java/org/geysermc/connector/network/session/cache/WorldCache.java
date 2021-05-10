@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.session.cache;
@@ -28,15 +28,15 @@ package org.geysermc.connector.network.session.cache;
 import com.github.steveice10.mc.protocol.data.game.setting.Difficulty;
 import lombok.Getter;
 import lombok.Setter;
-import org.geysermc.connector.configuration.GeyserConfiguration;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.configuration.RoryConfiguration;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.scoreboard.Objective;
 import org.geysermc.connector.scoreboard.Scoreboard;
 import org.geysermc.connector.scoreboard.ScoreboardUpdater;
 
 @Getter
 public class WorldCache {
-    private final GeyserSession session;
+    private final RorySession session;
     @Setter
     private Difficulty difficulty = Difficulty.EASY;
 
@@ -50,7 +50,7 @@ public class WorldCache {
     private Scoreboard scoreboard;
     private final ScoreboardUpdater scoreboardUpdater;
 
-    public WorldCache(GeyserSession session) {
+    public WorldCache(RorySession session) {
         this.session = session;
         this.scoreboard = new Scoreboard(session);
         scoreboardUpdater = new ScoreboardUpdater(this);
@@ -77,8 +77,8 @@ public class WorldCache {
      *
      * If {@link #prefersShowCoordinates} is true, coordinates will be shown, unless either of the following conditions apply: <br>
      * <br>
-     * {@link GeyserSession#reducedDebugInfo} is enabled
-     * {@link GeyserConfiguration#isShowCoordinates()} is disabled
+     * {@link RorySession#reducedDebugInfo} is enabled
+     * {@link RoryConfiguration#isShowCoordinates()} is disabled
      */
     public void updateShowCoordinates() {
         boolean allowShowCoordinates = !session.isReducedDebugInfo() && session.getConnector().getConfig().isShowCoordinates();

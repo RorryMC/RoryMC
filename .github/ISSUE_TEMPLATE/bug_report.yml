@@ -4,8 +4,8 @@ body:
 - type: markdown
   attributes:
     value: |
-      Thanks for taking the time to fill out this bug report for Geyser! Fill out the following form to your best ability to help us fix the problem.
-      Only use this if you're absolutely sure that you found a bug and can reproduce it. For anything else, use: [our Discord server](https://discord.gg/geysermc), [the FAQ](https://github.com/GeyserMC/Geyser/wiki/FAQ) or the [Common Issues](https://github.com/GeyserMC/Geyser/wiki/Common-Issues).
+      Thanks for taking the time to fill out this bug report for Rory! Fill out the following form to your best ability to help us fix the problem.
+      Only use this if you're absolutely sure that you found a bug and can reproduce it. For anything else, use: [our Discord server](https://discord.gg/geysermc), [the FAQ](https://github.com/RoryMC/Rory/wiki/FAQ) or the [Common Issues](https://github.com/RoryMC/Rory/wiki/Common-Issues).
 - type: textarea
   attributes:
     label: Describe the bug
@@ -37,19 +37,19 @@ body:
   attributes:
     label: Server Version and Plugins
     description: |
-      If you just run Geyser-Spigot, you can leave this area blank as the next section covers this information.
-      If you're running a multi-server instance or using Geyser Standalone:
+      If you just run Rory-Spigot, you can leave this area blank as the next section covers this information.
+      If you're running a multi-server instance or using Rory Standalone:
       *  Give us the exact output from `/version` on all servers involved. Saying "latest" does not help us at all.
       * Please list all plugins on all servers involved.
       If this bug occurs on a server you do not control, please fill this in to the best of your knowledge.
 - type: input
   attributes:
-    label: Geyser Dump
-    description: If Geyser starts correctly, please include the link to a dump using `/geyser dump`. If you're using the Standalone GUI, you can find the option under `Commands` => `Dump`. Doing this provides us information about your server that we can use to debug your issue.
+    label: Rory Dump
+    description: If Rory starts correctly, please include the link to a dump using `/geyser dump`. If you're using the Standalone GUI, you can find the option under `Commands` => `Dump`. Doing this provides us information about your server that we can use to debug your issue.
 - type: input
   attributes:
-    label: Geyser Version
-    description: What version of Geyser are you running?
+    label: Rory Version
+    description: What version of Rory are you running?
     placeholder: "For example: 1.2.0-SNAPSHOT (git-master-2d9baf1)"
   validations:
     required: true

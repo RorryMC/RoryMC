@@ -140,7 +140,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.GeyserMC</groupId>
+            <groupId>com.github.RoryMC</groupId>
             <artifactId>PacketLib</artifactId>
             <version>b77a427</version>
             <scope>compile</scope>
@@ -240,7 +240,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.GeyserMC</groupId>
+            <groupId>com.github.RoryMC</groupId>
             <artifactId>MCAuthLib</artifactId>
             <version>0e48a094f2</version>
         </dependency>
@@ -296,7 +296,7 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>${project.basedir}/src/main/java/org/geysermc/connector/GeyserConnector.java</include>
+                                <include>${project.basedir}/src/main/java/org/geysermc/connector/RoryConnector.java</include>
                             </includes>
                             <replacements>
                                 <replacement>
@@ -319,7 +319,7 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>${project.basedir}/src/main/java/org/geysermc/connector/GeyserConnector.java</include>
+                                <include>${project.basedir}/src/main/java/org/geysermc/connector/RoryConnector.java</include>
                             </includes>
                             <replacements>
                                 <replacement>

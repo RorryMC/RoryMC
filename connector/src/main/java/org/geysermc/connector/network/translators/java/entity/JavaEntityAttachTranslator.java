@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.entity;
@@ -31,7 +31,7 @@ import com.nukkitx.protocol.bedrock.data.entity.EntityEventType;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import com.nukkitx.protocol.bedrock.packet.EntityEventPacket;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -42,7 +42,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class JavaEntityAttachTranslator extends PacketTranslator<ServerEntityAttachPacket> {
 
     @Override
-    public void translate(ServerEntityAttachPacket packet, GeyserSession session) {
+    public void translate(ServerEntityAttachPacket packet, RorySession session) {
 
         Entity holderId;
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
@@ -65,7 +65,7 @@ public class JavaEntityAttachTranslator extends PacketTranslator<ServerEntityAtt
                 holderId.getMetadata().put(EntityData.LEASH_HOLDER_EID, -1L);
                 holderId.updateBedrockMetadata(session);
                 EntityEventPacket eventPacket = new EntityEventPacket();
-                eventPacket.setRuntimeEntityId(holderId.getGeyserId());
+                eventPacket.setRuntimeEntityId(holderId.getRoryId());
                 eventPacket.setType(EntityEventType.REMOVE_LEASH);
                 eventPacket.setData(0);
                 session.sendUpstreamPacket(eventPacket);
@@ -74,7 +74,7 @@ public class JavaEntityAttachTranslator extends PacketTranslator<ServerEntityAtt
         }
 
         holderId.getMetadata().getFlags().setFlag(EntityFlag.LEASHED, true);
-        holderId.getMetadata().put(EntityData.LEASH_HOLDER_EID, attachedToId.getGeyserId());
+        holderId.getMetadata().put(EntityData.LEASH_HOLDER_EID, attachedToId.getRoryId());
         holderId.updateBedrockMetadata(session);
     }
 }

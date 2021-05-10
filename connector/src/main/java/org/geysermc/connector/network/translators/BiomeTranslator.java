@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators;
@@ -28,7 +28,7 @@ package org.geysermc.connector.network.translators;
 import com.nukkitx.nbt.NBTInputStream;
 import com.nukkitx.nbt.NbtMap;
 import com.nukkitx.nbt.NbtUtils;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.utils.FileUtils;
 import org.geysermc.connector.utils.LanguageUtils;
 
@@ -59,7 +59,7 @@ public class BiomeTranslator {
             biomesTag = (NbtMap) biomenbtInputStream.readTag();
             BIOMES = biomesTag;
         } catch (Exception ex) {
-            GeyserConnector.getInstance().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.toolbox.fail.biome_read"));
+            RoryConnector.getInstance().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.toolbox.fail.biome_read"));
             throw new AssertionError(ex);
         }
     }

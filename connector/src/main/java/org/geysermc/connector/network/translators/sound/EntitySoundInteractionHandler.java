@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,16 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.sound;
 
 import com.nukkitx.math.vector.Vector3f;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.inventory.GeyserItemStack;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.inventory.RoryItemStack;
+import org.geysermc.connector.network.session.RorySession;
 
 import java.util.Map;
 
@@ -45,7 +45,7 @@ public interface EntitySoundInteractionHandler extends SoundInteractionHandler<E
      * @param position the position of the block
      * @param entity the entity interacted with
      */
-    static void handleEntityInteraction(GeyserSession session, Vector3f position, Entity entity) {
+    static void handleEntityInteraction(RorySession session, Vector3f position, Entity entity) {
         // If we need to get the hand identifier, only get it once and save it to a variable
         String handIdentifier = null;
 
@@ -63,7 +63,7 @@ public interface EntitySoundInteractionHandler extends SoundInteractionHandler<E
                 }
                 if (!contains) continue;
             }
-            GeyserItemStack itemInHand = session.getPlayerInventory().getItemInHand();
+            RoryItemStack itemInHand = session.getPlayerInventory().getItemInHand();
             if (interactionEntry.getKey().items().length != 0) {
                 if (itemInHand.isEmpty()) {
                     continue;

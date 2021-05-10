@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.entity;
@@ -28,7 +28,7 @@ package org.geysermc.connector.network.translators.java.entity;
 import com.github.steveice10.mc.protocol.packet.ingame.server.entity.ServerEntityEffectPacket;
 import com.nukkitx.protocol.bedrock.packet.MobEffectPacket;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.EntityUtils;
@@ -37,7 +37,7 @@ import org.geysermc.connector.utils.EntityUtils;
 public class JavaEntityEffectTranslator extends PacketTranslator<ServerEntityEffectPacket> {
 
     @Override
-    public void translate(ServerEntityEffectPacket packet, GeyserSession session) {
+    public void translate(ServerEntityEffectPacket packet, RorySession session) {
         Entity entity = session.getEntityCache().getEntityByJavaId(packet.getEntityId());
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();
@@ -50,7 +50,7 @@ public class JavaEntityEffectTranslator extends PacketTranslator<ServerEntityEff
         mobEffectPacket.setAmplifier(packet.getAmplifier());
         mobEffectPacket.setDuration(packet.getDuration());
         mobEffectPacket.setEvent(MobEffectPacket.Event.ADD);
-        mobEffectPacket.setRuntimeEntityId(entity.getGeyserId());
+        mobEffectPacket.setRuntimeEntityId(entity.getRoryId());
         mobEffectPacket.setParticles(packet.isShowParticles());
         mobEffectPacket.setEffectId(EntityUtils.toBedrockEffectId(packet.getEffect()));
         session.sendUpstreamPacket(mobEffectPacket);

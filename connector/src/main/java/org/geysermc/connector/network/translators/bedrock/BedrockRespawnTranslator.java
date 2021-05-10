@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.bedrock;
@@ -32,7 +32,7 @@ import com.nukkitx.protocol.bedrock.packet.MovePlayerPacket;
 import com.nukkitx.protocol.bedrock.packet.RespawnPacket;
 import com.nukkitx.protocol.bedrock.packet.SetEntityDataPacket;
 import org.geysermc.connector.entity.player.PlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -40,7 +40,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class BedrockRespawnTranslator extends PacketTranslator<RespawnPacket> {
 
     @Override
-    public void translate(RespawnPacket packet, GeyserSession session) {
+    public void translate(RespawnPacket packet, RorySession session) {
         if (packet.getState() == RespawnPacket.State.CLIENT_READY) {
             // Previously we only sent the respawn packet before the server finished loading
             // The message included was 'Otherwise when immediate respawn is on the client never loads'
@@ -56,12 +56,12 @@ public class BedrockRespawnTranslator extends PacketTranslator<RespawnPacket> {
                 PlayerEntity entity = session.getPlayerEntity();
                 if (entity == null) return;
                 SetEntityDataPacket entityDataPacket = new SetEntityDataPacket();
-                entityDataPacket.setRuntimeEntityId(entity.getGeyserId());
+                entityDataPacket.setRuntimeEntityId(entity.getRoryId());
                 entityDataPacket.getMetadata().putAll(entity.getMetadata());
                 session.sendUpstreamPacket(entityDataPacket);
 
                 MovePlayerPacket movePlayerPacket = new MovePlayerPacket();
-                movePlayerPacket.setRuntimeEntityId(entity.getGeyserId());
+                movePlayerPacket.setRuntimeEntityId(entity.getRoryId());
                 movePlayerPacket.setPosition(entity.getPosition());
                 movePlayerPacket.setRotation(entity.getBedrockRotation());
                 movePlayerPacket.setMode(MovePlayerPacket.Mode.RESPAWN);

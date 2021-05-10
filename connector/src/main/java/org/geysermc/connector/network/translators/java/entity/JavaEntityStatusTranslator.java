@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.java.entity;
@@ -39,7 +39,7 @@ import com.nukkitx.protocol.bedrock.packet.SetEntityMotionPacket;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.LivingEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
@@ -48,7 +48,7 @@ import org.geysermc.connector.network.translators.item.ItemRegistry;
 public class JavaEntityStatusTranslator extends PacketTranslator<ServerEntityStatusPacket> {
 
     @Override
-    public void translate(ServerEntityStatusPacket packet, GeyserSession session) {
+    public void translate(ServerEntityStatusPacket packet, RorySession session) {
         Entity entity;
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();
@@ -59,7 +59,7 @@ public class JavaEntityStatusTranslator extends PacketTranslator<ServerEntitySta
             return;
 
         EntityEventPacket entityEventPacket = new EntityEventPacket();
-        entityEventPacket.setRuntimeEntityId(entity.getGeyserId());
+        entityEventPacket.setRuntimeEntityId(entity.getRoryId());
         switch (packet.getStatus()) {
             case PLAYER_ENABLE_REDUCED_DEBUG:
                 session.setReducedDebugInfo(true);
@@ -125,12 +125,12 @@ public class JavaEntityStatusTranslator extends PacketTranslator<ServerEntitySta
                 // Player is pulled from a fishing rod
                 // The physics of this are clientside on Java
                 long pulledById = entity.getMetadata().getLong(EntityData.TARGET_EID);
-                if (session.getPlayerEntity().getGeyserId() == pulledById) {
-                    Entity hookOwner = session.getEntityCache().getEntityByGeyserId(entity.getMetadata().getLong(EntityData.OWNER_EID));
+                if (session.getPlayerEntity().getRoryId() == pulledById) {
+                    Entity hookOwner = session.getEntityCache().getEntityByRoryId(entity.getMetadata().getLong(EntityData.OWNER_EID));
                     if (hookOwner != null) {
                         // https://minecraft.gamepedia.com/Fishing_Rod#Hooking_mobs_and_other_entities
                         SetEntityMotionPacket motionPacket = new SetEntityMotionPacket();
-                        motionPacket.setRuntimeEntityId(session.getPlayerEntity().getGeyserId());
+                        motionPacket.setRuntimeEntityId(session.getPlayerEntity().getRoryId());
                         motionPacket.setMotion(hookOwner.getPosition().sub(session.getPlayerEntity().getPosition()).mul(0.1f));
                         session.sendUpstreamPacket(motionPacket);
                     }
@@ -182,7 +182,7 @@ public class JavaEntityStatusTranslator extends PacketTranslator<ServerEntitySta
                     // I assume part of the problem is that Bedrock uses a duration and Java just says the rabbit is jumping
                     SetEntityDataPacket dataPacket = new SetEntityDataPacket();
                     dataPacket.getMetadata().put(EntityData.JUMP_DURATION, (byte) 3);
-                    dataPacket.setRuntimeEntityId(entity.getGeyserId());
+                    dataPacket.setRuntimeEntityId(entity.getRoryId());
                     session.sendUpstreamPacket(dataPacket);
                     return;
                 }

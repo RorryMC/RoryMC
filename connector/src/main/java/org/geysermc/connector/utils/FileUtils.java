@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.utils;
@@ -29,7 +29,7 @@ import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.reflections.Reflections;
 import org.reflections.serializers.XmlSerializer;
 import org.reflections.util.ConfigurationBuilder;
@@ -64,7 +64,7 @@ public class FileUtils {
 
     public static <T> T loadJson(InputStream src, Class<T> valueType) throws IOException {
         // Read specifically with UTF-8 to allow any non-UTF-encoded JSON to read
-        return GeyserConnector.JSON_MAPPER.readValue(new InputStreamReader(src, StandardCharsets.UTF_8), valueType);
+        return RoryConnector.JSON_MAPPER.readValue(new InputStreamReader(src, StandardCharsets.UTF_8), valueType);
     }
 
     /**
@@ -93,7 +93,7 @@ public class FileUtils {
             //noinspection ResultOfMethodCallIgnored
             file.createNewFile();
             try (FileOutputStream fos = new FileOutputStream(file)) {
-                try (InputStream input = GeyserConnector.class.getResourceAsStream("/" + name)) { // resources need leading "/" prefix
+                try (InputStream input = RoryConnector.class.getResourceAsStream("/" + name)) { // resources need leading "/" prefix
                     byte[] bytes = new byte[input.available()];
 
                     //noinspection ResultOfMethodCallIgnored

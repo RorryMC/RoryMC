@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.entity.player;
@@ -30,12 +30,12 @@ import com.github.steveice10.mc.protocol.data.game.entity.metadata.EntityMetadat
 import com.github.steveice10.mc.protocol.data.game.entity.metadata.Pose;
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 import java.util.UUID;
 
 /**
- * The entity class specifically for a {@link GeyserSession}'s player.
+ * The entity class specifically for a {@link RorySession}'s player.
  */
 public class SessionPlayerEntity extends PlayerEntity {
     /**
@@ -43,9 +43,9 @@ public class SessionPlayerEntity extends PlayerEntity {
      */
     private boolean refreshSpeed = false;
 
-    private final GeyserSession session;
+    private final RorySession session;
 
-    public SessionPlayerEntity(GeyserSession session) {
+    public SessionPlayerEntity(RorySession session) {
         super(new GameProfile(UUID.randomUUID(), "unknown"), 1, 1, Vector3f.ZERO, Vector3f.ZERO, Vector3f.ZERO);
 
         valid = true;
@@ -53,12 +53,12 @@ public class SessionPlayerEntity extends PlayerEntity {
     }
 
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         // Already logged in
     }
 
     @Override
-    public void moveAbsolute(GeyserSession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
+    public void moveAbsolute(RorySession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
         session.getCollisionManager().updatePlayerBoundingBox(position);
         super.moveAbsolute(session, position, rotation, isOnGround, teleported);
     }
@@ -72,7 +72,7 @@ public class SessionPlayerEntity extends PlayerEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         super.updateBedrockMetadata(entityMetadata, session);
         if (entityMetadata.getId() == 0) {
             session.setSwimmingInWater((((byte) entityMetadata.getValue()) & 0x10) == 0x10 && metadata.getFlags().getFlag(EntityFlag.SPRINTING));
@@ -84,7 +84,7 @@ public class SessionPlayerEntity extends PlayerEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(GeyserSession session) {
+    public void updateBedrockMetadata(RorySession session) {
         super.updateBedrockMetadata(session);
         if (refreshSpeed) {
             if (session.adjustSpeed()) {

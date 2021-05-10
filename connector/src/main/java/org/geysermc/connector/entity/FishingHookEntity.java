@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.entity;
@@ -33,7 +33,7 @@ import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import com.nukkitx.protocol.bedrock.packet.PlaySoundPacket;
 import org.geysermc.connector.entity.player.PlayerEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.collision.BoundingBox;
 import org.geysermc.connector.network.translators.collision.CollisionManager;
 import org.geysermc.connector.network.translators.collision.CollisionTranslator;
@@ -62,11 +62,11 @@ public class FishingHookEntity extends ThrowableEntity {
         // so that it can be handled by moveAbsoluteImmediate.
         this.metadata.putFloat(EntityData.BOUNDING_BOX_HEIGHT, 128);
 
-        this.metadata.put(EntityData.OWNER_EID, owner.getGeyserId());
+        this.metadata.put(EntityData.OWNER_EID, owner.getRoryId());
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 7) { // Hooked entity
             int hookedEntityId = (int) entityMetadata.getValue() - 1;
             Entity entity = session.getEntityCache().getEntityByJavaId(hookedEntityId);
@@ -75,7 +75,7 @@ public class FishingHookEntity extends ThrowableEntity {
             }
 
             if (entity != null) {
-                metadata.put(EntityData.TARGET_EID, entity.getGeyserId());
+                metadata.put(EntityData.TARGET_EID, entity.getRoryId());
                 hooked = true;
             } else {
                 hooked = false;
@@ -86,7 +86,7 @@ public class FishingHookEntity extends ThrowableEntity {
     }
 
     @Override
-    protected void moveAbsoluteImmediate(GeyserSession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
+    protected void moveAbsoluteImmediate(RorySession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
         boundingBox.setMiddleX(position.getX());
         boundingBox.setMiddleY(position.getY() + boundingBox.getSizeY() / 2);
         boundingBox.setMiddleZ(position.getZ());
@@ -131,7 +131,7 @@ public class FishingHookEntity extends ThrowableEntity {
         }
     }
 
-    private void sendSplashSound(GeyserSession session) {
+    private void sendSplashSound(RorySession session) {
         if (!metadata.getFlags().getFlag(EntityFlag.SILENT)) {
             float volume = (float) (0.2f * Math.sqrt(0.2 * (motion.getX() * motion.getX() + motion.getZ() * motion.getZ()) + motion.getY() * motion.getY()));
             if (volume > 1) {
@@ -147,7 +147,7 @@ public class FishingHookEntity extends ThrowableEntity {
     }
 
     @Override
-    public void tick(GeyserSession session) {
+    public void tick(RorySession session) {
         if (hooked || !isInAir(session) && !isInWater(session) || isOnGround()) {
             motion = Vector3f.ZERO;
             return;
@@ -162,7 +162,7 @@ public class FishingHookEntity extends ThrowableEntity {
     }
 
     @Override
-    protected float getGravity(GeyserSession session) {
+    protected float getGravity(RorySession session) {
         if (!isInWater(session) && !onGround) {
             return 0.03f;
         }
@@ -173,7 +173,7 @@ public class FishingHookEntity extends ThrowableEntity {
      * @param session the session of the Bedrock client.
      * @return true if this entity is currently in air.
      */
-    protected boolean isInAir(GeyserSession session) {
+    protected boolean isInAir(RorySession session) {
         if (session.getConnector().getConfig().isCacheChunks()) {
             int block = session.getConnector().getWorldManager().getBlockAt(session, position.toInt());
             return block == BlockTranslator.JAVA_AIR_ID;
@@ -182,7 +182,7 @@ public class FishingHookEntity extends ThrowableEntity {
     }
 
     @Override
-    protected float getDrag(GeyserSession session) {
+    protected float getDrag(RorySession session) {
         return 0.92f;
     }
 }

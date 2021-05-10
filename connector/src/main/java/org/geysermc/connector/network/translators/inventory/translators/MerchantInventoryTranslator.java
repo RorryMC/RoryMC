@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.inventory.translators;
@@ -40,7 +40,7 @@ import org.geysermc.connector.entity.type.EntityType;
 import org.geysermc.connector.inventory.Inventory;
 import org.geysermc.connector.inventory.MerchantContainer;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.BedrockContainerSlot;
 import org.geysermc.connector.network.translators.inventory.SlotType;
 import org.geysermc.connector.network.translators.inventory.updater.InventoryUpdater;
@@ -103,7 +103,7 @@ public class MerchantInventoryTranslator extends BaseInventoryTranslator {
     }
 
     @Override
-    public void prepareInventory(GeyserSession session, Inventory inventory) {
+    public void prepareInventory(RorySession session, Inventory inventory) {
         MerchantContainer merchantInventory = (MerchantContainer) inventory;
         if (merchantInventory.getVillager() == null) {
             long geyserId = session.getEntityCache().getNextEntityId().incrementAndGet();
@@ -120,7 +120,7 @@ public class MerchantInventoryTranslator extends BaseInventoryTranslator {
 
             SetEntityLinkPacket linkPacket = new SetEntityLinkPacket();
             EntityLinkData.Type type = EntityLinkData.Type.PASSENGER;
-            linkPacket.setEntityLink(new EntityLinkData(session.getPlayerEntity().getGeyserId(), geyserId, type, true, false));
+            linkPacket.setEntityLink(new EntityLinkData(session.getPlayerEntity().getRoryId(), geyserId, type, true, false));
             session.sendUpstreamPacket(linkPacket);
 
             merchantInventory.setVillager(villager);
@@ -128,13 +128,13 @@ public class MerchantInventoryTranslator extends BaseInventoryTranslator {
     }
 
     @Override
-    public void openInventory(GeyserSession session, Inventory inventory) {
+    public void openInventory(RorySession session, Inventory inventory) {
         //Handled in JavaTradeListTranslator
         //TODO: send a blank inventory here in case the villager doesn't send a TradeList packet
     }
 
     @Override
-    public void closeInventory(GeyserSession session, Inventory inventory) {
+    public void closeInventory(RorySession session, Inventory inventory) {
         MerchantContainer merchantInventory = (MerchantContainer) inventory;
         if (merchantInventory.getVillager() != null) {
             merchantInventory.getVillager().despawnEntity(session);
@@ -142,19 +142,19 @@ public class MerchantInventoryTranslator extends BaseInventoryTranslator {
     }
 
     @Override
-    public ItemStackResponsePacket.Response translateAutoCraftingRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateAutoCraftingRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         // We're not crafting here
         // Called at least by consoles when pressing a trade option button
         return translateRequest(session, inventory, request);
     }
 
     @Override
-    public void updateInventory(GeyserSession session, Inventory inventory) {
+    public void updateInventory(RorySession session, Inventory inventory) {
         updater.updateInventory(this, session, inventory);
     }
 
     @Override
-    public void updateSlot(GeyserSession session, Inventory inventory, int slot) {
+    public void updateSlot(RorySession session, Inventory inventory, int slot) {
         updater.updateSlot(this, session, inventory, slot);
     }
 

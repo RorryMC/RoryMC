@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.utils;
@@ -32,7 +32,7 @@ import org.geysermc.common.window.SimpleFormWindow;
 import org.geysermc.common.window.button.FormButton;
 import org.geysermc.common.window.button.FormImage;
 import org.geysermc.common.window.response.SimpleFormResponse;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
 
@@ -49,7 +49,7 @@ public class StatisticsUtils {
      *
      * @param session The session to build the form for
      */
-    public static SimpleFormWindow buildMenuForm(GeyserSession session) {
+    public static SimpleFormWindow buildMenuForm(RorySession session) {
         // Cache the language for cleaner access
         String language = session.getClientData().getLanguageCode();
 
@@ -77,7 +77,7 @@ public class StatisticsUtils {
      * @param response The response string to parse
      * @return True if the form was parsed correctly, false if not
      */
-    public static boolean handleMenuForm(GeyserSession session, String response) {
+    public static boolean handleMenuForm(RorySession session, String response) {
         SimpleFormWindow menuForm = (SimpleFormWindow) session.getWindowCache().getWindows().get(STATISTICS_MENU_FORM_ID);
         menuForm.setResponse(response);
         SimpleFormResponse formResponse = (SimpleFormResponse) menuForm.getResponse();
@@ -204,7 +204,7 @@ public class StatisticsUtils {
      * @param response The response string to parse
      * @return True if the form was parsed correctly, false if not
      */
-    public static boolean handleListForm(GeyserSession session, String response) {
+    public static boolean handleListForm(RorySession session, String response) {
         SimpleFormWindow listForm = (SimpleFormWindow) session.getWindowCache().getWindows().get(STATISTICS_LIST_FORM_ID);
         listForm.setResponse(response);
 

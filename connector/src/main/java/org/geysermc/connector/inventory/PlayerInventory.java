@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.inventory;
@@ -28,8 +28,8 @@ package org.geysermc.connector.inventory;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 
 public class PlayerInventory extends Inventory {
 
@@ -43,35 +43,35 @@ public class PlayerInventory extends Inventory {
 
     @Getter
     @NonNull
-    private GeyserItemStack cursor = GeyserItemStack.EMPTY;
+    private RoryItemStack cursor = RoryItemStack.EMPTY;
 
     public PlayerInventory() {
         super(0, 46, null);
         heldItemSlot = 0;
     }
 
-    public void setCursor(@NonNull GeyserItemStack newCursor, GeyserSession session) {
+    public void setCursor(@NonNull RoryItemStack newCursor, RorySession session) {
         updateItemNetId(cursor, newCursor, session);
         cursor = newCursor;
     }
 
-    public GeyserItemStack getItemInHand() {
+    public RoryItemStack getItemInHand() {
         if (36 + heldItemSlot > this.size) {
-            GeyserConnector.getInstance().getLogger().debug("Held item slot was larger than expected!");
-            return GeyserItemStack.EMPTY;
+            RoryConnector.getInstance().getLogger().debug("Held item slot was larger than expected!");
+            return RoryItemStack.EMPTY;
         }
         return items[36 + heldItemSlot];
     }
 
-    public void setItemInHand(@NonNull GeyserItemStack item) {
+    public void setItemInHand(@NonNull RoryItemStack item) {
         if (36 + heldItemSlot > this.size) {
-            GeyserConnector.getInstance().getLogger().debug("Held item slot was larger than expected!");
+            RoryConnector.getInstance().getLogger().debug("Held item slot was larger than expected!");
             return;
         }
         items[36 + heldItemSlot] = item;
     }
 
-    public GeyserItemStack getOffhand() {
+    public RoryItemStack getOffhand() {
         return items[45];
     }
 }

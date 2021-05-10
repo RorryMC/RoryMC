@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.utils;
@@ -37,13 +37,13 @@ import com.nukkitx.protocol.bedrock.data.inventory.ContainerId;
 import com.nukkitx.protocol.bedrock.data.inventory.ItemData;
 import com.nukkitx.protocol.bedrock.packet.InventorySlotPacket;
 import com.nukkitx.protocol.bedrock.packet.PlayerHotbarPacket;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.common.ChatColor;
 import org.geysermc.connector.inventory.Container;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.Inventory;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
 import org.geysermc.connector.network.translators.inventory.translators.LecternInventoryTranslator;
 import org.geysermc.connector.network.translators.inventory.translators.chest.DoubleChestInventoryTranslator;
@@ -57,7 +57,7 @@ import java.util.concurrent.TimeUnit;
 public class InventoryUtils {
     public static final ItemStack REFRESH_ITEM = new ItemStack(1, 127, new CompoundTag(""));
 
-    public static void openInventory(GeyserSession session, Inventory inventory) {
+    public static void openInventory(RorySession session, Inventory inventory) {
         session.setOpenInventory(inventory);
         if (session.isClosingInventory()) {
             //Wait for close confirmation from client before opening the new inventory.
@@ -68,12 +68,12 @@ public class InventoryUtils {
         displayInventory(session, inventory);
     }
 
-    public static void displayInventory(GeyserSession session, Inventory inventory) {
+    public static void displayInventory(RorySession session, Inventory inventory) {
         InventoryTranslator translator = session.getInventoryTranslator();
         if (translator != null) {
             translator.prepareInventory(session, inventory);
             if (translator instanceof DoubleChestInventoryTranslator && !((Container) inventory).isUsingRealBlock()) {
-                GeyserConnector.getInstance().getGeneralThreadPool().schedule(() ->
+                RoryConnector.getInstance().getGeneralThreadPool().schedule(() ->
                     session.addInventoryTask(() -> {
                         Inventory openInv = session.getOpenInventory();
                         if (openInv != null && openInv.getId() == inventory.getId()) {
@@ -94,8 +94,8 @@ public class InventoryUtils {
         }
     }
 
-    public static void closeInventory(GeyserSession session, int windowId, boolean confirm) {
-        session.getPlayerInventory().setCursor(GeyserItemStack.EMPTY, session);
+    public static void closeInventory(RorySession session, int windowId, boolean confirm) {
+        session.getPlayerInventory().setCursor(RoryItemStack.EMPTY, session);
         updateCursor(session);
 
         Inventory inventory = getInventory(session, windowId);
@@ -110,7 +110,7 @@ public class InventoryUtils {
         session.setOpenInventory(null);
     }
 
-    public static Inventory getInventory(GeyserSession session, int windowId) {
+    public static Inventory getInventory(RorySession session, int windowId) {
         if (windowId == 0) {
             return session.getPlayerInventory();
         } else {
@@ -122,7 +122,7 @@ public class InventoryUtils {
         }
     }
 
-    public static void updateCursor(GeyserSession session) {
+    public static void updateCursor(RorySession session) {
         InventorySlotPacket cursorPacket = new InventorySlotPacket();
         cursorPacket.setContainerId(ContainerId.UI);
         cursorPacket.setSlot(0);
@@ -130,7 +130,7 @@ public class InventoryUtils {
         session.sendUpstreamPacket(cursorPacket);
     }
 
-    public static boolean canStack(GeyserItemStack item1, GeyserItemStack item2) {
+    public static boolean canStack(RoryItemStack item1, RoryItemStack item2) {
         if (item1.isEmpty() || item2.isEmpty())
             return false;
         return item1.getJavaId() == item2.getJavaId() && Objects.equals(item1.getNbt(), item2.getNbt());
@@ -171,12 +171,12 @@ public class InventoryUtils {
     }
 
     /**
-     * See {@link #findOrCreateItem(GeyserSession, String)}. This is for finding a specified {@link ItemStack}.
+     * See {@link #findOrCreateItem(RorySession, String)}. This is for finding a specified {@link ItemStack}.
      *
      * @param session the Bedrock client's session
      * @param itemStack the item to try to find a match for. NBT will also be accounted for.
      */
-    public static void findOrCreateItem(GeyserSession session, ItemStack itemStack) {
+    public static void findOrCreateItem(RorySession session, ItemStack itemStack) {
         PlayerInventory inventory = session.getPlayerInventory();
 
         if (itemStack == null || itemStack.getId() == 0) {
@@ -185,7 +185,7 @@ public class InventoryUtils {
 
         // Check hotbar for item
         for (int i = 36; i < 45; i++) {
-            GeyserItemStack geyserItem = inventory.getItem(i);
+            RoryItemStack geyserItem = inventory.getItem(i);
             if (geyserItem.isEmpty()) {
                 continue;
             }
@@ -199,7 +199,7 @@ public class InventoryUtils {
 
         // Check inventory for item
         for (int i = 9; i < 36; i++) {
-            GeyserItemStack geyserItem = inventory.getItem(i);
+            RoryItemStack geyserItem = inventory.getItem(i);
             if (geyserItem.isEmpty()) {
                 continue;
             }
@@ -235,7 +235,7 @@ public class InventoryUtils {
      * @param session the Bedrock client's session
      * @param itemName the Java identifier of the item to search/select
      */
-    public static void findOrCreateItem(GeyserSession session, String itemName) {
+    public static void findOrCreateItem(RorySession session, String itemName) {
         // Get the inventory to choose a slot to pick
         PlayerInventory inventory = session.getPlayerInventory();
 
@@ -245,7 +245,7 @@ public class InventoryUtils {
 
         // Check hotbar for item
         for (int i = 36; i < 45; i++) {
-            GeyserItemStack geyserItem = inventory.getItem(i);
+            RoryItemStack geyserItem = inventory.getItem(i);
             if (geyserItem.isEmpty()) {
                 continue;
             }
@@ -261,7 +261,7 @@ public class InventoryUtils {
 
         // Check inventory for item
         for (int i = 9; i < 36; i++) {
-            GeyserItemStack geyserItem = inventory.getItem(i);
+            RoryItemStack geyserItem = inventory.getItem(i);
             if (geyserItem.isEmpty()) {
                 continue;
             }
@@ -311,10 +311,10 @@ public class InventoryUtils {
 
     /**
      * Changes the held item slot to the specified slot
-     * @param session GeyserSession
+     * @param session RorySession
      * @param slot inventory slot to be selected
      */
-    private static void setHotbarItem(GeyserSession session, int slot) {
+    private static void setHotbarItem(RorySession session, int slot) {
         PlayerHotbarPacket hotbarPacket = new PlayerHotbarPacket();
         hotbarPacket.setContainerId(0);
         // Java inventory slot to hotbar slot ID

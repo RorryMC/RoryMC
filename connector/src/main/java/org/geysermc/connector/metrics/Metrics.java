@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.metrics;
@@ -29,7 +29,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.ByteArrayOutputStream;
@@ -76,18 +76,18 @@ public class Metrics {
 
     private final static ObjectMapper mapper = new ObjectMapper();
 
-    private final GeyserConnector connector;
+    private final RoryConnector connector;
 
     /**
      * Class constructor.
      *
-     * @param connector The GeyserConnector instance
+     * @param connector The RoryConnector instance
      * @param name The name of the server software.
      * @param serverUUID The uuid of the server.
      * @param logFailedRequests Whether failed requests should be logged or not.
      * @param logger The logger for the failed requests.
      */
-    public Metrics(GeyserConnector connector, String name, String serverUUID, boolean logFailedRequests, Logger logger) {
+    public Metrics(RoryConnector connector, String name, String serverUUID, boolean logFailedRequests, Logger logger) {
         this.connector = connector;
         this.name = name;
         this.serverUUID = serverUUID;
@@ -129,7 +129,7 @@ public class Metrics {
         ObjectNode data = mapper.createObjectNode();
 
         data.put("pluginName", name); // Append the name of the server software
-        data.put("pluginVersion", GeyserConnector.VERSION); // Append the name of the server software
+        data.put("pluginVersion", RoryConnector.VERSION); // Append the name of the server software
 
         ArrayNode customCharts = mapper.createArrayNode();
         for (CustomChart customChart : charts) {

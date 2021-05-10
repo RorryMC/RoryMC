@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.collision;
@@ -37,7 +37,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.geysermc.connector.entity.player.PlayerEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.collision.translators.BlockCollision;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
 
@@ -49,7 +49,7 @@ import java.util.Locale;
 
 public class CollisionManager {
 
-    private final GeyserSession session;
+    private final RorySession session;
 
     @Getter
     private BoundingBox playerBoundingBox;
@@ -77,7 +77,7 @@ public class CollisionManager {
      */
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.#####", new DecimalFormatSymbols(Locale.ENGLISH));
 
-    public CollisionManager(GeyserSession session) {
+    public CollisionManager(RorySession session) {
         this.session = session;
         this.playerBoundingBox = new BoundingBox(0, 0, 0, 0.6, 1.8, 0.6);
     }
@@ -177,12 +177,12 @@ public class CollisionManager {
         PlayerEntity entity = session.getPlayerEntity();
         // Gravity might need to be reset...
         SetEntityDataPacket entityDataPacket = new SetEntityDataPacket();
-        entityDataPacket.setRuntimeEntityId(entity.getGeyserId());
+        entityDataPacket.setRuntimeEntityId(entity.getRoryId());
         entityDataPacket.getMetadata().putAll(entity.getMetadata());
         session.sendUpstreamPacket(entityDataPacket);
 
         MovePlayerPacket movePlayerPacket = new MovePlayerPacket();
-        movePlayerPacket.setRuntimeEntityId(entity.getGeyserId());
+        movePlayerPacket.setRuntimeEntityId(entity.getRoryId());
         movePlayerPacket.setPosition(entity.getPosition());
         movePlayerPacket.setRotation(entity.getBedrockRotation());
         movePlayerPacket.setMode(MovePlayerPacket.Mode.NORMAL);
@@ -226,7 +226,7 @@ public class CollisionManager {
     /**
      * Returns false if the movement is invalid, and in this case it shouldn't be sent to the server and should be
      * cancelled
-     * See {@link BlockCollision#correctPosition(GeyserSession, BoundingBox)} for more info
+     * See {@link BlockCollision#correctPosition(RorySession, BoundingBox)} for more info
      */
     public boolean correctPlayerPosition() {
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,14 +19,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.utils;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -50,7 +50,7 @@ public class WebUtils {
             url = new URL(reqURL);
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");
-            con.setRequestProperty("User-Agent", "Geyser-" + GeyserConnector.getInstance().getPlatformType().toString() + "/" + GeyserConnector.VERSION); // Otherwise Java 8 fails on checking updates
+            con.setRequestProperty("User-Agent", "Rory-" + RoryConnector.getInstance().getPlatformType().toString() + "/" + RoryConnector.VERSION); // Otherwise Java 8 fails on checking updates
 
             return connectionToString(con);
         } catch (Exception e) {
@@ -66,8 +66,8 @@ public class WebUtils {
      */
     public static JsonNode getJson(String reqURL) throws IOException {
         HttpURLConnection con = (HttpURLConnection) new URL(reqURL).openConnection();
-        con.setRequestProperty("User-Agent", "Geyser-" + GeyserConnector.getInstance().getPlatformType().toString() + "/" + GeyserConnector.VERSION);
-        return GeyserConnector.JSON_MAPPER.readTree(con.getInputStream());
+        con.setRequestProperty("User-Agent", "Rory-" + RoryConnector.getInstance().getPlatformType().toString() + "/" + RoryConnector.VERSION);
+        return RoryConnector.JSON_MAPPER.readTree(con.getInputStream());
     }
 
     /**
@@ -79,7 +79,7 @@ public class WebUtils {
     public static void downloadFile(String reqURL, String fileLocation) {
         try {
             HttpURLConnection con = (HttpURLConnection) new URL(reqURL).openConnection();
-            con.setRequestProperty("User-Agent", "Geyser-" + GeyserConnector.getInstance().getPlatformType().toString() + "/" + GeyserConnector.VERSION);
+            con.setRequestProperty("User-Agent", "Rory-" + RoryConnector.getInstance().getPlatformType().toString() + "/" + RoryConnector.VERSION);
             InputStream in = con.getInputStream();
             Files.copy(in, Paths.get(fileLocation), StandardCopyOption.REPLACE_EXISTING);
         } catch (Exception e) {
@@ -92,7 +92,7 @@ public class WebUtils {
         HttpURLConnection con = (HttpURLConnection) url.openConnection();
         con.setRequestMethod("POST");
         con.setRequestProperty("Content-Type", "text/plain");
-        con.setRequestProperty("User-Agent", "Geyser-" + GeyserConnector.getInstance().getPlatformType().toString() + "/" + GeyserConnector.VERSION);
+        con.setRequestProperty("User-Agent", "Rory-" + RoryConnector.getInstance().getPlatformType().toString() + "/" + RoryConnector.VERSION);
         con.setDoOutput(true);
 
         OutputStream out = con.getOutputStream();

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.translators.inventory.holder;
@@ -36,7 +36,7 @@ import com.nukkitx.protocol.bedrock.packet.ContainerOpenPacket;
 import com.nukkitx.protocol.bedrock.packet.UpdateBlockPacket;
 import org.geysermc.connector.inventory.Container;
 import org.geysermc.connector.inventory.Inventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
 
@@ -70,7 +70,7 @@ public class BlockInventoryHolder extends InventoryHolder {
     }
 
     @Override
-    public void prepareInventory(InventoryTranslator translator, GeyserSession session, Inventory inventory) {
+    public void prepareInventory(InventoryTranslator translator, RorySession session, Inventory inventory) {
         // Check to see if there is an existing block we can use that the player just selected.
         // First, verify that the player's position has not changed, so we don't try to select a block wildly out of range.
         // (This could be a virtual inventory that the player is opening)
@@ -107,7 +107,7 @@ public class BlockInventoryHolder extends InventoryHolder {
      * @return if the player's last interaction position and current position match. Used to ensure that we don't select
      * a block to hold the inventory that's wildly out of range.
      */
-    protected boolean checkInteractionPosition(GeyserSession session) {
+    protected boolean checkInteractionPosition(RorySession session) {
         return session.getLastInteractionPlayerPosition().equals(session.getPlayerEntity().getPosition());
     }
 
@@ -118,7 +118,7 @@ public class BlockInventoryHolder extends InventoryHolder {
         return this.validBlocks.contains(javaBlockString[0]);
     }
 
-    protected void setCustomName(GeyserSession session, Vector3i position, Inventory inventory, int javaBlockState) {
+    protected void setCustomName(RorySession session, Vector3i position, Inventory inventory, int javaBlockState) {
         NbtMap tag = NbtMap.builder()
                 .putInt("x", position.getX())
                 .putInt("y", position.getY())
@@ -131,7 +131,7 @@ public class BlockInventoryHolder extends InventoryHolder {
     }
 
     @Override
-    public void openInventory(InventoryTranslator translator, GeyserSession session, Inventory inventory) {
+    public void openInventory(InventoryTranslator translator, RorySession session, Inventory inventory) {
         ContainerOpenPacket containerOpenPacket = new ContainerOpenPacket();
         containerOpenPacket.setId((byte) inventory.getId());
         containerOpenPacket.setType(containerType);
@@ -141,7 +141,7 @@ public class BlockInventoryHolder extends InventoryHolder {
     }
 
     @Override
-    public void closeInventory(InventoryTranslator translator, GeyserSession session, Inventory inventory) {
+    public void closeInventory(InventoryTranslator translator, RorySession session, Inventory inventory) {
         if (((Container) inventory).isUsingRealBlock()) {
             // No need to reset a block since we didn't change any blocks
             // But send a container close packet because we aren't destroying the original.

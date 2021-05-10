@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,8 +19,8 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.entity;
@@ -30,7 +30,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.packet.AnimatePacket;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 import java.util.concurrent.TimeUnit;
 
@@ -63,28 +63,28 @@ public class BoatEntity extends Entity {
     }
 
     @Override
-    public void moveAbsolute(GeyserSession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
+    public void moveAbsolute(RorySession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
         // We don't include the rotation (y) as it causes the boat to appear sideways
         super.moveAbsolute(session, position.add(0d, this.entityType.getOffset(), 0d), Vector3f.from(rotation.getX() + 90, 0, rotation.getX() + 90), isOnGround, teleported);
     }
 
     @Override
-    public void moveRelative(GeyserSession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
+    public void moveRelative(RorySession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
         super.moveRelative(session, relX, relY, relZ, Vector3f.from(rotation.getX(), 0, rotation.getX()), isOnGround);
     }
 
     @Override
-    public void updatePositionAndRotation(GeyserSession session, double moveX, double moveY, double moveZ, float yaw, float pitch, boolean isOnGround) {
+    public void updatePositionAndRotation(RorySession session, double moveX, double moveY, double moveZ, float yaw, float pitch, boolean isOnGround) {
         moveRelative(session, moveX, moveY, moveZ, yaw + 90, pitch, isOnGround);
     }
 
     @Override
-    public void updateRotation(GeyserSession session, float yaw, float pitch, boolean isOnGround) {
+    public void updateRotation(RorySession session, float yaw, float pitch, boolean isOnGround) {
         moveRelative(session, 0, 0, 0, Vector3f.from(yaw + 90, 0, 0), isOnGround);
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
 
         // Time since last hit
         if (entityMetadata.getId() == 7) {
@@ -148,7 +148,7 @@ public class BoatEntity extends Entity {
     }
 
     @Override
-    public void updateBedrockMetadata(GeyserSession session) {
+    public void updateBedrockMetadata(RorySession session) {
         super.updateBedrockMetadata(session);
 
         // As these indicate to reset rowing, remove them until it is time to send them out again.
@@ -156,7 +156,7 @@ public class BoatEntity extends Entity {
         metadata.remove(EntityData.ROW_TIME_RIGHT);
     }
 
-    private void updateLeftPaddle(GeyserSession session, Entity rower) {
+    private void updateLeftPaddle(RorySession session, Entity rower) {
         if (isPaddlingLeft) {
             paddleTimeLeft += ROWING_SPEED;
             sendAnimationPacket(session, rower, AnimatePacket.Action.ROW_LEFT, paddleTimeLeft);
@@ -169,7 +169,7 @@ public class BoatEntity extends Entity {
         }
     }
 
-    private void updateRightPaddle(GeyserSession session, Entity rower) {
+    private void updateRightPaddle(RorySession session, Entity rower) {
         if (isPaddlingRight) {
             paddleTimeRight += ROWING_SPEED;
             sendAnimationPacket(session, rower, AnimatePacket.Action.ROW_RIGHT, paddleTimeRight);
@@ -182,9 +182,9 @@ public class BoatEntity extends Entity {
         }
     }
 
-    private void sendAnimationPacket(GeyserSession session, Entity rower, AnimatePacket.Action action, float rowTime) {
+    private void sendAnimationPacket(RorySession session, Entity rower, AnimatePacket.Action action, float rowTime) {
         AnimatePacket packet = new AnimatePacket();
-        packet.setRuntimeEntityId(rower.getGeyserId());
+        packet.setRuntimeEntityId(rower.getRoryId());
         packet.setAction(action);
         packet.setRowingTime(rowTime);
         session.sendUpstreamPacket(packet);

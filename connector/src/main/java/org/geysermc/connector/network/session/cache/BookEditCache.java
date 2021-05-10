@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019-2021 GeyserMC. http://geysermc.org
+ * Copyright (c) 2019-2021 RoryMC. http://geysermc.org
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -19,16 +19,16 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  *
- * @author GeyserMC
- * @link https://github.com/GeyserMC/Geyser
+ * @author RoryMC
+ * @link https://github.com/RoryMC/Rory
  */
 
 package org.geysermc.connector.network.session.cache;
 
 import com.github.steveice10.mc.protocol.packet.ingame.client.window.ClientEditBookPacket;
 import lombok.Setter;
-import org.geysermc.connector.inventory.GeyserItemStack;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.inventory.RoryItemStack;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
 
 /**
@@ -38,7 +38,7 @@ import org.geysermc.connector.network.translators.item.ItemRegistry;
  * book packets. Because of this, we need to ensure packets are only send every second or so at maximum.
  */
 public class BookEditCache {
-    private final GeyserSession session;
+    private final RorySession session;
     @Setter
     private ClientEditBookPacket packet;
     /**
@@ -46,7 +46,7 @@ public class BookEditCache {
      */
     private long lastBookUpdate;
 
-    public BookEditCache(GeyserSession session) {
+    public BookEditCache(RorySession session) {
         this.session = session;
     }
 
@@ -63,7 +63,7 @@ public class BookEditCache {
             return;
         }
         // Don't send the update if the player isn't not holding a book, shouldn't happen if we catch all interactions
-        GeyserItemStack itemStack = session.getPlayerInventory().getItemInHand();
+        RoryItemStack itemStack = session.getPlayerInventory().getItemInHand();
         if (itemStack == null || itemStack.getJavaId() != ItemRegistry.WRITABLE_BOOK.getJavaId()) {
             packet = null;
             return;
