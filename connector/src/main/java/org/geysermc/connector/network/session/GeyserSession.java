@@ -66,10 +66,7 @@ import it.unimi.dsi.fastutil.ints.IntList;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
 import it.unimi.dsi.fastutil.longs.Long2ObjectMaps;
 import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.objects.Object2LongMap;
-import it.unimi.dsi.fastutil.objects.Object2LongOpenHashMap;
-import it.unimi.dsi.fastutil.objects.ObjectIterator;
-import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
+import it.unimi.dsi.fastutil.objects.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
@@ -79,7 +76,9 @@ import org.geysermc.common.window.FormWindow;
 import org.geysermc.connector.GeyserConnector;
 import org.geysermc.connector.command.CommandSender;
 import org.geysermc.connector.common.AuthType;
+import org.geysermc.connector.configuration.EmoteOffhandWorkaroundOption;
 import org.geysermc.connector.entity.Entity;
+import org.geysermc.connector.entity.ItemFrameEntity;
 import org.geysermc.connector.entity.Tickable;
 import org.geysermc.connector.entity.attribute.Attribute;
 import org.geysermc.connector.entity.attribute.AttributeType;
@@ -145,6 +144,7 @@ public class GeyserSession implements CommandSender {
     private ChunkCache chunkCache;
     private EntityCache entityCache;
     private EntityEffectCache effectCache;
+    private final TagCache tagCache;
     private WorldCache worldCache;
     private WindowCache windowCache;
     private final Int2ObjectMap<TeleportCache> teleportMap = new Int2ObjectOpenHashMap<>();
@@ -187,10 +187,10 @@ public class GeyserSession implements CommandSender {
     private final Long2ObjectMap<ClientboundMapItemDataPacket> storedMaps = Long2ObjectMaps.synchronize(new Long2ObjectOpenHashMap<>());
 
     /**
-     * A map of Vector3i positions to Java entity IDs.
+     * A map of Vector3i positions to Java entities.
      * Used for translating Bedrock block actions to Java entity actions.
      */
-    private final Object2LongMap<Vector3i> itemFrameCache = new Object2LongOpenHashMap<>();
+    private final Map<Vector3i, ItemFrameEntity> itemFrameCache = new Object2ObjectOpenHashMap<>();
 
     /**
      * Stores a list of all lectern locations and their block entity tags.
@@ -356,6 +356,12 @@ public class GeyserSession implements CommandSender {
     private long lastMovementTimestamp = System.currentTimeMillis();
 
     /**
+     * Used to send a ClientVehicleMovePacket for every PlayerInputPacket after idling on a boat/horse for more than 100ms
+     */
+    @Setter
+    private long lastVehicleMoveTimestamp = System.currentTimeMillis();
+
+    /**
      * Controls whether the daylight cycle gamerule has been sent to the client, so the sun/moon remain motionless.
      */
     private boolean daylightCycle = true;
@@ -427,9 +433,7 @@ public class GeyserSession implements CommandSender {
     @Setter
     private boolean waitingForStatistics = false;
 
-    @Setter
-    private List<UUID> selectedEmotes = new ArrayList<>();
-    private final Set<UUID> emotes = new HashSet<>();
+    private final Set<UUID> emotes;
 
     /**
      * The thread that will run every 50 milliseconds - one Minecraft tick.
@@ -447,6 +451,7 @@ public class GeyserSession implements CommandSender {
         this.chunkCache = new ChunkCache(this);
         this.entityCache = new EntityCache(this);
         this.effectCache = new EntityEffectCache();
+        this.tagCache = new TagCache();
         this.worldCache = new WorldCache(this);
         this.windowCache = new WindowCache(this);
 
@@ -465,9 +470,14 @@ public class GeyserSession implements CommandSender {
         this.spawned = false;
         this.loggedIn = false;
 
-        // Make a copy to prevent ConcurrentModificationException
-        final List<GeyserSession> tmpPlayers = new ArrayList<>(connector.getPlayers());
-        tmpPlayers.forEach(player -> this.emotes.addAll(player.getEmotes()));
+        if (connector.getConfig().getEmoteOffhandWorkaround() != EmoteOffhandWorkaroundOption.NO_EMOTES) {
+            this.emotes = new HashSet<>();
+            // Make a copy to prevent ConcurrentModificationException
+            final List<GeyserSession> tmpPlayers = new ArrayList<>(connector.getPlayers());
+            tmpPlayers.forEach(player -> this.emotes.addAll(player.getEmotes()));
+        } else {
+            this.emotes = null;
+        }
 
         bedrockServerSession.addDisconnectHandler(disconnectReason -> {
             InetAddress address = bedrockServerSession.getRealAddress().getAddress();
@@ -687,26 +697,41 @@ public class GeyserSession implements CommandSender {
             @Override
             public void packetSending(PacketSendingEvent event) {
                 //todo move this somewhere else
-                if (event.getPacket() instanceof HandshakePacket && floodgate) {
-                    String encrypted = "";
-                    try {
-                        encrypted = EncryptionUtil.encryptBedrockData(publicKey, new BedrockData(
-                                clientData.getGameVersion(),
-                                authData.getName(),
-                                authData.getXboxUUID(),
-                                clientData.getDeviceOS().ordinal(),
-                                clientData.getLanguageCode(),
-                                clientData.getCurrentInputMode().ordinal(),
-                                upstream.getAddress().getAddress().getHostAddress()
-                        ));
-                    } catch (Exception e) {
-                        connector.getLogger().error(LanguageUtils.getLocaleStringLog("geyser.auth.floodgate.encrypt_fail"), e);
+                if (event.getPacket() instanceof HandshakePacket) {
+                    String addressSuffix;
+                    if (floodgate) {
+                        String encrypted = "";
+                        try {
+                            encrypted = EncryptionUtil.encryptBedrockData(publicKey, new BedrockData(
+                                    clientData.getGameVersion(),
+                                    authData.getName(),
+                                    authData.getXboxUUID(),
+                                    clientData.getDeviceOS().ordinal(),
+                                    clientData.getLanguageCode(),
+                                    clientData.getCurrentInputMode().ordinal(),
+                                    upstream.getAddress().getAddress().getHostAddress()
+                            ));
+                        } catch (Exception e) {
+                            connector.getLogger().error(LanguageUtils.getLocaleStringLog("geyser.auth.floodgate.encrypt_fail"), e);
+                        }
+
+                        addressSuffix = '\0' + BedrockData.FLOODGATE_IDENTIFIER + '\0' + encrypted;
+                    } else {
+                        addressSuffix = "";
                     }
 
                     HandshakePacket handshakePacket = event.getPacket();
+
+                    String address;
+                    if (connector.getConfig().getRemote().isForwardHost()) {
+                        address = clientData.getServerAddress().split(":")[0];
+                    } else {
+                        address = handshakePacket.getHostname();
+                    }
+
                     event.setPacket(new HandshakePacket(
                             handshakePacket.getProtocolVersion(),
-                            handshakePacket.getHostname() + '\0' + BedrockData.FLOODGATE_IDENTIFIER + '\0' + encrypted,
+                            address + addressSuffix,
                             handshakePacket.getPort(),
                             handshakePacket.getIntent()
                     ));
@@ -829,7 +854,7 @@ public class GeyserSession implements CommandSender {
     /**
      * Called every 50 milliseconds - one Minecraft tick.
      */
-    public void tick() {
+    protected void tick() {
         // Check to see if the player's position needs updating - a position update should be sent once every 3 seconds
         if (spawned && (System.currentTimeMillis() - lastMovementTimestamp) > 3000) {
             // Recalculate in case something else changed position
@@ -1001,7 +1026,6 @@ public class GeyserSession implements CommandSender {
         startGamePacket.setLightningLevel(0);
         startGamePacket.setMultiplayerGame(true);
         startGamePacket.setBroadcastingToLan(true);
-        startGamePacket.getGamerules().add(new GameRuleData<>("showcoordinates", connector.getConfig().isShowCoordinates()));
         startGamePacket.setPlatformBroadcastMode(GamePublishSetting.PUBLIC);
         startGamePacket.setXblBroadcastMode(GamePublishSetting.PUBLIC);
         startGamePacket.setCommandsEnabled(!connector.getConfig().isXboxAchievementsEnabled());
@@ -1193,13 +1217,14 @@ public class GeyserSession implements CommandSender {
 
     /**
      * Update the cached value for the reduced debug info gamerule.
-     * This also toggles the coordinates display
+     * If enabled, also hides the player's coordinates.
      *
      * @param value The new value for reducedDebugInfo
      */
     public void setReducedDebugInfo(boolean value) {
-        worldCache.setShowCoordinates(!value);
         reducedDebugInfo = value;
+        // Set the showCoordinates data. This is done because updateShowCoordinates() uses this gamerule as a variable.
+        getWorldCache().updateShowCoordinates();
     }
 
     /**
@@ -1285,7 +1310,6 @@ public class GeyserSession implements CommandSender {
     }
 
     public void refreshEmotes(List<UUID> emotes) {
-        this.selectedEmotes = emotes;
         this.emotes.addAll(emotes);
         for (GeyserSession player : connector.getPlayers()) {
             List<UUID> pieces = new ArrayList<>();
