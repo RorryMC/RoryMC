@@ -109,10 +109,6 @@ public class ItemRegistry {
      */
     public static ItemEntry EGG;
     /**
-     * Gold item entry, used in PiglinEntity.java
-     */
-    public static ItemEntry GOLD;
-    /**
      * Shield item entry, used in Entity.java and LivingEntity.java
      */
     public static ItemEntry SHIELD;
@@ -294,7 +290,7 @@ public class ItemRegistry {
                         // However, in order for some visuals and crafting to work, we need to send the first matching block state
                         // as indexed by Bedrock's block palette
                         // There are exceptions! But, ideally, the block ID override should take care of those.
-                        String javaBlockIdentifier = BlockTranslator.getJavaIdBlockMap().inverse().get(blockRuntimeIdNode.intValue()).split("\\[")[0];
+                        String javaBlockIdentifier = BlockTranslator.getBlockMapping(blockRuntimeIdNode.intValue()).getCleanJavaIdentifier();
                         NbtMapBuilder requiredBlockStatesBuilder = NbtMap.builder();
                         String correctBedrockIdentifier = blockTranslator.getAllBedrockBlockStates().get(aValidBedrockBlockId).getString("name");
                         boolean firstPass = true;
@@ -408,6 +404,13 @@ public class ItemRegistry {
                             "", bedrockBlockId,
                             stackSize);
                 }
+            } else if (entry.getKey().equals("minecraft:spectral_arrow") || entry.getKey().equals("minecraft:knowledge_book")) {
+                // These items don't exist on Java, so set up a container that indicates they should have custom names
+                itemEntry = new TranslatableItemEntry(
+                        entry.getKey(), bedrockIdentifier, itemIndex, bedrockId,
+                        entry.getValue().get("bedrock_data").intValue(),
+                        bedrockBlockId,
+                        stackSize);
             } else {
                 itemEntry = new ItemEntry(
                         entry.getKey(), bedrockIdentifier, itemIndex, bedrockId,
@@ -429,9 +432,6 @@ public class ItemRegistry {
                     break;
                 case "minecraft:egg":
                     EGG = itemEntry;
-                    break;
-                case "minecraft:gold_ingot":
-                    GOLD = itemEntry;
                     break;
                 case "minecraft:shield":
                     SHIELD = itemEntry;
@@ -471,7 +471,6 @@ public class ItemRegistry {
         }
 
         itemNames.add("minecraft:furnace_minecart");
-        itemNames.add("minecraft:spectral_arrow");
 
         if (lodestoneCompassId == 0) {
             throw new RuntimeException("Lodestone compass not found in item palette!");
