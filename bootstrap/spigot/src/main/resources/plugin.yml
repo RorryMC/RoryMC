@@ -1,5 +1,5 @@
 main: org.geysermc.platform.spigot.GeyserSpigotPlugin
-name: ${outputName}-Spigot
+name: RoryMC-Spigot
 author: ${project.organization.name}
 website: ${project.organization.url}
 version: ${project.version}
