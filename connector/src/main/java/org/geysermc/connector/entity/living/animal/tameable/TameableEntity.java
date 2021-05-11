@@ -61,7 +61,7 @@ public class TameableEntity extends AnimalEntity {
                     entity = session.getPlayerEntity();
                 }
                 // Translate to entity ID
-                metadata.put(EntityData.OWNER_EID, entity.getRoryId());
+                metadata.put(EntityData.OWNER_EID, entity.getGeyserId());
             } else {
                 metadata.put(EntityData.OWNER_EID, 0L); // Reset
             }

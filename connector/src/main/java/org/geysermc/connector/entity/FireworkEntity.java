@@ -146,7 +146,7 @@ public class FireworkEntity extends Entity {
                     Math.cos(Math.toRadians(yaw)) * Math.cos(Math.toRadians(pitch)) * 2));
             //Need to update the EntityMotionPacket or else the player won't boost
             SetEntityMotionPacket entityMotionPacket = new SetEntityMotionPacket();
-            entityMotionPacket.setRuntimeEntityId(entity.getRoryId());
+            entityMotionPacket.setRuntimeEntityId(entity.getGeyserId());
             entityMotionPacket.setMotion(entity.getMotion());
 
             session.sendUpstreamPacket(entityMotionPacket);

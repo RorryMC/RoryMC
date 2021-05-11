@@ -76,8 +76,8 @@ public class EntityCache {
     public boolean cacheEntity(Entity entity) {
         // Check to see if the entity exists, otherwise we can end up with duplicated mobs
         if (!entityIdTranslations.containsKey(entity.getEntityId())) {
-            entityIdTranslations.put(entity.getEntityId(), entity.getRoryId());
-            entities.put(entity.getRoryId(), entity);
+            entityIdTranslations.put(entity.getEntityId(), entity.getGeyserId());
+            entities.put(entity.getGeyserId(), entity);
             return true;
         }
         return false;

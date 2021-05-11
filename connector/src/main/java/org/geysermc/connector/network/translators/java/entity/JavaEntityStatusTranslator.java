@@ -59,7 +59,7 @@ public class JavaEntityStatusTranslator extends PacketTranslator<ServerEntitySta
             return;
 
         EntityEventPacket entityEventPacket = new EntityEventPacket();
-        entityEventPacket.setRuntimeEntityId(entity.getRoryId());
+        entityEventPacket.setRuntimeEntityId(entity.getGeyserId());
         switch (packet.getStatus()) {
             case PLAYER_ENABLE_REDUCED_DEBUG:
                 session.setReducedDebugInfo(true);
@@ -125,12 +125,12 @@ public class JavaEntityStatusTranslator extends PacketTranslator<ServerEntitySta
                 // Player is pulled from a fishing rod
                 // The physics of this are clientside on Java
                 long pulledById = entity.getMetadata().getLong(EntityData.TARGET_EID);
-                if (session.getPlayerEntity().getRoryId() == pulledById) {
+                if (session.getPlayerEntity().getGeyserId() == pulledById) {
                     Entity hookOwner = session.getEntityCache().getEntityByRoryId(entity.getMetadata().getLong(EntityData.OWNER_EID));
                     if (hookOwner != null) {
                         // https://minecraft.gamepedia.com/Fishing_Rod#Hooking_mobs_and_other_entities
                         SetEntityMotionPacket motionPacket = new SetEntityMotionPacket();
-                        motionPacket.setRuntimeEntityId(session.getPlayerEntity().getRoryId());
+                        motionPacket.setRuntimeEntityId(session.getPlayerEntity().getGeyserId());
                         motionPacket.setMotion(hookOwner.getPosition().sub(session.getPlayerEntity().getPosition()).mul(0.1f));
                         session.sendUpstreamPacket(motionPacket);
                     }
@@ -182,7 +182,7 @@ public class JavaEntityStatusTranslator extends PacketTranslator<ServerEntitySta
                     // I assume part of the problem is that Bedrock uses a duration and Java just says the rabbit is jumping
                     SetEntityDataPacket dataPacket = new SetEntityDataPacket();
                     dataPacket.getMetadata().put(EntityData.JUMP_DURATION, (byte) 3);
-                    dataPacket.setRuntimeEntityId(entity.getRoryId());
+                    dataPacket.setRuntimeEntityId(entity.getGeyserId());
                     session.sendUpstreamPacket(dataPacket);
                     return;
                 }

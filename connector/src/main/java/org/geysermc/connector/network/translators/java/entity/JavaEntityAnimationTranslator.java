@@ -51,7 +51,7 @@ public class JavaEntityAnimationTranslator extends PacketTranslator<ServerEntity
             return;
 
         AnimatePacket animatePacket = new AnimatePacket();
-        animatePacket.setRuntimeEntityId(entity.getRoryId());
+        animatePacket.setRuntimeEntityId(entity.getGeyserId());
         switch (packet.getAnimation()) {
             case SWING_ARM:
                 animatePacket.setAction(AnimatePacket.Action.SWING_ARM);
@@ -64,7 +64,7 @@ public class JavaEntityAnimationTranslator extends PacketTranslator<ServerEntity
                 offHandPacket.setBlendOutTime(0.0f);
                 offHandPacket.setStopExpression("query.any_animation_finished");
                 offHandPacket.setController("__runtime_controller");
-                offHandPacket.getRuntimeEntityIds().add(entity.getRoryId());
+                offHandPacket.getRuntimeEntityIds().add(entity.getGeyserId());
 
                 session.sendUpstreamPacket(offHandPacket);
                 return;
@@ -78,7 +78,7 @@ public class JavaEntityAnimationTranslator extends PacketTranslator<ServerEntity
                 stringPacket.setIdentifier("geyseropt:enchanted_hit_multiple");
                 stringPacket.setDimensionId(DimensionUtils.javaToBedrock(session.getDimension()));
                 stringPacket.setPosition(Vector3f.ZERO);
-                stringPacket.setUniqueEntityId(entity.getRoryId());
+                stringPacket.setUniqueEntityId(entity.getGeyserId());
                 session.sendUpstreamPacket(stringPacket);
                 break;
             case LEAVE_BED:

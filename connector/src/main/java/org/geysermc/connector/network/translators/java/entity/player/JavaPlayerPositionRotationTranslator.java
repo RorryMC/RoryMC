@@ -63,12 +63,12 @@ public class JavaPlayerPositionRotationTranslator extends PacketTranslator<Serve
             session.sendUpstreamPacket(respawnPacket);
 
             SetEntityDataPacket entityDataPacket = new SetEntityDataPacket();
-            entityDataPacket.setRuntimeEntityId(entity.getRoryId());
+            entityDataPacket.setRuntimeEntityId(entity.getGeyserId());
             entityDataPacket.getMetadata().putAll(entity.getMetadata());
             session.sendUpstreamPacket(entityDataPacket);
 
             MovePlayerPacket movePlayerPacket = new MovePlayerPacket();
-            movePlayerPacket.setRuntimeEntityId(entity.getRoryId());
+            movePlayerPacket.setRuntimeEntityId(entity.getGeyserId());
             movePlayerPacket.setPosition(entity.getPosition());
             movePlayerPacket.setRotation(Vector3f.from(packet.getPitch(), packet.getYaw(), 0));
             movePlayerPacket.setMode(MovePlayerPacket.Mode.RESPAWN);

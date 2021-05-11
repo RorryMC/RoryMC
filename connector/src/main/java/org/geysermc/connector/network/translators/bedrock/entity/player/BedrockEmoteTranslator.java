@@ -60,7 +60,7 @@ public class BedrockEmoteTranslator extends PacketTranslator<EmotePacket> {
                 if (otherEntity == null) continue;
                 EmotePacket otherEmotePacket = new EmotePacket();
                 otherEmotePacket.setEmoteId(packet.getEmoteId());
-                otherEmotePacket.setRuntimeEntityId(otherEntity.getRoryId());
+                otherEmotePacket.setRuntimeEntityId(otherEntity.getGeyserId());
                 otherSession.sendUpstreamPacket(otherEmotePacket);
             }
         }

@@ -61,7 +61,7 @@ public class EnchantingInventoryTranslator extends AbstractBlockInventoryTransla
             case 2:
                 // Experience required
                 slotToUpdate = key;
-                enchantingInventory.getRoryEnchantOptions()[slotToUpdate].setXpCost(value);
+                enchantingInventory.getGeyserEnchantOptions()[slotToUpdate].setXpCost(value);
                 break;
             case 4:
             case 5:
@@ -81,20 +81,20 @@ public class EnchantingInventoryTranslator extends AbstractBlockInventoryTransla
                         bedrockIndex = -1;
                     }
                 }
-                enchantingInventory.getRoryEnchantOptions()[slotToUpdate].setEnchantIndex(value, bedrockIndex);
+                enchantingInventory.getGeyserEnchantOptions()[slotToUpdate].setEnchantIndex(value, bedrockIndex);
                 break;
             case 7:
             case 8:
             case 9:
                 // Enchantment level
                 slotToUpdate = key - 7;
-                enchantingInventory.getRoryEnchantOptions()[slotToUpdate].setEnchantLevel(value);
+                enchantingInventory.getGeyserEnchantOptions()[slotToUpdate].setEnchantLevel(value);
                 shouldUpdate = true; // Java sends each property as its own packet, so let's only update after all properties have been sent
                 break;
             default:
                 return;
         }
-        RoryEnchantOption enchantOption = enchantingInventory.getRoryEnchantOptions()[slotToUpdate];
+        RoryEnchantOption enchantOption = enchantingInventory.getGeyserEnchantOptions()[slotToUpdate];
         if (shouldUpdate && enchantOption.hasChanged()) {
             enchantingInventory.getEnchantOptions()[slotToUpdate] = enchantOption.build(session);
             PlayerEnchantOptionsPacket packet = new PlayerEnchantOptionsPacket();
@@ -119,7 +119,7 @@ public class EnchantingInventoryTranslator extends AbstractBlockInventoryTransla
             if (enchantData != null) {
                 if (craftRecipeData.getRecipeNetworkId() == enchantData.getEnchantNetId()) {
                     // Enchant net ID is how we differentiate between what item Bedrock wants
-                    javaSlot = enchantingInventory.getRoryEnchantOptions()[i].getJavaIndex();
+                    javaSlot = enchantingInventory.getGeyserEnchantOptions()[i].getJavaIndex();
                     break;
                 }
             }

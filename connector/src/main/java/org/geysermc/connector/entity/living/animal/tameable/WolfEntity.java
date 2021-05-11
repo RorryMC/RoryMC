@@ -74,7 +74,7 @@ public class WolfEntity extends TameableEntity {
             if (!metadata.containsKey(EntityData.OWNER_EID)) {
                 // If a color is set and there is no owner entity ID, set one.
                 // Otherwise, the entire wolf is set to that color: https://user-images.githubusercontent.com/9083212/99209989-92691200-2792-11eb-911d-9a315c955be9.png
-                metadata.put(EntityData.OWNER_EID, session.getPlayerEntity().getRoryId());
+                metadata.put(EntityData.OWNER_EID, session.getPlayerEntity().getGeyserId());
             }
         }
 

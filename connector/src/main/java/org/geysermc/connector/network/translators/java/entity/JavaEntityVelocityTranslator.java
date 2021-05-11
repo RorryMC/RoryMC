@@ -55,7 +55,7 @@ public class JavaEntityVelocityTranslator extends PacketTranslator<ServerEntityV
         }
 
         SetEntityMotionPacket entityMotionPacket = new SetEntityMotionPacket();
-        entityMotionPacket.setRuntimeEntityId(entity.getRoryId());
+        entityMotionPacket.setRuntimeEntityId(entity.getGeyserId());
         entityMotionPacket.setMotion(entity.getMotion());
 
         session.sendUpstreamPacket(entityMotionPacket);

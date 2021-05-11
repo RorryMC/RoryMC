@@ -56,12 +56,12 @@ public class BedrockRespawnTranslator extends PacketTranslator<RespawnPacket> {
                 PlayerEntity entity = session.getPlayerEntity();
                 if (entity == null) return;
                 SetEntityDataPacket entityDataPacket = new SetEntityDataPacket();
-                entityDataPacket.setRuntimeEntityId(entity.getRoryId());
+                entityDataPacket.setRuntimeEntityId(entity.getGeyserId());
                 entityDataPacket.getMetadata().putAll(entity.getMetadata());
                 session.sendUpstreamPacket(entityDataPacket);
 
                 MovePlayerPacket movePlayerPacket = new MovePlayerPacket();
-                movePlayerPacket.setRuntimeEntityId(entity.getRoryId());
+                movePlayerPacket.setRuntimeEntityId(entity.getGeyserId());
                 movePlayerPacket.setPosition(entity.getPosition());
                 movePlayerPacket.setRotation(entity.getBedrockRotation());
                 movePlayerPacket.setMode(MovePlayerPacket.Mode.RESPAWN);

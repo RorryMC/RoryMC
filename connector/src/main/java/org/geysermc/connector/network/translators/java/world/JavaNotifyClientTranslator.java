@@ -122,7 +122,7 @@ public class JavaNotifyClientTranslator extends PacketTranslator<ServerNotifyCli
                     case FIRST_TIME:
                         ShowCreditsPacket showCreditsPacket = new ShowCreditsPacket();
                         showCreditsPacket.setStatus(ShowCreditsPacket.Status.START_CREDITS);
-                        showCreditsPacket.setRuntimeEntityId(entity.getRoryId());
+                        showCreditsPacket.setRuntimeEntityId(entity.getGeyserId());
                         session.sendUpstreamPacket(showCreditsPacket);
                         break;
                 }
@@ -131,7 +131,7 @@ public class JavaNotifyClientTranslator extends PacketTranslator<ServerNotifyCli
                 EntityEventPacket eventPacket = new EntityEventPacket();
                 eventPacket.setType(EntityEventType.ELDER_GUARDIAN_CURSE);
                 eventPacket.setData(0);
-                eventPacket.setRuntimeEntityId(entity.getRoryId());
+                eventPacket.setRuntimeEntityId(entity.getGeyserId());
                 session.sendUpstreamPacket(eventPacket);
                 break;
             case ENABLE_RESPAWN_SCREEN:

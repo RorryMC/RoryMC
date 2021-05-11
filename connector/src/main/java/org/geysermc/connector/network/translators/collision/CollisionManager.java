@@ -177,12 +177,12 @@ public class CollisionManager {
         PlayerEntity entity = session.getPlayerEntity();
         // Gravity might need to be reset...
         SetEntityDataPacket entityDataPacket = new SetEntityDataPacket();
-        entityDataPacket.setRuntimeEntityId(entity.getRoryId());
+        entityDataPacket.setRuntimeEntityId(entity.getGeyserId());
         entityDataPacket.getMetadata().putAll(entity.getMetadata());
         session.sendUpstreamPacket(entityDataPacket);
 
         MovePlayerPacket movePlayerPacket = new MovePlayerPacket();
-        movePlayerPacket.setRuntimeEntityId(entity.getRoryId());
+        movePlayerPacket.setRuntimeEntityId(entity.getGeyserId());
         movePlayerPacket.setPosition(entity.getPosition());
         movePlayerPacket.setRotation(entity.getBedrockRotation());
         movePlayerPacket.setMode(MovePlayerPacket.Mode.NORMAL);

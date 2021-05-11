@@ -66,7 +66,7 @@ public class JavaJoinGameTranslator extends PacketTranslator<ServerJoinGamePacke
         session.getTagCache().clear();
 
         AdventureSettingsPacket bedrockPacket = new AdventureSettingsPacket();
-        bedrockPacket.setUniqueEntityId(session.getPlayerEntity().getRoryId());
+        bedrockPacket.setUniqueEntityId(session.getPlayerEntity().getGeyserId());
         bedrockPacket.setPlayerPermission(PlayerPermission.MEMBER);
         session.sendUpstreamPacket(bedrockPacket);
 
@@ -80,7 +80,7 @@ public class JavaJoinGameTranslator extends PacketTranslator<ServerJoinGamePacke
         session.setGameMode(packet.getGameMode());
 
         SetEntityDataPacket entityDataPacket = new SetEntityDataPacket();
-        entityDataPacket.setRuntimeEntityId(entity.getRoryId());
+        entityDataPacket.setRuntimeEntityId(entity.getGeyserId());
         entityDataPacket.getMetadata().putAll(entity.getMetadata());
         session.sendUpstreamPacket(entityDataPacket);
 

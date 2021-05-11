@@ -120,7 +120,7 @@ public class MerchantInventoryTranslator extends BaseInventoryTranslator {
 
             SetEntityLinkPacket linkPacket = new SetEntityLinkPacket();
             EntityLinkData.Type type = EntityLinkData.Type.PASSENGER;
-            linkPacket.setEntityLink(new EntityLinkData(session.getPlayerEntity().getRoryId(), geyserId, type, true, false));
+            linkPacket.setEntityLink(new EntityLinkData(session.getPlayerEntity().getGeyserId(), geyserId, type, true, false));
             session.sendUpstreamPacket(linkPacket);
 
             merchantInventory.setVillager(villager);

@@ -184,7 +184,7 @@ public class BoatEntity extends Entity {
 
     private void sendAnimationPacket(RorySession session, Entity rower, AnimatePacket.Action action, float rowTime) {
         AnimatePacket packet = new AnimatePacket();
-        packet.setRuntimeEntityId(rower.getRoryId());
+        packet.setRuntimeEntityId(rower.getGeyserId());
         packet.setAction(action);
         packet.setRowingTime(rowTime);
         session.sendUpstreamPacket(packet);

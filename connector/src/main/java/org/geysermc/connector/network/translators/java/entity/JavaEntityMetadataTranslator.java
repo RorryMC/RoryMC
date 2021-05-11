@@ -56,7 +56,7 @@ public class JavaEntityMetadataTranslator extends PacketTranslator<ServerEntityM
                 // Because some entity rewriters forget about some values
                 // Any other errors are actual bugs
                 session.getConnector().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.network.translator.metadata.failed", metadata, entity.getEntityType()));
-                session.getConnector().getLogger().debug("Entity Java ID: " + entity.getEntityId() + ", Rory ID: " + entity.getRoryId());
+                session.getConnector().getLogger().debug("Entity Java ID: " + entity.getEntityId() + ", Rory ID: " + entity.getGeyserId());
                 if (session.getConnector().getConfig().isDebugMode()) {
                     e.printStackTrace();
                 }

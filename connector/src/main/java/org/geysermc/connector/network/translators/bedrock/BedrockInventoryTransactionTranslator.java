@@ -330,7 +330,7 @@ public class BedrockInventoryTransactionTranslator extends PacketTranslator<Inve
                             openPacket.setBlockPosition(Vector3i.ZERO);
                             openPacket.setId((byte) 1);
                             openPacket.setType(ContainerType.COMMAND_BLOCK);
-                            openPacket.setUniqueEntityId(entity.getRoryId());
+                            openPacket.setUniqueEntityId(entity.getGeyserId());
                             session.sendUpstreamPacket(openPacket);
                             break;
                         }

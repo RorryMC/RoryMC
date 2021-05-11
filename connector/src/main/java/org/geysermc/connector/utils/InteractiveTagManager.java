@@ -65,7 +65,7 @@ public class InteractiveTagManager {
 
         InteractiveTag interactiveTag = InteractiveTag.NONE;
 
-        if (entityMetadata.getLong(EntityData.LEASH_HOLDER_EID) == session.getPlayerEntity().getRoryId()) {
+        if (entityMetadata.getLong(EntityData.LEASH_HOLDER_EID) == session.getPlayerEntity().getGeyserId()) {
             // Unleash the entity
             interactiveTag = InteractiveTag.REMOVE_LEASH;
         } else if (javaIdentifierStripped.equals("saddle") && !entityMetadata.getFlags().getFlag(EntityFlag.SADDLED) &&
@@ -94,7 +94,7 @@ public class InteractiveTagManager {
                     break;
                 case CAT:
                     if (entityMetadata.getFlags().getFlag(EntityFlag.TAMED) &&
-                            entityMetadata.getLong(EntityData.OWNER_EID) == session.getPlayerEntity().getRoryId()) {
+                            entityMetadata.getLong(EntityData.OWNER_EID) == session.getPlayerEntity().getGeyserId()) {
                         // Tamed and owned by player - can sit/stand
                         interactiveTag = entityMetadata.getFlags().getFlag(EntityFlag.SITTING) ? InteractiveTag.STAND : InteractiveTag.SIT;
                         break;
@@ -203,7 +203,7 @@ public class InteractiveTagManager {
                         // Bone and untamed - can tame
                         interactiveTag = InteractiveTag.TAME;
                     } else if (entityMetadata.getFlags().getFlag(EntityFlag.TAMED) &&
-                            entityMetadata.getLong(EntityData.OWNER_EID) == session.getPlayerEntity().getRoryId()) {
+                            entityMetadata.getLong(EntityData.OWNER_EID) == session.getPlayerEntity().getGeyserId()) {
                         // Tamed and owned by player - can sit/stand
                         interactiveTag = entityMetadata.getFlags().getFlag(EntityFlag.SITTING) ? InteractiveTag.STAND : InteractiveTag.SIT;
                     }

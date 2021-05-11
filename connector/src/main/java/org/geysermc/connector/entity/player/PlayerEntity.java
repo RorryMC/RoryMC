@@ -108,7 +108,7 @@ public class PlayerEntity extends LivingEntity {
         if (linkedEntityId != -1) {
             Entity linkedEntity = session.getEntityCache().getEntityByJavaId(linkedEntityId);
             if (linkedEntity != null) {
-                addPlayerPacket.getEntityLinks().add(new EntityLinkData(linkedEntity.getRoryId(), geyserId, EntityLinkData.Type.RIDER, false, false));
+                addPlayerPacket.getEntityLinks().add(new EntityLinkData(linkedEntity.getGeyserId(), geyserId, EntityLinkData.Type.RIDER, false, false));
             }
         }
 
@@ -311,7 +311,7 @@ public class PlayerEntity extends LivingEntity {
                 parrot.updateBedrockMetadata(session);
                 SetEntityLinkPacket linkPacket = new SetEntityLinkPacket();
                 EntityLinkData.Type type = (entityMetadata.getId() == 18) ? EntityLinkData.Type.RIDER : EntityLinkData.Type.PASSENGER;
-                linkPacket.setEntityLink(new EntityLinkData(geyserId, parrot.getRoryId(), type, false));
+                linkPacket.setEntityLink(new EntityLinkData(geyserId, parrot.getGeyserId(), type, false));
                 // Delay, or else spawned-in players won't get the link
                 // TODO: Find a better solution. This problem also exists with item frames
                 session.getConnector().getGeneralThreadPool().schedule(() -> session.sendUpstreamPacket(linkPacket), 500, TimeUnit.MILLISECONDS);

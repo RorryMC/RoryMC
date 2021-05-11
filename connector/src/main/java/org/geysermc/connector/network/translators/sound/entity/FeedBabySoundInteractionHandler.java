@@ -49,7 +49,7 @@ public class FeedBabySoundInteractionHandler implements EntitySoundInteractionHa
                     session.getPlayerInventory().getItemInHand().getItemEntry())) {
                 // Play the "feed child" effect
                 EntityEventPacket feedEvent = new EntityEventPacket();
-                feedEvent.setRuntimeEntityId(entity.getRoryId());
+                feedEvent.setRuntimeEntityId(entity.getGeyserId());
                 feedEvent.setType(EntityEventType.BABY_ANIMAL_FEED);
                 session.sendUpstreamPacket(feedEvent);
             }

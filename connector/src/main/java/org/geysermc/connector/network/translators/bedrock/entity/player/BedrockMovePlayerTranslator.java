@@ -50,7 +50,7 @@ public class BedrockMovePlayerTranslator extends PacketTranslator<MovePlayerPack
 
         if (!session.getUpstream().isInitialized()) {
             MoveEntityAbsolutePacket moveEntityBack = new MoveEntityAbsolutePacket();
-            moveEntityBack.setRuntimeEntityId(entity.getRoryId());
+            moveEntityBack.setRuntimeEntityId(entity.getGeyserId());
             moveEntityBack.setPosition(entity.getPosition());
             moveEntityBack.setRotation(entity.getBedrockRotation());
             moveEntityBack.setTeleported(true);
@@ -114,7 +114,7 @@ public class BedrockMovePlayerTranslator extends PacketTranslator<MovePlayerPack
                                 //TODO: This will need to be changed for 1.17
                                 entity.setPosition(entity.getPosition().sub(0, 4f, 0));
                                 MovePlayerPacket movePlayerPacket = new MovePlayerPacket();
-                                movePlayerPacket.setRuntimeEntityId(entity.getRoryId());
+                                movePlayerPacket.setRuntimeEntityId(entity.getGeyserId());
                                 movePlayerPacket.setPosition(entity.getPosition());
                                 movePlayerPacket.setRotation(entity.getBedrockRotation());
                                 movePlayerPacket.setMode(MovePlayerPacket.Mode.TELEPORT);

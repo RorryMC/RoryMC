@@ -49,7 +49,7 @@ public class BedrockInteractTranslator extends PacketTranslator<InteractPacket> 
     @Override
     public void translate(InteractPacket packet, RorySession session) {
         Entity entity;
-        if (packet.getRuntimeEntityId() == session.getPlayerEntity().getRoryId()) {
+        if (packet.getRuntimeEntityId() == session.getPlayerEntity().getGeyserId()) {
             //Player is not in entity cache
             entity = session.getPlayerEntity();
         } else {

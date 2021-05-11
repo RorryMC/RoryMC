@@ -140,7 +140,7 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>com.github.RoryMC</groupId>
+            <groupId>com.github.GeyserMC</groupId>
             <artifactId>PacketLib</artifactId>
             <version>b77a427</version>
             <scope>compile</scope>
@@ -240,7 +240,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>com.github.RoryMC</groupId>
+            <groupId>com.github.GeyserMC</groupId>
             <artifactId>MCAuthLib</artifactId>
             <version>0e48a094f2</version>
         </dependency>

@@ -21,13 +21,13 @@
 
     <organization>
         <name>RoryMC</name>
-        <url>https://github.com/RoryMC/Rory/blob/master/pom.xml</url>
+        <url>https://github.com/RoryMCDev/Rory/blob/master/pom.xml</url>
     </organization>
 
     <scm>
-        <connection>scm:git:https://github.com/RoryMC/Rory.git</connection>
-        <developerConnection>scm:git:git@github.com:RoryMC/Rory.git</developerConnection>
-        <url>https://github.com/RoryMC/Rory</url>
+        <connection>scm:git:https://github.com/RoryMCDev/Rory.git</connection>
+        <developerConnection>scm:git:git@github.com:RoryMCDev/Rory.git</developerConnection>
+        <url>https://github.com/RoryMCDev/Rory</url>
     </scm>
 
     <modules>

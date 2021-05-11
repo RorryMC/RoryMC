@@ -76,8 +76,8 @@ public class JavaTradeListTranslator extends PacketTranslator<ServerTradeListPac
         updateTradePacket.setSize(0);
         updateTradePacket.setNewTradingUi(true);
         updateTradePacket.setUsingEconomyTrade(true);
-        updateTradePacket.setPlayerUniqueEntityId(session.getPlayerEntity().getRoryId());
-        updateTradePacket.setTraderUniqueEntityId(villager.getRoryId());
+        updateTradePacket.setPlayerUniqueEntityId(session.getPlayerEntity().getGeyserId());
+        updateTradePacket.setTraderUniqueEntityId(villager.getGeyserId());
 
         NbtMapBuilder builder = NbtMap.builder();
         boolean addExtraTrade = packet.isRegularVillager() && packet.getVillagerLevel() < 5;

@@ -72,7 +72,7 @@ public class BedrockActionTranslator extends PacketTranslator<PlayerActionPacket
             case RESPAWN:
                 // Respawn process is finished and the server and client are both OK with respawning.
                 EntityEventPacket eventPacket = new EntityEventPacket();
-                eventPacket.setRuntimeEntityId(entity.getRoryId());
+                eventPacket.setRuntimeEntityId(entity.getGeyserId());
                 eventPacket.setType(EntityEventType.RESPAWN);
                 eventPacket.setData(0);
                 session.sendUpstreamPacket(eventPacket);

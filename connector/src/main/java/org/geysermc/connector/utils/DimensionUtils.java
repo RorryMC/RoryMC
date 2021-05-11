@@ -78,7 +78,7 @@ public class DimensionUtils {
         for (Effect effect : session.getEffectCache().getEntityEffects().keySet()) {
             MobEffectPacket mobEffectPacket = new MobEffectPacket();
             mobEffectPacket.setEvent(MobEffectPacket.Event.REMOVE);
-            mobEffectPacket.setRuntimeEntityId(session.getPlayerEntity().getRoryId());
+            mobEffectPacket.setRuntimeEntityId(session.getPlayerEntity().getGeyserId());
             mobEffectPacket.setEffectId(EntityUtils.toBedrockEffectId(effect));
             session.sendUpstreamPacket(mobEffectPacket);
         }

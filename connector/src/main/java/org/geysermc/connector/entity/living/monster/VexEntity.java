@@ -43,7 +43,7 @@ public class VexEntity extends MonsterEntity {
             byte xd = (byte) entityMetadata.getValue();
             // Set the target to the player to force the attack animation
             // even if the player isn't the target as we dont get the target on Java
-            metadata.put(EntityData.TARGET_EID, (xd & 0x01) == 0x01 ? session.getPlayerEntity().getRoryId() : 0);
+            metadata.put(EntityData.TARGET_EID, (xd & 0x01) == 0x01 ? session.getPlayerEntity().getGeyserId() : 0);
         }
         super.updateBedrockMetadata(entityMetadata, session);
     }

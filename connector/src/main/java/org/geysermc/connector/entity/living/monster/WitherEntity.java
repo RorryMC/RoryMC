@@ -51,7 +51,7 @@ public class WitherEntity extends MonsterEntity {
             }
 
             if (entity != null) {
-                targetID = entity.getRoryId();
+                targetID = entity.getGeyserId();
             }
         }
 

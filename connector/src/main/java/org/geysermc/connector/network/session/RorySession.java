@@ -530,7 +530,7 @@ public class RorySession implements CommandSender {
         upstream.sendPacket(playStatusPacket);
 
         UpdateAttributesPacket attributesPacket = new UpdateAttributesPacket();
-        attributesPacket.setRuntimeEntityId(getPlayerEntity().getRoryId());
+        attributesPacket.setRuntimeEntityId(getPlayerEntity().getGeyserId());
         // Default move speed
         // Bedrock clients move very fast by default until they get an attribute packet correcting the speed
         attributesPacket.setAttributes(Collections.singletonList(
@@ -1006,8 +1006,8 @@ public class RorySession implements CommandSender {
 
     private void startGame() {
         StartGamePacket startGamePacket = new StartGamePacket();
-        startGamePacket.setUniqueEntityId(playerEntity.getRoryId());
-        startGamePacket.setRuntimeEntityId(playerEntity.getRoryId());
+        startGamePacket.setUniqueEntityId(playerEntity.getGeyserId());
+        startGamePacket.setRuntimeEntityId(playerEntity.getGeyserId());
         startGamePacket.setPlayerGameType(GameType.SURVIVAL);
         startGamePacket.setPlayerPosition(Vector3f.from(0, 69, 0));
         startGamePacket.setRotation(Vector2f.from(1, 1));
@@ -1266,7 +1266,7 @@ public class RorySession implements CommandSender {
      */
     public void sendAdventureSettings() {
         AdventureSettingsPacket adventureSettingsPacket = new AdventureSettingsPacket();
-        adventureSettingsPacket.setUniqueEntityId(playerEntity.getRoryId());
+        adventureSettingsPacket.setUniqueEntityId(playerEntity.getGeyserId());
         // Set command permission if OP permission level is high enough
         // This allows mobile players access to a GUI for doing commands. The commands there do not change above OPERATOR
         // and all commands there are accessible with OP permission level 2
@@ -1320,7 +1320,7 @@ public class RorySession implements CommandSender {
                 player.getEmotes().add(piece);
             }
             EmoteListPacket emoteList = new EmoteListPacket();
-            emoteList.setRuntimeEntityId(player.getPlayerEntity().getRoryId());
+            emoteList.setRuntimeEntityId(player.getPlayerEntity().getGeyserId());
             emoteList.getPieceIds().addAll(pieces);
             player.sendUpstreamPacket(emoteList);
         }

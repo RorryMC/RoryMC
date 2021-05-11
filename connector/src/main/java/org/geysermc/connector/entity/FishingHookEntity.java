@@ -62,7 +62,7 @@ public class FishingHookEntity extends ThrowableEntity {
         // so that it can be handled by moveAbsoluteImmediate.
         this.metadata.putFloat(EntityData.BOUNDING_BOX_HEIGHT, 128);
 
-        this.metadata.put(EntityData.OWNER_EID, owner.getRoryId());
+        this.metadata.put(EntityData.OWNER_EID, owner.getGeyserId());
     }
 
     @Override
@@ -75,7 +75,7 @@ public class FishingHookEntity extends ThrowableEntity {
             }
 
             if (entity != null) {
-                metadata.put(EntityData.TARGET_EID, entity.getRoryId());
+                metadata.put(EntityData.TARGET_EID, entity.getGeyserId());
                 hooked = true;
             } else {
                 hooked = false;
