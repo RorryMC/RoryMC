@@ -5,23 +5,20 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Build Status](https://ci.opencollab.dev/job/Geyser/job/master/badge/icon)](https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/)
 [![Discord](https://img.shields.io/discord/613163671870242838.svg?color=%237289da&label=discord)](https://discord.gg/geysermc/)
-[![HitCount](http://hits.dwyl.com/Geyser/GeyserMC.svg)](http://hits.dwyl.com/Geyser/GeyserMC)
+[![HitCount](http://hits.dwyl.com/RoryMCDev/RoryMC.svg)](http://hits.dwyl.com/RoryMCDev/RoryMC)
 [![Crowdin](https://badges.crowdin.net/geyser/localized.svg)](https://translate.geysermc.org/)
 
-Geyser is a bridge between Minecraft: Bedrock Edition and Minecraft: Java Edition, closing the gap from those wanting to play true cross-platform.
+Rory is a bridge between Minecraft: Bedrock Edition and Minecraft: Java Edition, closing the gap from those wanting to play true cross-platform.
 
-Geyser is an open collaboration project by [CubeCraft Games](https://cubecraft.net).
+## What is Rory?
+What is Rory? Rory is a proxy, bridging the gap between Minecraft: Bedrock Edition and Minecraft: Java Edition servers. The ultimate goal of this project is to allow Minecraft: Bedrock Edition users to join Minecraft: Java Edition servers as seamlessly as possible. **Please note, this project is still a work in progress and should not be used on production. Expect bugs!**
 
-## What is Geyser?
-Geyser is a proxy, bridging the gap between Minecraft: Bedrock Edition and Minecraft: Java Edition servers.
-The ultimate goal of this project is to allow Minecraft: Bedrock Edition users to join Minecraft: Java Edition servers as seamlessly as possible. **Please note, this project is still a work in progress and should not be used on production. Expect bugs!**
-
-Special thanks to the DragonProxy project for being a trailblazer in protocol translation and for all the team members who have joined us here!
+Special thanks to the DragonProxy and GeyserMC project for being a trailblazer in protocol translation and for all the team members who have joined us here!
 
 ### Currently supporting Minecraft Bedrock v1.16.100 - v1.16.220 and Minecraft Java v1.16.4 - v1.16.5.
 
 ## Setting Up
-Take a look [here](https://github.com/GeyserMC/Geyser/wiki#Setup) for how to set up Geyser.
+Take a look [here](https://github.com/GeyserMC/Geyser/wiki#Setup) for how to set up Rory.
 
 [![YouTube Video](https://img.youtube.com/vi/U7dZZ8w7Gi4/0.jpg)](https://www.youtube.com/watch?v=U7dZZ8w7Gi4)
 
