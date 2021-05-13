@@ -8,7 +8,7 @@ Thank you for considering a contribution! Generally, Rory welcomes PRs from ever
 *Pull requests for Rory:* Anything that fixes compatibility between Java or Bedrock or improves the quality of play for Bedrock players. The exception is wherever direct server access is required; in this case, it may be better for Floodgate.
 
 
-We have some general style guides that should be applied throughout the code:
+We have some general style guides that you should apply throughout the code:
 
 ```java
 public class LongClassName {
@@ -44,8 +44,8 @@ public class LongClassName {
 }
 ```
 
-Make sure to comment your code where possible.
+Make sure to add comments to your code where possible.
 
-The nature of our software requires a lot of arrays and maps to be stored - where possible, use Fastutil's specialized maps. For example, if you're storing block state translations, use an `Int2IntMap`.
+Our software's nature requires a lot of arrays and maps to be stored - where possible, use Fastutil's specialized maps. For example, if you're storing block state translations, use an `Int2IntMap`.
 
 We have a rundown of all the tools you need to develop over on our [wiki](https://github.com/RoryMC/Rory/wiki/Developer-Guide). If you have any questions, please feel free to reach out to our [Discord](https://discord.gg/geysermc)!

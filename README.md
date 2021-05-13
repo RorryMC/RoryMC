@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![Build Status](https://ci.opencollab.dev/job/Rory/job/master/badge/icon)](https://ci.opencollab.dev/job/RoryMC/job/Rory/job/master/)
 [![Discord](https://img.shields.io/discord/613163671870242838.svg?color=%237289da&label=discord)](https://discord.gg/geysermc/)
-[![HitCount](http://hits.dwyl.com/Rory/RoryMC.svg)](http://hits.dwyl.com/Rory/RoryMC)
+[![HitCount](http://hits.dwyl.com/RoryMCDev/RoryMC.svg)](http://hits.dwyl.com/RoryMCDev/RoryMC)
 [![Crowdin](https://badges.crowdin.net/geyser/localized.svg)](https://translate.geysermc.org/)
 
 Rory is a bridge between Minecraft: Bedrock Edition and Minecraft: Java Edition, closing the gap from those wanting to play true cross-platform.
@@ -21,13 +21,13 @@ Special thanks to the DragonProxy project for being a trailblazer in protocol tr
 ### Currently supporting Minecraft Bedrock v1.16.100 - v1.16.220 and Minecraft Java v1.16.4 - v1.16.5.
 
 ## Setting Up
-Take a look [here](https://github.com/RoryMC/Rory/wiki#Setup) for how to set up Rory.
+Take a look [here](https://github.com/GeyserMC/Geyser/wiki#Setup) for how to set up Rory.
 
 [![YouTube Video](https://img.youtube.com/vi/U7dZZ8w7Gi4/0.jpg)](https://www.youtube.com/watch?v=U7dZZ8w7Gi4)
 
 ## Links:
 - Website: https://geysermc.org
-- Docs: https://github.com/RoryMC/Rory/wiki
+- Docs: https://github.com/GeyserMC/Geyser/wiki
 - Download: https://ci.geysermc.org
 - Discord: https://discord.gg/geysermc
 - ~~Donate: https://patreon.com/RoryMC~~ Currently disabled.
