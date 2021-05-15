@@ -27,13 +27,13 @@ package org.geysermc.connector.network.session.cache;
 
 import lombok.Getter;
 import lombok.Setter;
-import org.geysermc.connector.configuration.GeyserConfiguration;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.configuration.RoryConfiguration;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.CooldownUtils;
 
 @Getter
 public class PreferencesCache {
-    private final GeyserSession session;
+    private final RorySession session;
 
     /**
      * True if the client prefers being shown their coordinates, regardless if they're being shown or not.
@@ -52,7 +52,7 @@ public class PreferencesCache {
     @Setter
     private CooldownUtils.CooldownType cooldownPreference = CooldownUtils.getDefaultShowCooldown();
 
-    public PreferencesCache(GeyserSession session) {
+    public PreferencesCache(RorySession session) {
         this.session = session;
     }
 
@@ -61,8 +61,8 @@ public class PreferencesCache {
      *
      * If {@link #prefersShowCoordinates} is true, coordinates will be shown, unless either of the following conditions apply: <br>
      * <br>
-     * {@link GeyserSession#reducedDebugInfo} is enabled
-     * {@link GeyserConfiguration#isShowCoordinates()} is disabled
+     * {@link RorySession#reducedDebugInfo} is enabled
+     * {@link RoryConfiguration#isShowCoordinates()} is disabled
      */
     public void updateShowCoordinates() {
         allowShowCoordinates = !session.isReducedDebugInfo() && session.getConnector().getConfig().isShowCoordinates();
