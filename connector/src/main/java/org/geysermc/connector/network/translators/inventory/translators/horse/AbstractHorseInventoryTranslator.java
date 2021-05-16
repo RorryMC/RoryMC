@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.inventory.translators.horse;
 
 import org.geysermc.connector.inventory.Inventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.translators.BaseInventoryTranslator;
 import org.geysermc.connector.network.translators.inventory.updater.HorseInventoryUpdater;
 import org.geysermc.connector.network.translators.inventory.updater.InventoryUpdater;
@@ -40,24 +40,24 @@ public abstract class AbstractHorseInventoryTranslator extends BaseInventoryTran
     }
 
     @Override
-    public void prepareInventory(GeyserSession session, Inventory inventory) {
+    public void prepareInventory(RorySession session, Inventory inventory) {
     }
 
     @Override
-    public void openInventory(GeyserSession session, Inventory inventory) {
+    public void openInventory(RorySession session, Inventory inventory) {
     }
 
     @Override
-    public void closeInventory(GeyserSession session, Inventory inventory) {
+    public void closeInventory(RorySession session, Inventory inventory) {
     }
 
     @Override
-    public void updateInventory(GeyserSession session, Inventory inventory) {
+    public void updateInventory(RorySession session, Inventory inventory) {
         updater.updateInventory(this, session, inventory);
     }
 
     @Override
-    public void updateSlot(GeyserSession session, Inventory inventory, int slot) {
+    public void updateSlot(RorySession session, Inventory inventory, int slot) {
         updater.updateSlot(this, session, inventory, slot);
     }
 }

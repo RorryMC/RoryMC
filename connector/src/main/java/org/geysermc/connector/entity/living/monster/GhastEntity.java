@@ -30,7 +30,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import org.geysermc.connector.entity.living.FlyingEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class GhastEntity extends FlyingEntity {
 
@@ -39,7 +39,7 @@ public class GhastEntity extends FlyingEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 15) {
             // If the ghast is attacking
             metadata.put(EntityData.CHARGE_AMOUNT, (byte) ((boolean) entityMetadata.getValue() ? 1 : 0));

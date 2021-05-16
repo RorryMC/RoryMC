@@ -28,20 +28,20 @@ package org.geysermc.connector.command.defaults;
 import com.github.steveice10.mc.protocol.data.game.entity.player.PlayerAction;
 import com.github.steveice10.mc.protocol.data.game.world.block.BlockFace;
 import com.github.steveice10.mc.protocol.packet.ingame.client.player.ClientPlayerActionPacket;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.command.CommandSender;
-import org.geysermc.connector.command.GeyserCommand;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.command.RoryCommand;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.BlockUtils;
 
-public class OffhandCommand extends GeyserCommand {
+public class OffhandCommand extends RoryCommand {
 
-    public OffhandCommand(GeyserConnector connector, String name, String description, String permission) {
+    public OffhandCommand(RoryConnector connector, String name, String description, String permission) {
         super(name, description, permission);
     }
 
     @Override
-    public void execute(GeyserSession session, CommandSender sender, String[] args) {
+    public void execute(RorySession session, CommandSender sender, String[] args) {
         if (session == null) {
             return;
         }

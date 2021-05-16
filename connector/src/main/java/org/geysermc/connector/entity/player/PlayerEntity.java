@@ -49,7 +49,7 @@ import org.geysermc.connector.entity.attribute.Attribute;
 import org.geysermc.connector.entity.attribute.AttributeType;
 import org.geysermc.connector.entity.living.animal.tameable.ParrotEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.scoreboard.Team;
 import org.geysermc.connector.utils.AttributeUtils;
 import org.geysermc.connector.network.translators.chat.MessageTranslator;
@@ -88,7 +88,7 @@ public class PlayerEntity extends LivingEntity {
     }
 
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         AddPlayerPacket addPlayerPacket = new AddPlayerPacket();
         addPlayerPacket.setUuid(uuid);
         addPlayerPacket.setUsername(username);
@@ -119,11 +119,11 @@ public class PlayerEntity extends LivingEntity {
         updateBedrockAttributes(session);
     }
 
-    public void sendPlayer(GeyserSession session) {
+    public void sendPlayer(RorySession session) {
         if (session.getEntityCache().getPlayerEntity(uuid) == null)
             return;
 
-        if (session.getUpstream().isInitialized() && session.getEntityCache().getEntityByGeyserId(geyserId) == null) {
+        if (session.getUpstream().isInitialized() && session.getEntityCache().getEntityByRoryId(geyserId) == null) {
             session.getEntityCache().spawnEntity(this);
         } else {
             spawnEntity(session);
@@ -131,7 +131,7 @@ public class PlayerEntity extends LivingEntity {
     }
 
     @Override
-    public void moveAbsolute(GeyserSession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
+    public void moveAbsolute(RorySession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
         setPosition(position);
         setRotation(rotation);
 
@@ -158,11 +158,11 @@ public class PlayerEntity extends LivingEntity {
     }
 
     @Override
-    public void moveRelative(GeyserSession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
+    public void moveRelative(RorySession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
         setRotation(rotation);
         this.position = Vector3f.from(position.getX() + relX, position.getY() + relY, position.getZ() + relZ);
 
-        // If this is the player logged in through this Geyser session
+        // If this is the player logged in through this Rory session
         if (geyserId == 1) {
             session.getCollisionManager().updatePlayerBoundingBox(position);
         }
@@ -195,7 +195,7 @@ public class PlayerEntity extends LivingEntity {
     }
 
     @Override
-    public void updateHeadLookRotation(GeyserSession session, float headYaw) {
+    public void updateHeadLookRotation(RorySession session, float headYaw) {
         moveRelative(session, 0, 0, 0, Vector3f.from(rotation.getX(), rotation.getY(), headYaw), onGround);
         MovePlayerPacket movePlayerPacket = new MovePlayerPacket();
         movePlayerPacket.setRuntimeEntityId(geyserId);
@@ -206,7 +206,7 @@ public class PlayerEntity extends LivingEntity {
     }
 
     @Override
-    public void updatePositionAndRotation(GeyserSession session, double moveX, double moveY, double moveZ, float yaw, float pitch, boolean isOnGround) {
+    public void updatePositionAndRotation(RorySession session, double moveX, double moveY, double moveZ, float yaw, float pitch, boolean isOnGround) {
         moveRelative(session, moveX, moveY, moveZ, yaw, pitch, isOnGround);
         if (leftParrot != null) {
             leftParrot.moveRelative(session, moveX, moveY, moveZ, yaw, pitch, isOnGround);
@@ -217,7 +217,7 @@ public class PlayerEntity extends LivingEntity {
     }
 
     @Override
-    public void updateRotation(GeyserSession session, float yaw, float pitch, boolean isOnGround) {
+    public void updateRotation(RorySession session, float yaw, float pitch, boolean isOnGround) {
         super.updateRotation(session, yaw, pitch, isOnGround);
         // Both packets need to be sent or else player head rotation isn't correctly updated
         MovePlayerPacket movePlayerPacket = new MovePlayerPacket();
@@ -252,7 +252,7 @@ public class PlayerEntity extends LivingEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         super.updateBedrockMetadata(entityMetadata, session);
 
         if (entityMetadata.getId() == 2) {
@@ -335,7 +335,7 @@ public class PlayerEntity extends LivingEntity {
     }
 
     @Override
-    public void updateBedrockAttributes(GeyserSession session) { // TODO: Don't use duplicated code
+    public void updateBedrockAttributes(RorySession session) { // TODO: Don't use duplicated code
         if (!valid) return;
 
         List<AttributeData> attributes = new ArrayList<>();

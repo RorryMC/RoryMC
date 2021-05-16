@@ -32,8 +32,8 @@ import com.github.steveice10.opennbt.tag.builtin.ListTag;
 import com.github.steveice10.opennbt.tag.builtin.StringTag;
 import com.github.steveice10.opennbt.tag.builtin.Tag;
 import com.nukkitx.protocol.bedrock.packet.BookEditPacket;
-import org.geysermc.connector.inventory.GeyserItemStack;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.inventory.RoryItemStack;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -45,8 +45,8 @@ import java.util.List;
 public class BedrockBookEditTranslator extends PacketTranslator<BookEditPacket> {
 
     @Override
-    public void translate(BookEditPacket packet, GeyserSession session) {
-        GeyserItemStack itemStack = session.getPlayerInventory().getItemInHand();
+    public void translate(BookEditPacket packet, RorySession session) {
+        RoryItemStack itemStack = session.getPlayerInventory().getItemInHand();
         if (itemStack != null) {
             CompoundTag tag = itemStack.getNbt() != null ? itemStack.getNbt() : new CompoundTag("");
             ItemStack bookItem = new ItemStack(itemStack.getJavaId(), itemStack.getAmount(), tag);
@@ -106,7 +106,7 @@ public class BedrockBookEditTranslator extends PacketTranslator<BookEditPacket> 
                 }
             }
             tag.put(new ListTag("pages", pages));
-            session.getPlayerInventory().setItem(36 + session.getPlayerInventory().getHeldItemSlot(), GeyserItemStack.from(bookItem), session);
+            session.getPlayerInventory().setItem(36 + session.getPlayerInventory().getHeldItemSlot(), RoryItemStack.from(bookItem), session);
             session.getInventoryTranslator().updateInventory(session, session.getPlayerInventory());
 
             session.getBookEditCache().setPacket(new ClientEditBookPacket(bookItem, packet.getAction() == BookEditPacket.Action.SIGN_BOOK, session.getPlayerInventory().getHeldItemSlot()));

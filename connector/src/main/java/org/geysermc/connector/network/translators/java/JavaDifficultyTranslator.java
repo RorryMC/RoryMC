@@ -25,7 +25,7 @@
 
 package org.geysermc.connector.network.translators.java;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -36,7 +36,7 @@ import com.nukkitx.protocol.bedrock.packet.SetDifficultyPacket;
 public class JavaDifficultyTranslator extends PacketTranslator<ServerDifficultyPacket> {
 
     @Override
-    public void translate(ServerDifficultyPacket packet, GeyserSession session) {
+    public void translate(ServerDifficultyPacket packet, RorySession session) {
         SetDifficultyPacket setDifficultyPacket = new SetDifficultyPacket();
         setDifficultyPacket.setDifficulty(packet.getDifficulty().ordinal());
         session.sendUpstreamPacket(setDifficultyPacket);

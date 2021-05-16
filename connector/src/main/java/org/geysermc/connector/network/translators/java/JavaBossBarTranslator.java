@@ -25,7 +25,7 @@
 
 package org.geysermc.connector.network.translators.java;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.session.cache.BossBar;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
@@ -35,7 +35,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.ServerBossBarPacke
 @Translator(packet = ServerBossBarPacket.class)
 public class JavaBossBarTranslator extends PacketTranslator<ServerBossBarPacket> {
     @Override
-    public void translate(ServerBossBarPacket packet, GeyserSession session) {
+    public void translate(ServerBossBarPacket packet, RorySession session) {
         BossBar bossBar = session.getEntityCache().getBossBar(packet.getUuid());
         switch (packet.getAction()) {
             case ADD:

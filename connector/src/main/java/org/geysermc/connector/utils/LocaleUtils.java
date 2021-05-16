@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.github.steveice10.mc.protocol.MinecraftConstants;
 import lombok.Getter;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -51,7 +51,7 @@ public class LocaleUtils {
 
     static {
         // Create the locales folder
-        File localesFolder = GeyserConnector.getInstance().getBootstrap().getConfigFolder().resolve("locales").toFile();
+        File localesFolder = RoryConnector.getInstance().getBootstrap().getConfigFolder().resolve("locales").toFile();
         //noinspection ResultOfMethodCallIgnored
         localesFolder.mkdir();
 
@@ -66,7 +66,7 @@ public class LocaleUtils {
     private static void generateAssetCache() {
         try {
             // Get the version manifest from Mojang
-            VersionManifest versionManifest = GeyserConnector.JSON_MAPPER.readValue(WebUtils.getBody("https://launchermeta.mojang.com/mc/game/version_manifest.json"), VersionManifest.class);
+            VersionManifest versionManifest = RoryConnector.JSON_MAPPER.readValue(WebUtils.getBody("https://launchermeta.mojang.com/mc/game/version_manifest.json"), VersionManifest.class);
 
             // Get the url for the latest version of the games manifest
             String latestInfoURL = "";
@@ -83,25 +83,25 @@ public class LocaleUtils {
             }
 
             // Get the individual version manifest
-            VersionInfo versionInfo = GeyserConnector.JSON_MAPPER.readValue(WebUtils.getBody(latestInfoURL), VersionInfo.class);
+            VersionInfo versionInfo = RoryConnector.JSON_MAPPER.readValue(WebUtils.getBody(latestInfoURL), VersionInfo.class);
 
             // Get the client jar for use when downloading the en_us locale
-            GeyserConnector.getInstance().getLogger().debug(GeyserConnector.JSON_MAPPER.writeValueAsString(versionInfo.getDownloads()));
+            RoryConnector.getInstance().getLogger().debug(RoryConnector.JSON_MAPPER.writeValueAsString(versionInfo.getDownloads()));
             clientJarInfo = versionInfo.getDownloads().get("client");
-            GeyserConnector.getInstance().getLogger().debug(GeyserConnector.JSON_MAPPER.writeValueAsString(clientJarInfo));
+            RoryConnector.getInstance().getLogger().debug(RoryConnector.JSON_MAPPER.writeValueAsString(clientJarInfo));
 
             // Get the assets list
-            JsonNode assets = GeyserConnector.JSON_MAPPER.readTree(WebUtils.getBody(versionInfo.getAssetIndex().getUrl())).get("objects");
+            JsonNode assets = RoryConnector.JSON_MAPPER.readTree(WebUtils.getBody(versionInfo.getAssetIndex().getUrl())).get("objects");
 
             // Put each asset into an array for use later
             Iterator<Map.Entry<String, JsonNode>> assetIterator = assets.fields();
             while (assetIterator.hasNext()) {
                 Map.Entry<String, JsonNode> entry = assetIterator.next();
-                Asset asset = GeyserConnector.JSON_MAPPER.treeToValue(entry.getValue(), Asset.class);
+                Asset asset = RoryConnector.JSON_MAPPER.treeToValue(entry.getValue(), Asset.class);
                 ASSET_MAP.put(entry.getKey(), asset);
             }
         } catch (Exception e) {
-            GeyserConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.locale.fail.asset_cache", (!e.getMessage().isEmpty() ? e.getMessage() : e.getStackTrace())));
+            RoryConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.locale.fail.asset_cache", (!e.getMessage().isEmpty() ? e.getMessage() : e.getStackTrace())));
         }
     }
 
@@ -115,11 +115,11 @@ public class LocaleUtils {
 
         // Check the locale isn't already loaded
         if (!ASSET_MAP.containsKey("minecraft/lang/" + locale + ".json") && !locale.equals("en_us")) {
-            GeyserConnector.getInstance().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.locale.fail.invalid", locale));
+            RoryConnector.getInstance().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.locale.fail.invalid", locale));
             return;
         }
 
-        GeyserConnector.getInstance().getLogger().debug("Downloading and loading locale: " + locale);
+        RoryConnector.getInstance().getLogger().debug("Downloading and loading locale: " + locale);
 
         downloadLocale(locale);
         loadLocale(locale);
@@ -131,7 +131,7 @@ public class LocaleUtils {
      * @param locale Locale to download
      */
     private static void downloadLocale(String locale) {
-        File localeFile = GeyserConnector.getInstance().getBootstrap().getConfigFolder().resolve("locales/" + locale + ".json").toFile();
+        File localeFile = RoryConnector.getInstance().getBootstrap().getConfigFolder().resolve("locales/" + locale + ".json").toFile();
 
         // Check if we have already downloaded the locale file
         if (localeFile.exists()) {
@@ -140,7 +140,7 @@ public class LocaleUtils {
 
             if (locale.equals("en_us")) {
                 try {
-                    File hashFile = GeyserConnector.getInstance().getBootstrap().getConfigFolder().resolve("locales/en_us.hash").toFile();
+                    File hashFile = RoryConnector.getInstance().getBootstrap().getConfigFolder().resolve("locales/en_us.hash").toFile();
                     if (hashFile.exists()) {
                         try (BufferedReader br = new BufferedReader(new FileReader(hashFile))) {
                             curHash = br.readLine().trim();
@@ -150,7 +150,7 @@ public class LocaleUtils {
 
                 if (clientJarInfo == null) {
                     // Likely failed to download
-                    GeyserConnector.getInstance().getLogger().debug("Skipping en_US hash check as client jar is null.");
+                    RoryConnector.getInstance().getLogger().debug("Skipping en_US hash check as client jar is null.");
                     return;
                 }
                 targetHash = clientJarInfo.getSha1();
@@ -160,9 +160,9 @@ public class LocaleUtils {
             }
 
             if (!curHash.equals(targetHash)) {
-                GeyserConnector.getInstance().getLogger().debug("Locale out of date; re-downloading: " + locale);
+                RoryConnector.getInstance().getLogger().debug("Locale out of date; re-downloading: " + locale);
             } else {
-                GeyserConnector.getInstance().getLogger().debug("Locale already downloaded and up-to date: " + locale);
+                RoryConnector.getInstance().getLogger().debug("Locale already downloaded and up-to date: " + locale);
                 return;
             }
         }
@@ -179,7 +179,7 @@ public class LocaleUtils {
             String hash = ASSET_MAP.get("minecraft/lang/" + locale + ".json").getHash();
             WebUtils.downloadFile("https://resources.download.minecraft.net/" + hash.substring(0, 2) + "/" + hash, localeFile.toString());
         } catch (Exception e) {
-            GeyserConnector.getInstance().getLogger().error("Unable to download locale file hash", e);
+            RoryConnector.getInstance().getLogger().error("Unable to download locale file hash", e);
         }
     }
 
@@ -189,7 +189,7 @@ public class LocaleUtils {
      * @param locale Locale to load
      */
     private static void loadLocale(String locale) {
-        File localeFile = GeyserConnector.getInstance().getBootstrap().getConfigFolder().resolve("locales/" + locale + ".json").toFile();
+        File localeFile = RoryConnector.getInstance().getBootstrap().getConfigFolder().resolve("locales/" + locale + ".json").toFile();
 
         // Load the locale
         if (localeFile.exists()) {
@@ -204,7 +204,7 @@ public class LocaleUtils {
             // Parse the file as json
             JsonNode localeObj;
             try {
-                localeObj = GeyserConnector.JSON_MAPPER.readTree(localeStream);
+                localeObj = RoryConnector.JSON_MAPPER.readTree(localeStream);
             } catch (Exception e) {
                 throw new AssertionError(LanguageUtils.getLocaleStringLog("geyser.locale.fail.json", locale), e);
             }
@@ -226,7 +226,7 @@ public class LocaleUtils {
                 throw new AssertionError(LanguageUtils.getLocaleStringLog("geyser.locale.fail.file", locale, e.getMessage()));
             }
         } else {
-            GeyserConnector.getInstance().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.locale.fail.missing", locale));
+            RoryConnector.getInstance().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.locale.fail.missing", locale));
         }
     }
 
@@ -238,11 +238,11 @@ public class LocaleUtils {
     private static void downloadEN_US(File localeFile) {
         try {
             // Let the user know we are downloading the JAR
-            GeyserConnector.getInstance().getLogger().info(LanguageUtils.getLocaleStringLog("geyser.locale.download.en_us"));
-            GeyserConnector.getInstance().getLogger().debug("Download URL: " + clientJarInfo.getUrl());
+            RoryConnector.getInstance().getLogger().info(LanguageUtils.getLocaleStringLog("geyser.locale.download.en_us"));
+            RoryConnector.getInstance().getLogger().debug("Download URL: " + clientJarInfo.getUrl());
 
             // Download the smallest JAR (client or server)
-            Path tmpFilePath = GeyserConnector.getInstance().getBootstrap().getConfigFolder().resolve("tmp_locale.jar");
+            Path tmpFilePath = RoryConnector.getInstance().getBootstrap().getConfigFolder().resolve("tmp_locale.jar");
             WebUtils.downloadFile(clientJarInfo.getUrl(), tmpFilePath.toString());
 
             // Load in the JAR as a zip and extract the file
@@ -264,12 +264,12 @@ public class LocaleUtils {
             }
 
             // Store the latest jar hash
-            FileUtils.writeFile(GeyserConnector.getInstance().getBootstrap().getConfigFolder().resolve("locales/en_us.hash").toString(), clientJarInfo.getSha1().toCharArray());
+            FileUtils.writeFile(RoryConnector.getInstance().getBootstrap().getConfigFolder().resolve("locales/en_us.hash").toString(), clientJarInfo.getSha1().toCharArray());
 
             // Delete the nolonger needed client/server jar
             Files.delete(tmpFilePath);
         } catch (Exception e) {
-            GeyserConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.locale.fail.en_us"), e);
+            RoryConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.locale.fail.en_us"), e);
         }
     }
 
@@ -286,7 +286,7 @@ public class LocaleUtils {
             localeStrings = LocaleUtils.LOCALE_MAPPINGS.get(LanguageUtils.getDefaultLocale());
             if (localeStrings == null) {
                 // Don't cause a NPE if the locale is STILL missing
-                GeyserConnector.getInstance().getLogger().debug("MISSING DEFAULT LOCALE: " + LanguageUtils.getDefaultLocale());
+                RoryConnector.getInstance().getLogger().debug("MISSING DEFAULT LOCALE: " + LanguageUtils.getDefaultLocale());
                 return messageText;
             }
         }

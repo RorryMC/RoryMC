@@ -35,11 +35,11 @@ import com.nukkitx.nbt.NbtMap;
 import com.nukkitx.nbt.NbtMapBuilder;
 import com.nukkitx.nbt.NbtType;
 import com.nukkitx.protocol.bedrock.data.inventory.ItemData;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.Inventory;
 import org.geysermc.connector.inventory.LecternContainer;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.updater.InventoryUpdater;
 import org.geysermc.connector.utils.BlockEntityUtils;
 import org.geysermc.connector.utils.InventoryUtils;
@@ -55,19 +55,19 @@ public class LecternInventoryTranslator extends BaseInventoryTranslator {
     }
 
     @Override
-    public void prepareInventory(GeyserSession session, Inventory inventory) {
+    public void prepareInventory(RorySession session, Inventory inventory) {
     }
 
     @Override
-    public void openInventory(GeyserSession session, Inventory inventory) {
+    public void openInventory(RorySession session, Inventory inventory) {
     }
 
     @Override
-    public void closeInventory(GeyserSession session, Inventory inventory) {
+    public void closeInventory(RorySession session, Inventory inventory) {
     }
 
     @Override
-    public void updateProperty(GeyserSession session, Inventory inventory, int key, int value) {
+    public void updateProperty(RorySession session, Inventory inventory, int key, int value) {
         if (key == 0) { // Lectern page update
             LecternContainer lecternContainer = (LecternContainer) inventory;
             lecternContainer.setCurrentBedrockPage(value / 2);
@@ -77,11 +77,11 @@ public class LecternInventoryTranslator extends BaseInventoryTranslator {
     }
 
     @Override
-    public void updateInventory(GeyserSession session, Inventory inventory) {
+    public void updateInventory(RorySession session, Inventory inventory) {
     }
 
     @Override
-    public void updateSlot(GeyserSession session, Inventory inventory, int slot) {
+    public void updateSlot(RorySession session, Inventory inventory, int slot) {
         this.updater.updateSlot(this, session, inventory, slot);
         if (slot == 0) {
             LecternContainer lecternContainer = (LecternContainer) inventory;
@@ -93,7 +93,7 @@ public class LecternInventoryTranslator extends BaseInventoryTranslator {
                 InventoryUtils.closeInventory(session, inventory.getId(), false);
             } else if (lecternContainer.getBlockEntityTag() == null) {
                 // If the method returns true, this is already handled for us
-                GeyserItemStack geyserItemStack = inventory.getItem(0);
+                RoryItemStack geyserItemStack = inventory.getItem(0);
                 CompoundTag tag = geyserItemStack.getNbt();
                 // Position has to be the last interacted position... right?
                 Vector3i position = session.getLastInteractionBlockPosition();

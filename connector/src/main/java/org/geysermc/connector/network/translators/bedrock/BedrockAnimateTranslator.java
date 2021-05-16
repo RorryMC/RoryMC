@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.data.game.entity.player.Hand;
 import com.github.steveice10.mc.protocol.packet.ingame.client.player.ClientPlayerSwingArmPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.client.world.ClientSteerBoatPacket;
 import com.nukkitx.protocol.bedrock.packet.AnimatePacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -39,7 +39,7 @@ import java.util.concurrent.TimeUnit;
 public class BedrockAnimateTranslator extends PacketTranslator<AnimatePacket> {
 
     @Override
-    public void translate(AnimatePacket packet, GeyserSession session) {
+    public void translate(AnimatePacket packet, RorySession session) {
         // Stop the player sending animations before they have fully spawned into the server
         if (!session.isSpawned()) {
             return;

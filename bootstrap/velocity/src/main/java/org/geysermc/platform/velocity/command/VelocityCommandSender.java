@@ -41,7 +41,7 @@ public class VelocityCommandSender implements CommandSender {
     public VelocityCommandSender(CommandSource handle) {
         this.handle = handle;
         // Ensure even Java players' languages are loaded
-        LanguageUtils.loadGeyserLocale(getLocale());
+        LanguageUtils.loadRoryLocale(getLocale());
     }
 
     @Override

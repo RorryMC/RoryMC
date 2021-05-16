@@ -35,8 +35,8 @@ import org.geysermc.common.window.component.InputComponent;
 import org.geysermc.common.window.component.LabelComponent;
 import org.geysermc.common.window.component.ToggleComponent;
 import org.geysermc.common.window.response.CustomFormResponse;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 
 import java.util.ArrayList;
 
@@ -50,18 +50,31 @@ public class SettingsUtils {
      *
      * @param session The session to build the form for
      */
-    public static void buildForm(GeyserSession session) {
+    public static void buildForm(RorySession session) {
         // Cache the language for cleaner access
         String language = session.getLocale();
 
         CustomFormBuilder builder = new CustomFormBuilder(LanguageUtils.getPlayerLocaleString("geyser.settings.title.main", language));
         builder.setIcon(new FormImage(FormImage.FormImageType.PATH, "textures/ui/settings_glyph_color_2x.png"));
 
-        // Client can only see its coordinates if reducedDebugInfo is disabled and coordinates are enabled in geyser config.
-        if (!session.isReducedDebugInfo() && session.getConnector().getConfig().isShowCoordinates()) {
+        // Only show the client title if any of the client settings are available
+        if (session.getPreferencesCache().isAllowShowCoordinates() || CooldownUtils.getDefaultShowCooldown() != CooldownUtils.CooldownType.DISABLED) {
             builder.addComponent(new LabelComponent(LanguageUtils.getPlayerLocaleString("geyser.settings.title.client", language)));
 
-            builder.addComponent(new ToggleComponent(LanguageUtils.getPlayerLocaleString("geyser.settings.option.coordinates", language), session.getWorldCache().isPrefersShowCoordinates()));
+            // Client can only see its coordinates if reducedDebugInfo is disabled and coordinates are enabled in geyser config.
+            if (session.getPreferencesCache().isAllowShowCoordinates()) {
+                builder.addComponent(new ToggleComponent(LanguageUtils.getPlayerLocaleString("geyser.settings.option.coordinates", language), session.getPreferencesCache().isPrefersShowCoordinates()));
+            }
+
+            if (CooldownUtils.getDefaultShowCooldown() != CooldownUtils.CooldownType.DISABLED) {
+                DropdownComponent cooldownDropdown = new DropdownComponent();
+                cooldownDropdown.setText(LocaleUtils.getLocaleString("options.attackIndicator", language));
+                cooldownDropdown.setOptions(new ArrayList<>());
+                cooldownDropdown.addOption(LocaleUtils.getLocaleString("options.attack.crosshair", language), session.getPreferencesCache().getCooldownPreference() == CooldownUtils.CooldownType.TITLE);
+                cooldownDropdown.addOption(LocaleUtils.getLocaleString("options.attack.hotbar", language), session.getPreferencesCache().getCooldownPreference() == CooldownUtils.CooldownType.ACTIONBAR);
+                cooldownDropdown.addOption(LocaleUtils.getLocaleString("options.off", language), session.getPreferencesCache().getCooldownPreference() == CooldownUtils.CooldownType.DISABLED);
+                builder.addComponent(cooldownDropdown);
+            }
         }
 
 
@@ -94,9 +107,9 @@ public class SettingsUtils {
 
                 // Add the relevant form item based on the gamerule type
                 if (Boolean.class.equals(gamerule.getType())) {
-                    builder.addComponent(new ToggleComponent(LocaleUtils.getLocaleString("gamerule." + gamerule.getJavaID(), language), GeyserConnector.getInstance().getWorldManager().getGameRuleBool(session, gamerule)));
+                    builder.addComponent(new ToggleComponent(LocaleUtils.getLocaleString("gamerule." + gamerule.getJavaID(), language), RoryConnector.getInstance().getWorldManager().getGameRuleBool(session, gamerule)));
                 } else if (Integer.class.equals(gamerule.getType())) {
-                    builder.addComponent(new InputComponent(LocaleUtils.getLocaleString("gamerule." + gamerule.getJavaID(), language), "", String.valueOf(GeyserConnector.getInstance().getWorldManager().getGameRuleInt(session, gamerule))));
+                    builder.addComponent(new InputComponent(LocaleUtils.getLocaleString("gamerule." + gamerule.getJavaID(), language), "", String.valueOf(RoryConnector.getInstance().getWorldManager().getGameRuleInt(session, gamerule))));
                 }
             }
         }
@@ -111,7 +124,7 @@ public class SettingsUtils {
      * @param response The response string to parse
      * @return True if the form was parsed correctly, false if not
      */
-    public static boolean handleSettingsForm(GeyserSession session, String response) {
+    public static boolean handleSettingsForm(RorySession session, String response) {
         CustomFormWindow settingsForm = session.getSettingsForm();
         settingsForm.setResponse(response);
 
@@ -121,13 +134,21 @@ public class SettingsUtils {
         }
         int offset = 0;
 
-        // Client can only see its coordinates if reducedDebugInfo is disabled and coordinates are enabled in geyser config.
-        if (!session.isReducedDebugInfo() && session.getConnector().getConfig().isShowCoordinates()) {
+        if (session.getPreferencesCache().isAllowShowCoordinates() || CooldownUtils.getDefaultShowCooldown() != CooldownUtils.CooldownType.DISABLED) {
             offset++; // Client settings title
 
-            session.getWorldCache().setPrefersShowCoordinates(settingsResponse.getToggleResponses().get(offset));
-            session.getWorldCache().updateShowCoordinates();
-            offset++;
+            // Client can only see its coordinates if reducedDebugInfo is disabled and coordinates are enabled in geyser config.
+            if (session.getPreferencesCache().isAllowShowCoordinates()) {
+                session.getPreferencesCache().setPrefersShowCoordinates(settingsResponse.getToggleResponses().get(offset));
+                session.getPreferencesCache().updateShowCoordinates();
+                offset++;
+            }
+
+            if (CooldownUtils.getDefaultShowCooldown() != CooldownUtils.CooldownType.DISABLED) {
+                CooldownUtils.CooldownType cooldownType = CooldownUtils.CooldownType.VALUES[settingsResponse.getDropdownResponses().get(offset).getElementID()];
+                session.getPreferencesCache().setCooldownPreference(cooldownType);
+                offset++;
+            }
         }
 
         if (session.getOpPermissionLevel() >= 2 || session.hasPermission("geyser.settings.server")) {

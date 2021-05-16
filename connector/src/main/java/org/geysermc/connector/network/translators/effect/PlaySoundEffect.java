@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.world.ServerPlayEf
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.packet.PlaySoundPacket;
 import lombok.Value;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -68,7 +68,7 @@ public class PlaySoundEffect implements Effect {
     boolean relative;
 
     @Override
-    public void handleEffectPacket(GeyserSession session, ServerPlayEffectPacket packet) {
+    public void handleEffectPacket(RorySession session, ServerPlayEffectPacket packet) {
         Random rand = ThreadLocalRandom.current();
         PlaySoundPacket playSoundPacket = new PlaySoundPacket();
         playSoundPacket.setSound(name);

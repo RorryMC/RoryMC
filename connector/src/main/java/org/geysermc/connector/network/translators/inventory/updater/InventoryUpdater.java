@@ -30,13 +30,13 @@ import com.nukkitx.protocol.bedrock.data.inventory.ItemData;
 import com.nukkitx.protocol.bedrock.packet.InventoryContentPacket;
 import com.nukkitx.protocol.bedrock.packet.InventorySlotPacket;
 import org.geysermc.connector.inventory.Inventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
 
 import java.util.Arrays;
 
 public class InventoryUpdater {
-    public void updateInventory(InventoryTranslator translator, GeyserSession session, Inventory inventory) {
+    public void updateInventory(InventoryTranslator translator, RorySession session, Inventory inventory) {
         ItemData[] bedrockItems = new ItemData[36];
         for (int i = 0; i < 36; i++) {
             final int offset = i < 9 ? 27 : -9;
@@ -48,7 +48,7 @@ public class InventoryUpdater {
         session.sendUpstreamPacket(contentPacket);
     }
 
-    public boolean updateSlot(InventoryTranslator translator, GeyserSession session, Inventory inventory, int javaSlot) {
+    public boolean updateSlot(InventoryTranslator translator, RorySession session, Inventory inventory, int javaSlot) {
         if (javaSlot >= translator.size) {
             InventorySlotPacket slotPacket = new InventorySlotPacket();
             slotPacket.setContainerId(ContainerId.INVENTORY);

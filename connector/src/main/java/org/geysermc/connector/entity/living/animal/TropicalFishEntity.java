@@ -32,7 +32,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.geysermc.connector.entity.living.AbstractFishEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class TropicalFishEntity extends AbstractFishEntity {
 
@@ -41,7 +41,7 @@ public class TropicalFishEntity extends AbstractFishEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 16) {
             TropicalFishVariant variant = TropicalFishVariant.fromVariantNumber((int) entityMetadata.getValue());
 

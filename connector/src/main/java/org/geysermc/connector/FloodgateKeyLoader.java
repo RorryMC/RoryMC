@@ -25,14 +25,14 @@
 
 package org.geysermc.connector;
 
-import org.geysermc.connector.configuration.GeyserJacksonConfiguration;
+import org.geysermc.connector.configuration.RoryJacksonConfiguration;
 import org.geysermc.connector.utils.LanguageUtils;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
 
 public class FloodgateKeyLoader {
-    public static Path getKeyPath(GeyserJacksonConfiguration config, Object floodgate, Path floodgateDataFolder, Path geyserDataFolder, GeyserLogger logger) {
+    public static Path getKeyPath(RoryJacksonConfiguration config, Object floodgate, Path floodgateDataFolder, Path geyserDataFolder, RoryLogger logger) {
         Path floodgateKey = geyserDataFolder.resolve(config.getFloodgateKeyFile());
 
         if (!Files.exists(floodgateKey) && config.getRemote().getAuthType().equals("floodgate")) {

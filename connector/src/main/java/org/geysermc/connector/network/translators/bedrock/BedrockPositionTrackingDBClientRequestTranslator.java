@@ -32,7 +32,7 @@ import com.nukkitx.protocol.bedrock.packet.PositionTrackingDBClientRequestPacket
 import com.nukkitx.protocol.bedrock.packet.PositionTrackingDBServerBroadcastPacket;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.DimensionUtils;
@@ -42,7 +42,7 @@ import org.geysermc.connector.utils.LoadstoneTracker;
 public class BedrockPositionTrackingDBClientRequestTranslator extends PacketTranslator<PositionTrackingDBClientRequestPacket> {
 
     @Override
-    public void translate(PositionTrackingDBClientRequestPacket packet, GeyserSession session) {
+    public void translate(PositionTrackingDBClientRequestPacket packet, RorySession session) {
         PositionTrackingDBServerBroadcastPacket broadcastPacket = new PositionTrackingDBServerBroadcastPacket();
         broadcastPacket.setTrackingId(packet.getTrackingId());
 

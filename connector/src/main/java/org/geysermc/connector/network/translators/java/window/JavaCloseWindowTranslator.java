@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.java.window;
 
 import com.github.steveice10.mc.protocol.packet.ingame.server.window.ServerCloseWindowPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.InventoryUtils;
@@ -35,7 +35,7 @@ import org.geysermc.connector.utils.InventoryUtils;
 public class JavaCloseWindowTranslator extends PacketTranslator<ServerCloseWindowPacket> {
 
     @Override
-    public void translate(ServerCloseWindowPacket packet, GeyserSession session) {
+    public void translate(ServerCloseWindowPacket packet, RorySession session) {
         session.addInventoryTask(() ->
                 // Sometimes the server can request a window close of ID 0... when the window isn't even open
                 // Don't confirm in this instance

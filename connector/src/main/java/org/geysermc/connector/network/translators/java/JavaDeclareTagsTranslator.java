@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.java;
 
 import com.github.steveice10.mc.protocol.packet.ingame.server.ServerDeclareTagsPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -34,7 +34,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class JavaDeclareTagsTranslator extends PacketTranslator<ServerDeclareTagsPacket> {
 
     @Override
-    public void translate(ServerDeclareTagsPacket packet, GeyserSession session) {
+    public void translate(ServerDeclareTagsPacket packet, RorySession session) {
         session.getTagCache().loadPacket(packet);
     }
 }

@@ -28,7 +28,7 @@ package org.geysermc.connector.network.translators.sound.block;
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.LevelEventType;
 import com.nukkitx.protocol.bedrock.packet.LevelEventPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.sound.BlockSoundInteractionHandler;
 import org.geysermc.connector.network.translators.sound.SoundHandler;
 
@@ -36,7 +36,7 @@ import org.geysermc.connector.network.translators.sound.SoundHandler;
 public class ComparatorSoundInteractionHandler implements BlockSoundInteractionHandler {
 
     @Override
-    public void handleInteraction(GeyserSession session, Vector3f position, String identifier) {
+    public void handleInteraction(RorySession session, Vector3f position, String identifier) {
         boolean powered = identifier.contains("mode=compare");
         LevelEventPacket levelEventPacket = new LevelEventPacket();
         levelEventPacket.setPosition(position);

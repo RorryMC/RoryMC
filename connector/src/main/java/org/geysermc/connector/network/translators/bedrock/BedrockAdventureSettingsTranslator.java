@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.client.player.ClientPlaye
 import com.nukkitx.protocol.bedrock.data.AdventureSetting;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import com.nukkitx.protocol.bedrock.packet.AdventureSettingsPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -37,7 +37,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class BedrockAdventureSettingsTranslator extends PacketTranslator<AdventureSettingsPacket> {
 
     @Override
-    public void translate(AdventureSettingsPacket packet, GeyserSession session) {
+    public void translate(AdventureSettingsPacket packet, RorySession session) {
         boolean isFlying = packet.getSettings().contains(AdventureSetting.FLYING);
         session.setFlying(isFlying);
         ClientPlayerAbilitiesPacket abilitiesPacket = new ClientPlayerAbilitiesPacket(isFlying);

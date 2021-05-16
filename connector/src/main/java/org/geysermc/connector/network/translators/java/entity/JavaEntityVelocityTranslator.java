@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.java.entity;
 
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.living.animal.horse.AbstractHorseEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -39,7 +39,7 @@ import com.nukkitx.protocol.bedrock.packet.SetEntityMotionPacket;
 public class JavaEntityVelocityTranslator extends PacketTranslator<ServerEntityVelocityPacket> {
 
     @Override
-    public void translate(ServerEntityVelocityPacket packet, GeyserSession session) {
+    public void translate(ServerEntityVelocityPacket packet, RorySession session) {
         Entity entity = session.getEntityCache().getEntityByJavaId(packet.getEntityId());
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();

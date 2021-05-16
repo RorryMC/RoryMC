@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.bedrock;
 
 import com.nukkitx.protocol.bedrock.packet.ServerSettingsRequestPacket;
 import com.nukkitx.protocol.bedrock.packet.ServerSettingsResponsePacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.SettingsUtils;
@@ -38,7 +38,7 @@ import java.util.concurrent.TimeUnit;
 public class BedrockServerSettingsRequestTranslator extends PacketTranslator<ServerSettingsRequestPacket> {
 
     @Override
-    public void translate(ServerSettingsRequestPacket packet, GeyserSession session) {
+    public void translate(ServerSettingsRequestPacket packet, RorySession session) {
         SettingsUtils.buildForm(session);
 
         // Fixes https://bugs.mojang.com/browse/MCPE-94012 because of the delay

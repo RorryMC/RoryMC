@@ -29,7 +29,7 @@ import com.nukkitx.math.vector.Vector3i;
 import com.nukkitx.nbt.NbtMap;
 import com.nukkitx.nbt.NbtMapBuilder;
 import com.nukkitx.protocol.bedrock.packet.UpdateBlockPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.world.block.BlockStateValues;
 import org.geysermc.connector.utils.BlockEntityUtils;
 
@@ -49,7 +49,7 @@ public class FlowerPotBlockEntityTranslator implements BedrockOnlyBlockEntity, R
      * @param position   Bedrock position of flower pot.
      * @return Bedrock tag of flower pot.
      */
-    public static NbtMap getTag(GeyserSession session, int blockState, Vector3i position) {
+    public static NbtMap getTag(RorySession session, int blockState, Vector3i position) {
         NbtMapBuilder tagBuilder = NbtMap.builder()
                 .putInt("x", position.getX())
                 .putInt("y", position.getY())
@@ -75,7 +75,7 @@ public class FlowerPotBlockEntityTranslator implements BedrockOnlyBlockEntity, R
     }
 
     @Override
-    public void updateBlock(GeyserSession session, int blockState, Vector3i position) {
+    public void updateBlock(RorySession session, int blockState, Vector3i position) {
         NbtMap tag = getTag(session, blockState, position);
         BlockEntityUtils.updateBlockEntity(session, tag, position);
         UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();

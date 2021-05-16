@@ -28,14 +28,14 @@ package org.geysermc.connector.network.translators.inventory.updater;
 import com.nukkitx.protocol.bedrock.data.inventory.ContainerId;
 import com.nukkitx.protocol.bedrock.packet.InventorySlotPacket;
 import org.geysermc.connector.inventory.Inventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
 
 public class UIInventoryUpdater extends InventoryUpdater {
     public static final UIInventoryUpdater INSTANCE = new UIInventoryUpdater();
 
     @Override
-    public void updateInventory(InventoryTranslator translator, GeyserSession session, Inventory inventory) {
+    public void updateInventory(InventoryTranslator translator, RorySession session, Inventory inventory) {
         super.updateInventory(translator, session, inventory);
 
         for (int i = 0; i < translator.size; i++) {
@@ -51,7 +51,7 @@ public class UIInventoryUpdater extends InventoryUpdater {
     }
 
     @Override
-    public boolean updateSlot(InventoryTranslator translator, GeyserSession session, Inventory inventory, int javaSlot) {
+    public boolean updateSlot(InventoryTranslator translator, RorySession session, Inventory inventory, int javaSlot) {
         if (super.updateSlot(translator, session, inventory, javaSlot))
             return true;
 

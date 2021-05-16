@@ -46,10 +46,10 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import lombok.Data;
 import lombok.experimental.UtilityClass;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.entity.ItemFrameEntity;
 import org.geysermc.connector.entity.player.SkullPlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.translators.LecternInventoryTranslator;
 import org.geysermc.connector.network.translators.world.block.BlockStateValues;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
@@ -80,7 +80,7 @@ public class ChunkUtils {
         return (yzx >> 8) | (yzx & 0x0F0) | ((yzx & 0x00F) << 8);
     }
 
-    public static ChunkData translateToBedrock(GeyserSession session, Column column, boolean isNonFullChunk) {
+    public static ChunkData translateToBedrock(RorySession session, Column column, boolean isNonFullChunk) {
         Chunk[] javaSections = column.getChunks();
         ChunkSection[] sections = new ChunkSection[javaSections.length];
 
@@ -253,7 +253,7 @@ public class ChunkUtils {
                     }
                 }
                 if (tagName.equals("Empty")) {
-                    GeyserConnector.getInstance().getLogger().debug("Got tag with no id: " + tag.getValue());
+                    RoryConnector.getInstance().getLogger().debug("Got tag with no id: " + tag.getValue());
                 }
             }
 
@@ -293,7 +293,7 @@ public class ChunkUtils {
         return new ChunkData(sections, bedrockBlockEntities);
     }
 
-    public static void updateChunkPosition(GeyserSession session, Vector3i position) {
+    public static void updateChunkPosition(RorySession session, Vector3i position) {
         Vector2i chunkPos = session.getLastChunkPosition();
         Vector2i newChunkPos = Vector2i.from(position.getX() >> 4, position.getZ() >> 4);
 
@@ -314,7 +314,7 @@ public class ChunkUtils {
      * @param blockState the Java block state of the block
      * @param position the position of the block
      */
-    public static void updateBlock(GeyserSession session, int blockState, Position position) {
+    public static void updateBlock(RorySession session, int blockState, Position position) {
         Vector3i pos = Vector3i.from(position.getX(), position.getY(), position.getZ());
         updateBlock(session, blockState, pos);
     }
@@ -326,7 +326,7 @@ public class ChunkUtils {
      * @param blockState the Java block state of the block
      * @param position the position of the block
      */
-    public static void updateBlock(GeyserSession session, int blockState, Vector3i position) {
+    public static void updateBlock(RorySession session, int blockState, Vector3i position) {
         // Checks for item frames so they aren't tripped up and removed
         ItemFrameEntity itemFrameEntity = ItemFrameEntity.getItemFrameEntity(session, position);
         if (itemFrameEntity != null) {
@@ -408,7 +408,7 @@ public class ChunkUtils {
         session.getChunkCache().updateBlock(position.getX(), position.getY(), position.getZ(), blockState);
     }
 
-    public static void sendEmptyChunks(GeyserSession session, Vector3i position, int radius, boolean forceUpdate) {
+    public static void sendEmptyChunks(RorySession session, Vector3i position, int radius, boolean forceUpdate) {
         int chunkX = position.getX() >> 4;
         int chunkZ = position.getZ() >> 4;
         for (int x = -radius; x <= radius; x++) {

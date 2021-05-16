@@ -28,7 +28,7 @@ package org.geysermc.connector.entity;
 import com.github.steveice10.mc.protocol.data.game.entity.metadata.EntityMetadata;
 import com.nukkitx.math.vector.Vector3f;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class WitherSkullEntity extends ItemedFireballEntity {
     private boolean isCharged;
@@ -40,12 +40,12 @@ public class WitherSkullEntity extends ItemedFireballEntity {
     }
 
     @Override
-    protected float getDrag(GeyserSession session) {
+    protected float getDrag(RorySession session) {
         return isCharged ? 0.73f : super.getDrag(session);
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 7) {
             boolean newIsCharged = (boolean) entityMetadata.getValue();
             if (newIsCharged != isCharged) {

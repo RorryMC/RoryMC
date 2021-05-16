@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.java.world;
 
 import com.github.steveice10.mc.protocol.packet.ingame.server.world.ServerUpdateTimePacket;
 import com.nukkitx.protocol.bedrock.packet.SetTimePacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -35,7 +35,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class JavaUpdateTimeTranslator extends PacketTranslator<ServerUpdateTimePacket> {
 
     @Override
-    public void translate(ServerUpdateTimePacket packet, GeyserSession session) {
+    public void translate(ServerUpdateTimePacket packet, RorySession session) {
         // Bedrock sends a GameRulesChangedPacket if there is no daylight cycle
         // Java just sends a negative long if there is no daylight cycle
         long time = packet.getTime();

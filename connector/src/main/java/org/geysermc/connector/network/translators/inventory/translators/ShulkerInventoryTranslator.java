@@ -32,7 +32,7 @@ import com.nukkitx.protocol.bedrock.data.inventory.ContainerSlotType;
 import com.nukkitx.protocol.bedrock.data.inventory.ContainerType;
 import com.nukkitx.protocol.bedrock.packet.BlockEntityDataPacket;
 import org.geysermc.connector.inventory.Inventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.BedrockContainerSlot;
 import org.geysermc.connector.network.translators.inventory.holder.BlockInventoryHolder;
 import org.geysermc.connector.network.translators.inventory.updater.ContainerInventoryUpdater;
@@ -49,7 +49,7 @@ public class ShulkerInventoryTranslator extends AbstractBlockInventoryTranslator
             }
 
             @Override
-            protected void setCustomName(GeyserSession session, Vector3i position, Inventory inventory, int javaBlockState) {
+            protected void setCustomName(RorySession session, Vector3i position, Inventory inventory, int javaBlockState) {
                 NbtMapBuilder tag = NbtMap.builder()
                         .putInt("x", position.getX())
                         .putInt("y", position.getY())

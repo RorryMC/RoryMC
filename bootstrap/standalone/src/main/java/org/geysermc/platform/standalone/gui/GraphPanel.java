@@ -34,7 +34,7 @@ import java.util.Collection;
 import java.util.List;
 
 /**
- * This has been modified to fit Geyser more but is based on
+ * This has been modified to fit Rory more but is based on
  * https://gist.github.com/roooodcastro/6325153#gistcomment-3107524
  */
 public final class GraphPanel extends JPanel {

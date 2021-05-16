@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.data.game.entity.metadata.EntityMetadat
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class MinecartEntity extends Entity {
 
@@ -38,7 +38,7 @@ public class MinecartEntity extends Entity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
 
         if (entityMetadata.getId() == 7) {
             metadata.put(EntityData.HEALTH, entityMetadata.getValue());
@@ -76,7 +76,7 @@ public class MinecartEntity extends Entity {
     }
 
     @Override
-    public void moveAbsolute(GeyserSession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
+    public void moveAbsolute(RorySession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
         super.moveAbsolute(session, position.add(0d, this.entityType.getOffset(), 0d), rotation, isOnGround, teleported);
     }
 

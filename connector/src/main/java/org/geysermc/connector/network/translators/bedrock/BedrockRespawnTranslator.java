@@ -32,7 +32,7 @@ import com.nukkitx.protocol.bedrock.packet.MovePlayerPacket;
 import com.nukkitx.protocol.bedrock.packet.RespawnPacket;
 import com.nukkitx.protocol.bedrock.packet.SetEntityDataPacket;
 import org.geysermc.connector.entity.player.PlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -40,7 +40,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class BedrockRespawnTranslator extends PacketTranslator<RespawnPacket> {
 
     @Override
-    public void translate(RespawnPacket packet, GeyserSession session) {
+    public void translate(RespawnPacket packet, RorySession session) {
         if (packet.getState() == RespawnPacket.State.CLIENT_READY) {
             // Previously we only sent the respawn packet before the server finished loading
             // The message included was 'Otherwise when immediate respawn is on the client never loads'

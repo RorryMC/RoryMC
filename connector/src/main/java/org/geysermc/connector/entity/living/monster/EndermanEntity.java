@@ -32,7 +32,7 @@ import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import com.nukkitx.protocol.bedrock.packet.LevelSoundEvent2Packet;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class EndermanEntity extends MonsterEntity {
 
@@ -41,7 +41,7 @@ public class EndermanEntity extends MonsterEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         // Held block
         if (entityMetadata.getId() == 15) {
             metadata.put(EntityData.CARRIED_BLOCK, session.getBlockTranslator().getBedrockBlockId((int) entityMetadata.getValue()));

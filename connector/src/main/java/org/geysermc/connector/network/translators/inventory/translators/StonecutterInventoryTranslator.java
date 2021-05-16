@@ -37,11 +37,11 @@ import com.nukkitx.protocol.bedrock.data.inventory.stackrequestactions.StackRequ
 import com.nukkitx.protocol.bedrock.data.inventory.stackrequestactions.StackRequestActionType;
 import com.nukkitx.protocol.bedrock.packet.ItemStackResponsePacket;
 import it.unimi.dsi.fastutil.ints.IntList;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.Inventory;
 import org.geysermc.connector.inventory.PlayerInventory;
 import org.geysermc.connector.inventory.StonecutterContainer;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.BedrockContainerSlot;
 import org.geysermc.connector.network.translators.inventory.SlotType;
 import org.geysermc.connector.network.translators.inventory.updater.UIInventoryUpdater;
@@ -58,7 +58,7 @@ public class StonecutterInventoryTranslator extends AbstractBlockInventoryTransl
     }
 
     @Override
-    public ItemStackResponsePacket.Response translateSpecialRequest(GeyserSession session, Inventory inventory, ItemStackRequest request) {
+    public ItemStackResponsePacket.Response translateSpecialRequest(RorySession session, Inventory inventory, ItemStackRequest request) {
         // TODO: Also surely to change in the future
         StackRequestActionData data = request.getActions()[1];
         if (!(data instanceof CraftResultsDeprecatedStackRequestActionData)) {
@@ -85,7 +85,7 @@ public class StonecutterInventoryTranslator extends AbstractBlockInventoryTransl
             container.setStonecutterButton(button);
             if (inventory.getItem(1).getJavaId() != javaOutput.getId()) {
                 // We don't know there is an output here, so we tell ourselves that there is
-                inventory.setItem(1, GeyserItemStack.from(javaOutput), session);
+                inventory.setItem(1, RoryItemStack.from(javaOutput), session);
             }
         }
 

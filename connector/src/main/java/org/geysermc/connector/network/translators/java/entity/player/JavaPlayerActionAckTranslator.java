@@ -32,9 +32,9 @@ import com.github.steveice10.opennbt.tag.builtin.CompoundTag;
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.LevelEventType;
 import com.nukkitx.protocol.bedrock.packet.LevelEventPacket;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.item.ItemEntry;
@@ -46,7 +46,7 @@ import org.geysermc.connector.utils.ChunkUtils;
 public class JavaPlayerActionAckTranslator extends PacketTranslator<ServerPlayerActionAckPacket> {
 
     @Override
-    public void translate(ServerPlayerActionAckPacket packet, GeyserSession session) {
+    public void translate(ServerPlayerActionAckPacket packet, RorySession session) {
         ChunkUtils.updateBlock(session, packet.getNewState(), packet.getPosition());
         if (packet.getAction() == PlayerAction.START_DIGGING && !packet.isSuccessful()) {
             LevelEventPacket stopBreak = new LevelEventPacket();
@@ -70,7 +70,7 @@ public class JavaPlayerActionAckTranslator extends PacketTranslator<ServerPlayer
                             packet.getPosition().getZ()
                     ));
                     PlayerInventory inventory = session.getPlayerInventory();
-                    GeyserItemStack item = inventory.getItemInHand();
+                    RoryItemStack item = inventory.getItemInHand();
                     ItemEntry itemEntry;
                     CompoundTag nbtData;
                     if (item != null) {

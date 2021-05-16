@@ -28,7 +28,7 @@ package org.geysermc.connector.network.translators.sound.block;
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.SoundEvent;
 import com.nukkitx.protocol.bedrock.packet.LevelSoundEventPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.sound.BlockSoundInteractionHandler;
 import org.geysermc.connector.network.translators.sound.SoundHandler;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
@@ -37,7 +37,7 @@ import org.geysermc.connector.network.translators.world.block.BlockTranslator;
 public class HoeInteractionHandler implements BlockSoundInteractionHandler {
 
     @Override
-    public void handleInteraction(GeyserSession session, Vector3f position, String identifier) {
+    public void handleInteraction(RorySession session, Vector3f position, String identifier) {
         LevelSoundEventPacket levelSoundEventPacket = new LevelSoundEventPacket();
         levelSoundEventPacket.setPosition(position);
         levelSoundEventPacket.setBabySound(false);

@@ -36,7 +36,7 @@ import com.nukkitx.protocol.bedrock.packet.AddPlayerPacket;
 import lombok.Getter;
 import lombok.Setter;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 /**
  * A wrapper to handle skulls more effectively - skulls have to be treated as entities since there are no
@@ -69,7 +69,7 @@ public class SkullPlayerEntity extends PlayerEntity {
      * Overwritten so each entity doesn't check for a linked entity
      */
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         AddPlayerPacket addPlayerPacket = new AddPlayerPacket();
         addPlayerPacket.setUuid(getUuid());
         addPlayerPacket.setUsername(getUsername());
@@ -92,7 +92,7 @@ public class SkullPlayerEntity extends PlayerEntity {
         updateBedrockAttributes(session);
     }
 
-    public void despawnEntity(GeyserSession session, Vector3i position) {
+    public void despawnEntity(RorySession session, Vector3i position) {
         this.despawnEntity(session);
         session.getSkullCache().remove(position, this);
     }

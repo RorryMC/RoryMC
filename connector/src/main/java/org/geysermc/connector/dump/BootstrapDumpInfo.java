@@ -28,7 +28,7 @@ package org.geysermc.connector.dump;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.geysermc.common.PlatformType;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 
 import java.util.List;
 
@@ -38,7 +38,7 @@ public class BootstrapDumpInfo {
     private PlatformType platform;
 
     public BootstrapDumpInfo() {
-        this.platform = GeyserConnector.getInstance().getPlatformType();
+        this.platform = RoryConnector.getInstance().getPlatformType();
     }
 
     @Getter

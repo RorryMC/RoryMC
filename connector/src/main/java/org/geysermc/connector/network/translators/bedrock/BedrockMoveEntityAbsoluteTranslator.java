@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.client.world.ClientVehicl
 import com.nukkitx.protocol.bedrock.packet.MoveEntityAbsolutePacket;
 import org.geysermc.connector.entity.BoatEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -40,7 +40,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class BedrockMoveEntityAbsoluteTranslator extends PacketTranslator<MoveEntityAbsolutePacket> {
 
     @Override
-    public void translate(MoveEntityAbsolutePacket packet, GeyserSession session) {
+    public void translate(MoveEntityAbsolutePacket packet, RorySession session) {
         session.setLastVehicleMoveTimestamp(System.currentTimeMillis());
 
         float y = packet.getPosition().getY();

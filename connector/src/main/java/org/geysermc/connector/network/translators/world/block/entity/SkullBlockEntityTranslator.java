@@ -34,7 +34,7 @@ import com.nukkitx.math.vector.Vector3i;
 import com.nukkitx.nbt.NbtMapBuilder;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import org.geysermc.connector.entity.player.SkullPlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.world.block.BlockStateValues;
 import org.geysermc.connector.skin.SkinProvider;
 import org.geysermc.connector.skin.SkullSkinManager;
@@ -89,7 +89,7 @@ public class SkullBlockEntityTranslator extends BlockEntityTranslator implements
         return CompletableFuture.completedFuture(null);
     }
 
-    public static void spawnPlayer(GeyserSession session, CompoundTag tag, int blockState) {
+    public static void spawnPlayer(RorySession session, CompoundTag tag, int blockState) {
         int posX = (int) tag.get("x").getValue();
         int posY = (int) tag.get("y").getValue();
         int posZ = (int) tag.get("z").getValue();

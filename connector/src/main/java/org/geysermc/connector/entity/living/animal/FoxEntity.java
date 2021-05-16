@@ -30,7 +30,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemEntry;
 
 public class FoxEntity extends AnimalEntity {
@@ -40,7 +40,7 @@ public class FoxEntity extends AnimalEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 16) {
             metadata.put(EntityData.VARIANT, entityMetadata.getValue());
         }
@@ -55,7 +55,7 @@ public class FoxEntity extends AnimalEntity {
     }
 
     @Override
-    public boolean canEat(GeyserSession session, String javaIdentifierStripped, ItemEntry itemEntry) {
+    public boolean canEat(RorySession session, String javaIdentifierStripped, ItemEntry itemEntry) {
         return javaIdentifierStripped.equals("sweet_berries");
     }
 }

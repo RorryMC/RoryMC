@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.bedrock;
 
 import com.nukkitx.protocol.bedrock.packet.ItemStackRequestPacket;
 import org.geysermc.connector.inventory.Inventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
@@ -39,7 +39,7 @@ import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
 public class BedrockItemStackRequestTranslator extends PacketTranslator<ItemStackRequestPacket> {
 
     @Override
-    public void translate(ItemStackRequestPacket packet, GeyserSession session) {
+    public void translate(ItemStackRequestPacket packet, RorySession session) {
         Inventory inventory = session.getOpenInventory();
         if (inventory == null)
             return;

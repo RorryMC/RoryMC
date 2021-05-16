@@ -30,9 +30,9 @@ import com.github.steveice10.mc.protocol.data.game.PlayerListEntryAction;
 import com.github.steveice10.mc.protocol.packet.ingame.server.ServerPlayerListEntryPacket;
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.packet.PlayerListPacket;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.entity.player.PlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.skin.SkinManager;
@@ -40,7 +40,7 @@ import org.geysermc.connector.skin.SkinManager;
 @Translator(packet = ServerPlayerListEntryPacket.class)
 public class JavaPlayerListEntryTranslator extends PacketTranslator<ServerPlayerListEntryPacket> {
     @Override
-    public void translate(ServerPlayerListEntryPacket packet, GeyserSession session) {
+    public void translate(ServerPlayerListEntryPacket packet, RorySession session) {
         if (packet.getAction() != PlayerListEntryAction.ADD_PLAYER && packet.getAction() != PlayerListEntryAction.REMOVE_PLAYER)
             return;
 
@@ -83,7 +83,7 @@ public class JavaPlayerListEntryTranslator extends PacketTranslator<ServerPlayer
                     // without processing their skin information - that'll be processed when they spawn in
                     if (self) {
                         SkinManager.requestAndHandleSkinAndCape(playerEntity, session, skinAndCape ->
-                                GeyserConnector.getInstance().getLogger().debug("Loaded Local Bedrock Java Skin Data for " + session.getClientData().getUsername()));
+                                RoryConnector.getInstance().getLogger().debug("Loaded Local Bedrock Java Skin Data for " + session.getClientData().getUsername()));
                     } else {
                         playerEntity.setValid(true);
                         PlayerListPacket.Entry playerListEntry = SkinManager.buildCachedEntry(session, playerEntity);

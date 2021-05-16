@@ -28,7 +28,7 @@ package org.geysermc.connector.entity.living;
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class MagmaCubeEntity extends SlimeEntity {
 
@@ -37,18 +37,18 @@ public class MagmaCubeEntity extends SlimeEntity {
     }
 
     @Override
-    public void moveRelative(GeyserSession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
+    public void moveRelative(RorySession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
         updateJump(session, isOnGround);
         super.moveRelative(session, relX, relY, relZ, rotation, isOnGround);
     }
 
     @Override
-    public void moveAbsolute(GeyserSession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
+    public void moveAbsolute(RorySession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
         updateJump(session, isOnGround);
         super.moveAbsolute(session, position, rotation, isOnGround, teleported);
     }
 
-    public void updateJump(GeyserSession session, boolean newOnGround) {
+    public void updateJump(RorySession session, boolean newOnGround) {
         if (newOnGround != onGround) {
             // Add the jumping effect to the magma cube
             metadata.put(EntityData.CLIENT_EVENT, (byte) (newOnGround ? 1 : 2));

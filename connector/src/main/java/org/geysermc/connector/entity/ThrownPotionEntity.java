@@ -33,9 +33,9 @@ import com.github.steveice10.opennbt.tag.builtin.Tag;
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemEntry;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
 import org.geysermc.connector.network.translators.item.Potion;
@@ -50,7 +50,7 @@ public class ThrownPotionEntity extends ThrowableEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 7 && entityMetadata.getType() == MetadataType.ITEM) {
             ItemStack itemStack = (ItemStack) entityMetadata.getValue();
             ItemEntry itemEntry = ItemRegistry.getItem(itemStack);
@@ -63,7 +63,7 @@ public class ThrownPotionEntity extends ThrowableEntity {
                         metadata.getFlags().setFlag(EntityFlag.ENCHANTED, !NON_ENCHANTED_POTIONS.contains(potion));
                     } else {
                         metadata.put(EntityData.POTION_AUX_VALUE, 0);
-                        GeyserConnector.getInstance().getLogger().debug("Unknown java potion: " + potionTag.getValue());
+                        RoryConnector.getInstance().getLogger().debug("Unknown java potion: " + potionTag.getValue());
                     }
                 }
 

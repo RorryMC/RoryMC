@@ -31,7 +31,7 @@ import com.nukkitx.protocol.bedrock.data.entity.EntityEventType;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import com.nukkitx.protocol.bedrock.packet.EntityEventPacket;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -42,7 +42,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class JavaEntityAttachTranslator extends PacketTranslator<ServerEntityAttachPacket> {
 
     @Override
-    public void translate(ServerEntityAttachPacket packet, GeyserSession session) {
+    public void translate(ServerEntityAttachPacket packet, RorySession session) {
 
         Entity holderId;
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {

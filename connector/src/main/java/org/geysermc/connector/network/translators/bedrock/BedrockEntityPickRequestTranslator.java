@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.data.game.entity.player.GameMode;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.packet.EntityPickRequestPacket;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.item.ItemEntry;
@@ -43,9 +43,9 @@ import org.geysermc.connector.utils.InventoryUtils;
 public class BedrockEntityPickRequestTranslator extends PacketTranslator<EntityPickRequestPacket> {
 
     @Override
-    public void translate(EntityPickRequestPacket packet, GeyserSession session) {
+    public void translate(EntityPickRequestPacket packet, RorySession session) {
         if (session.getGameMode() != GameMode.CREATIVE) return; // Apparently Java behavior
-        Entity entity = session.getEntityCache().getEntityByGeyserId(packet.getRuntimeEntityId());
+        Entity entity = session.getEntityCache().getEntityByRoryId(packet.getRuntimeEntityId());
         if (entity == null) return;
 
         // Get the corresponding item

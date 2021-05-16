@@ -38,7 +38,7 @@ public class LoopbackUtil {
     private static final String loopbackCommand = "powershell -Command \"CheckNetIsolation LoopbackExempt -a -n='Microsoft.MinecraftUWP_8wekyb3d8bbwe'\"";
     private static final String startScript = "powershell -Command \"Start-Process 'cmd' -ArgumentList /c,%temp%/loopback_minecraft.bat -Verb runAs\"";
 
-    public static void checkLoopback(GeyserStandaloneLogger geyserLogger) {
+    public static void checkLoopback(RoryStandaloneLogger geyserLogger) {
         if (System.getProperty("os.name").equalsIgnoreCase("Windows 10")) {
             try {
                 Process process = Runtime.getRuntime().exec(checkExemption);

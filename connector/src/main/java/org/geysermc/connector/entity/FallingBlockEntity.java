@@ -30,7 +30,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class FallingBlockEntity extends Entity {
     private final int javaId;
@@ -41,13 +41,13 @@ public class FallingBlockEntity extends Entity {
     }
 
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         this.metadata.put(EntityData.VARIANT, session.getBlockTranslator().getBedrockBlockId(javaId));
         super.spawnEntity(session);
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         // Set the NO_AI flag based on the no gravity flag to prevent movement
         if (entityMetadata.getId() == 5) {
             this.metadata.getFlags().setFlag(EntityFlag.NO_AI, (boolean) entityMetadata.getValue());

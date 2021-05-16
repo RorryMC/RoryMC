@@ -33,7 +33,7 @@ import com.nukkitx.protocol.bedrock.data.SoundEvent;
 import com.nukkitx.protocol.bedrock.packet.LevelEventPacket;
 import com.nukkitx.protocol.bedrock.packet.LevelSoundEventPacket;
 import com.nukkitx.protocol.bedrock.packet.SetEntityMotionPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
@@ -43,7 +43,7 @@ import org.geysermc.connector.utils.ChunkUtils;
 public class JavaExplosionTranslator extends PacketTranslator<ServerExplosionPacket> {
 
     @Override
-    public void translate(ServerExplosionPacket packet, GeyserSession session) {
+    public void translate(ServerExplosionPacket packet, RorySession session) {
         for (ExplodedBlockRecord record : packet.getExploded()) {
             Vector3f pos = Vector3f.from(packet.getX() + record.getX(), packet.getY() + record.getY(), packet.getZ() + record.getZ());
             ChunkUtils.updateBlock(session, BlockTranslator.JAVA_AIR_ID, pos.toInt());

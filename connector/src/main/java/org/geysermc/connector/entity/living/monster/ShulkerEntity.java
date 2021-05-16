@@ -34,7 +34,7 @@ import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import org.geysermc.connector.entity.living.GolemEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class ShulkerEntity extends GolemEntity {
 
@@ -45,7 +45,7 @@ public class ShulkerEntity extends GolemEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 15) {
             BlockFace blockFace = (BlockFace) entityMetadata.getValue();
             metadata.put(EntityData.SHULKER_ATTACH_FACE, (byte) blockFace.ordinal());

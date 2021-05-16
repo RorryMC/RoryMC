@@ -36,7 +36,7 @@ import com.nukkitx.protocol.bedrock.packet.MoveEntityAbsolutePacket;
 import lombok.Getter;
 import org.geysermc.connector.entity.LivingEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class ArmorStandEntity extends LivingEntity {
 
@@ -72,21 +72,21 @@ public class ArmorStandEntity extends LivingEntity {
      * Whether we should update the position of this armor stand after metadata updates.
      */
     private boolean positionUpdateRequired = false;
-    private GeyserSession session;
+    private RorySession session;
 
     public ArmorStandEntity(long entityId, long geyserId, EntityType entityType, Vector3f position, Vector3f motion, Vector3f rotation) {
         super(entityId, geyserId, entityType, position, motion, rotation);
     }
 
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         this.session = session;
         this.rotation = Vector3f.from(rotation.getX(), rotation.getX(), rotation.getX());
         super.spawnEntity(session);
     }
 
     @Override
-    public boolean despawnEntity(GeyserSession session) {
+    public boolean despawnEntity(RorySession session) {
         if (secondEntity != null) {
             secondEntity.despawnEntity(session);
         }
@@ -94,7 +94,7 @@ public class ArmorStandEntity extends LivingEntity {
     }
 
     @Override
-    public void moveRelative(GeyserSession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
+    public void moveRelative(RorySession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
         if (secondEntity != null) {
             secondEntity.moveRelative(session, relX, relY, relZ, rotation, isOnGround);
         }
@@ -102,7 +102,7 @@ public class ArmorStandEntity extends LivingEntity {
     }
 
     @Override
-    public void moveAbsolute(GeyserSession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
+    public void moveAbsolute(RorySession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
         if (secondEntity != null) {
             secondEntity.moveAbsolute(session, applyOffsetToPosition(position), rotation, isOnGround, teleported);
         } else if (positionRequiresOffset) {
@@ -114,7 +114,7 @@ public class ArmorStandEntity extends LivingEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         super.updateBedrockMetadata(entityMetadata, session);
         if (entityMetadata.getId() == 0 && entityMetadata.getType() == MetadataType.BYTE) {
             byte xd = (byte) entityMetadata.getValue();
@@ -231,7 +231,7 @@ public class ArmorStandEntity extends LivingEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(GeyserSession session) {
+    public void updateBedrockMetadata(RorySession session) {
         if (secondEntity != null) {
             secondEntity.updateBedrockMetadata(session);
         }

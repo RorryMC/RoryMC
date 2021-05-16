@@ -31,7 +31,7 @@ import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import com.nukkitx.protocol.bedrock.packet.LevelEventPacket;
 import com.nukkitx.protocol.bedrock.packet.MoveEntityDeltaPacket;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.world.block.BlockStateValues;
 
 /**
@@ -52,14 +52,14 @@ public class ThrowableEntity extends Entity implements Tickable {
      * Java clients assume the next positions of moving items. Bedrock needs to be explicitly told positions
      */
     @Override
-    public void tick(GeyserSession session) {
+    public void tick(RorySession session) {
         moveAbsoluteImmediate(session, position.add(motion), rotation, onGround, false);
         float drag = getDrag(session);
         float gravity = getGravity(session);
         motion = motion.mul(drag).down(gravity);
     }
 
-    protected void moveAbsoluteImmediate(GeyserSession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
+    protected void moveAbsoluteImmediate(RorySession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
         MoveEntityDeltaPacket moveEntityDeltaPacket = new MoveEntityDeltaPacket();
         moveEntityDeltaPacket.setRuntimeEntityId(geyserId);
 
@@ -111,7 +111,7 @@ public class ThrowableEntity extends Entity implements Tickable {
      * @param session the session of the Bedrock client.
      * @return the amount of gravity to apply to this entity while in motion.
      */
-    protected float getGravity(GeyserSession session) {
+    protected float getGravity(RorySession session) {
         if (metadata.getFlags().getFlag(EntityFlag.HAS_GRAVITY)) {
             switch (entityType) {
                 case THROWN_POTION:
@@ -137,7 +137,7 @@ public class ThrowableEntity extends Entity implements Tickable {
      * @param session the session of the Bedrock client.
      * @return the drag that should be multiplied to the entity's motion
      */
-    protected float getDrag(GeyserSession session) {
+    protected float getDrag(RorySession session) {
         if (isInWater(session)) {
             return 0.8f;
         } else {
@@ -165,7 +165,7 @@ public class ThrowableEntity extends Entity implements Tickable {
      * @param session the session of the Bedrock client.
      * @return true if this entity is currently in water.
      */
-    protected boolean isInWater(GeyserSession session) {
+    protected boolean isInWater(RorySession session) {
         if (session.getConnector().getConfig().isCacheChunks()) {
             if (0 <= position.getFloorY() && position.getFloorY() <= 255) {
                 int block = session.getConnector().getWorldManager().getBlockAt(session, position.toInt());
@@ -176,7 +176,7 @@ public class ThrowableEntity extends Entity implements Tickable {
     }
 
     @Override
-    public boolean despawnEntity(GeyserSession session) {
+    public boolean despawnEntity(RorySession session) {
         if (entityType == EntityType.THROWN_ENDERPEARL) {
             LevelEventPacket particlePacket = new LevelEventPacket();
             particlePacket.setType(LevelEventType.PARTICLE_TELEPORT);
@@ -187,13 +187,13 @@ public class ThrowableEntity extends Entity implements Tickable {
     }
 
     @Override
-    public void moveRelative(GeyserSession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
+    public void moveRelative(RorySession session, double relX, double relY, double relZ, Vector3f rotation, boolean isOnGround) {
         moveAbsoluteImmediate(session, lastJavaPosition.add(relX, relY, relZ), rotation, isOnGround, false);
         lastJavaPosition = position;
     }
 
     @Override
-    public void moveAbsolute(GeyserSession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
+    public void moveAbsolute(RorySession session, Vector3f position, Vector3f rotation, boolean isOnGround, boolean teleported) {
         moveAbsoluteImmediate(session, position, rotation, isOnGround, teleported);
         lastJavaPosition = position;
     }

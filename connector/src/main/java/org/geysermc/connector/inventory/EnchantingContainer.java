@@ -39,17 +39,17 @@ public class EnchantingContainer extends Container {
      * A mutable cache of what the server sends us
      */
     @Getter
-    private final GeyserEnchantOption[] geyserEnchantOptions;
+    private final RoryEnchantOption[] geyserEnchantOptions;
 
     public EnchantingContainer(String title, int id, int size, WindowType windowType, PlayerInventory playerInventory) {
         super(title, id, size, windowType, playerInventory);
 
         enchantOptions = new EnchantOptionData[3];
-        geyserEnchantOptions = new GeyserEnchantOption[3];
+        geyserEnchantOptions = new RoryEnchantOption[3];
         for (int i = 0; i < geyserEnchantOptions.length; i++) {
-            geyserEnchantOptions[i] = new GeyserEnchantOption(i);
+            geyserEnchantOptions[i] = new RoryEnchantOption(i);
             // Options cannot be null, so we build initial options
-            // GeyserSession can be safely null here because it's only needed for net IDs
+            // RorySession can be safely null here because it's only needed for net IDs
             enchantOptions[i] = geyserEnchantOptions[i].build(null);
         }
     }

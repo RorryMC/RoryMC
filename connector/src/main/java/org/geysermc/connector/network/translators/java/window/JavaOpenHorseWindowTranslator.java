@@ -36,7 +36,7 @@ import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.living.animal.horse.ChestedHorseEntity;
 import org.geysermc.connector.entity.living.animal.horse.LlamaEntity;
 import org.geysermc.connector.inventory.Container;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
@@ -98,7 +98,7 @@ public class JavaOpenHorseWindowTranslator extends PacketTranslator<ServerOpenHo
     }
 
     @Override
-    public void translate(ServerOpenHorseWindowPacket packet, GeyserSession session) {
+    public void translate(ServerOpenHorseWindowPacket packet, RorySession session) {
         Entity entity = session.getEntityCache().getEntityByJavaId(packet.getEntityId());
         if (entity == null) {
             return;

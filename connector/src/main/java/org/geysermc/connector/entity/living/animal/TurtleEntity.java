@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.data.game.entity.metadata.EntityMetadat
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemEntry;
 
 public class TurtleEntity extends AnimalEntity {
@@ -39,7 +39,7 @@ public class TurtleEntity extends AnimalEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 17) {
             metadata.getFlags().setFlag(EntityFlag.IS_PREGNANT, (boolean) entityMetadata.getValue());
         } else if (entityMetadata.getId() == 18) {
@@ -49,7 +49,7 @@ public class TurtleEntity extends AnimalEntity {
     }
 
     @Override
-    public boolean canEat(GeyserSession session, String javaIdentifierStripped, ItemEntry itemEntry) {
+    public boolean canEat(RorySession session, String javaIdentifierStripped, ItemEntry itemEntry) {
         return javaIdentifierStripped.equals("seagrass");
     }
 }

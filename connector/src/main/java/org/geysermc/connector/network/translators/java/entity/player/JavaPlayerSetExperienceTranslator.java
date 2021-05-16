@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.java.entity.player;
 
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.attribute.AttributeType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -37,7 +37,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.entity.player.Serv
 public class JavaPlayerSetExperienceTranslator extends PacketTranslator<ServerPlayerSetExperiencePacket> {
 
     @Override
-    public void translate(ServerPlayerSetExperiencePacket packet, GeyserSession session) {
+    public void translate(ServerPlayerSetExperiencePacket packet, RorySession session) {
         Entity entity = session.getPlayerEntity();
         if (entity == null)
             return;

@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.sound;
 
 import com.nukkitx.math.vector.Vector3f;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 /**
  * Handler for playing sounds when right-clicking
@@ -48,5 +48,5 @@ public interface SoundInteractionHandler<T> {
      * @param position the position of the block
      * @param value the value
      */
-    void handleInteraction(GeyserSession session, Vector3f position, T value);
+    void handleInteraction(RorySession session, Vector3f position, T value);
 }

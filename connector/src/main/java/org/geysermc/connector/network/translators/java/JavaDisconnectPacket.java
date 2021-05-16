@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.java;
 
 import com.github.steveice10.mc.protocol.packet.ingame.server.ServerDisconnectPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.chat.MessageTranslator;
@@ -35,7 +35,7 @@ import org.geysermc.connector.network.translators.chat.MessageTranslator;
 public class JavaDisconnectPacket extends PacketTranslator<ServerDisconnectPacket> {
 
     @Override
-    public void translate(ServerDisconnectPacket packet, GeyserSession session) {
+    public void translate(ServerDisconnectPacket packet, RorySession session) {
         session.disconnect(MessageTranslator.convertMessage(packet.getReason(), session.getLocale()));
     }
 }

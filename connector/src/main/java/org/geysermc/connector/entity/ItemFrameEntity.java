@@ -37,7 +37,7 @@ import com.nukkitx.protocol.bedrock.packet.BlockEntityDataPacket;
 import com.nukkitx.protocol.bedrock.packet.UpdateBlockPacket;
 import lombok.Getter;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemEntry;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
 import org.geysermc.connector.network.translators.item.ItemTranslator;
@@ -82,7 +82,7 @@ public class ItemFrameEntity extends Entity {
     }
 
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         NbtMapBuilder blockBuilder = NbtMap.builder()
                 .putString("name", "minecraft:frame")
                 .putInt("version", session.getBlockTranslator().getBlockStateVersion());
@@ -104,7 +104,7 @@ public class ItemFrameEntity extends Entity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 7 && entityMetadata.getValue() != null) {
             this.heldItem = (ItemStack) entityMetadata.getValue();
             ItemData itemData = ItemTranslator.translateToBedrock(session, heldItem);
@@ -145,7 +145,7 @@ public class ItemFrameEntity extends Entity {
     }
 
     @Override
-    public boolean despawnEntity(GeyserSession session) {
+    public boolean despawnEntity(RorySession session) {
         UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();
         updateBlockPacket.setDataLayer(0);
         updateBlockPacket.setBlockPosition(bedrockPosition);
@@ -173,9 +173,9 @@ public class ItemFrameEntity extends Entity {
 
     /**
      * Updates the item frame as a block
-     * @param session GeyserSession.
+     * @param session RorySession.
      */
-    public void updateBlock(GeyserSession session) {
+    public void updateBlock(RorySession session) {
         UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();
         updateBlockPacket.setDataLayer(0);
         updateBlockPacket.setBlockPosition(bedrockPosition);
@@ -199,10 +199,10 @@ public class ItemFrameEntity extends Entity {
     /**
      * Finds the Java entity ID of an item frame from its Bedrock position.
      * @param position position of item frame in Bedrock.
-     * @param session GeyserSession.
+     * @param session RorySession.
      * @return Java entity ID or -1 if not found.
      */
-    public static ItemFrameEntity getItemFrameEntity(GeyserSession session, Vector3i position) {
+    public static ItemFrameEntity getItemFrameEntity(RorySession session, Vector3i position) {
         return session.getItemFrameCache().get(position);
     }
 }

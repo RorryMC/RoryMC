@@ -26,11 +26,11 @@
 package org.geysermc.connector.network.translators.inventory.holder;
 
 import org.geysermc.connector.inventory.Inventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
 
 public abstract class InventoryHolder {
-    public abstract void prepareInventory(InventoryTranslator translator, GeyserSession session, Inventory inventory);
-    public abstract void openInventory(InventoryTranslator translator, GeyserSession session, Inventory inventory);
-    public abstract void closeInventory(InventoryTranslator translator, GeyserSession session, Inventory inventory);
+    public abstract void prepareInventory(InventoryTranslator translator, RorySession session, Inventory inventory);
+    public abstract void openInventory(InventoryTranslator translator, RorySession session, Inventory inventory);
+    public abstract void closeInventory(InventoryTranslator translator, RorySession session, Inventory inventory);
 }

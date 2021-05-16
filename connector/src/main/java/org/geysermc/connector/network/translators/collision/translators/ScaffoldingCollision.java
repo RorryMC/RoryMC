@@ -25,7 +25,7 @@
 
 package org.geysermc.connector.network.translators.collision.translators;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.collision.BoundingBox;
 import org.geysermc.connector.network.translators.collision.CollisionRemapper;
 
@@ -40,7 +40,7 @@ public class ScaffoldingCollision extends BlockCollision {
     }
 
     @Override
-    public boolean correctPosition(GeyserSession session, BoundingBox playerCollision) {
+    public boolean correctPosition(RorySession session, BoundingBox playerCollision) {
         // Hack to not check below the player
         playerCollision.setSizeY(playerCollision.getSizeY() - 0.001);
         playerCollision.setMiddleY(playerCollision.getMiddleY() + 0.002);

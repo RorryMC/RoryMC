@@ -29,7 +29,7 @@ import com.github.steveice10.opennbt.tag.builtin.ByteTag;
 import com.github.steveice10.opennbt.tag.builtin.CompoundTag;
 import com.github.steveice10.opennbt.tag.builtin.ListTag;
 import com.github.steveice10.opennbt.tag.builtin.Tag;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.ItemRemapper;
 import org.geysermc.connector.network.translators.item.ItemEntry;
 import org.geysermc.connector.utils.MathUtils;
@@ -38,7 +38,7 @@ import org.geysermc.connector.utils.MathUtils;
 public class FireworkRocketTranslator extends FireworkBaseTranslator {
 
     @Override
-    public void translateToBedrock(GeyserSession session, CompoundTag itemTag, ItemEntry itemEntry) {
+    public void translateToBedrock(RorySession session, CompoundTag itemTag, ItemEntry itemEntry) {
         CompoundTag fireworks = itemTag.get("Fireworks");
         if (fireworks == null) {
             return;

@@ -25,20 +25,20 @@
 
 package org.geysermc.connector.command.defaults;
 
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.command.CommandSender;
-import org.geysermc.connector.command.GeyserCommand;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.command.RoryCommand;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.SettingsUtils;
 
-public class SettingsCommand extends GeyserCommand {
+public class SettingsCommand extends RoryCommand {
 
-    public SettingsCommand(GeyserConnector connector, String name, String description, String permission) {
+    public SettingsCommand(RoryConnector connector, String name, String description, String permission) {
         super(name, description, permission);
     }
 
     @Override
-    public void execute(GeyserSession session, CommandSender sender, String[] args) {
+    public void execute(RorySession session, CommandSender sender, String[] args) {
         if (session == null) return;
 
         SettingsUtils.buildForm(session);

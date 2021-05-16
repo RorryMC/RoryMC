@@ -28,7 +28,7 @@ package org.geysermc.connector.network.translators.bedrock;
 import com.nukkitx.math.vector.Vector3i;
 import com.nukkitx.protocol.bedrock.packet.BlockPickRequestPacket;
 import org.geysermc.connector.entity.ItemFrameEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
@@ -38,7 +38,7 @@ import org.geysermc.connector.utils.InventoryUtils;
 public class BedrockBlockPickRequestTranslator extends PacketTranslator<BlockPickRequestPacket> {
 
     @Override
-    public void translate(BlockPickRequestPacket packet, GeyserSession session) {
+    public void translate(BlockPickRequestPacket packet, RorySession session) {
         Vector3i vector = packet.getBlockPosition();
         int blockToPick = session.getConnector().getWorldManager().getBlockAt(session, vector.getX(), vector.getY(), vector.getZ());
         

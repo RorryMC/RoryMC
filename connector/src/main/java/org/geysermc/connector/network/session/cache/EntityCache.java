@@ -31,7 +31,7 @@ import lombok.Getter;
 import org.geysermc.connector.entity.Tickable;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.player.PlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicLong;
@@ -41,7 +41,7 @@ import java.util.concurrent.atomic.AtomicLong;
  * for that player (e.g. seeing vanished players from /vanish)
  */
 public class EntityCache {
-    private final GeyserSession session;
+    private final RorySession session;
 
     @Getter
     private Long2ObjectMap<Entity> entities = Long2ObjectMaps.synchronize(new Long2ObjectOpenHashMap<>());
@@ -57,7 +57,7 @@ public class EntityCache {
     @Getter
     private final AtomicLong nextEntityId = new AtomicLong(2L);
 
-    public EntityCache(GeyserSession session) {
+    public EntityCache(RorySession session) {
         this.session = session;
         cachedPlayerEntityLinks.defaultReturnValue(-1L);
     }
@@ -106,7 +106,7 @@ public class EntityCache {
         cachedPlayerEntityLinks.clear();
     }
 
-    public Entity getEntityByGeyserId(long geyserId) {
+    public Entity getEntityByRoryId(long geyserId) {
         return entities.get(geyserId);
     }
 

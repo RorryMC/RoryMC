@@ -25,7 +25,7 @@
 
 package org.geysermc.connector.network.translators.bedrock;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -37,7 +37,7 @@ import org.geysermc.connector.network.translators.chat.MessageTranslator;
 public class BedrockTextTranslator extends PacketTranslator<TextPacket> {
 
     @Override
-    public void translate(TextPacket packet, GeyserSession session) {
+    public void translate(TextPacket packet, RorySession session) {
         String message = packet.getMessage();
 
         if (MessageTranslator.isTooLong(message, session)) {

@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.java.entity;
 
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -39,7 +39,7 @@ import org.geysermc.connector.utils.LanguageUtils;
 public class JavaEntityMetadataTranslator extends PacketTranslator<ServerEntityMetadataPacket> {
 
     @Override
-    public void translate(ServerEntityMetadataPacket packet, GeyserSession session) {
+    public void translate(ServerEntityMetadataPacket packet, RorySession session) {
         Entity entity;
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();
@@ -56,7 +56,7 @@ public class JavaEntityMetadataTranslator extends PacketTranslator<ServerEntityM
                 // Because some entity rewriters forget about some values
                 // Any other errors are actual bugs
                 session.getConnector().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.network.translator.metadata.failed", metadata, entity.getEntityType()));
-                session.getConnector().getLogger().debug("Entity Java ID: " + entity.getEntityId() + ", Geyser ID: " + entity.getGeyserId());
+                session.getConnector().getLogger().debug("Entity Java ID: " + entity.getEntityId() + ", Rory ID: " + entity.getGeyserId());
                 if (session.getConnector().getConfig().isDebugMode()) {
                     e.printStackTrace();
                 }

@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.bedrock;
 
 import com.github.steveice10.mc.protocol.packet.ingame.client.ClientKeepAlivePacket;
 import com.nukkitx.protocol.bedrock.packet.NetworkStackLatencyPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.floodgate.util.DeviceOS;
@@ -39,7 +39,7 @@ import org.geysermc.floodgate.util.DeviceOS;
 public class BedrockNetworkStackLatencyTranslator extends PacketTranslator<NetworkStackLatencyPacket> {
 
     @Override
-    public void translate(NetworkStackLatencyPacket packet, GeyserSession session) {
+    public void translate(NetworkStackLatencyPacket packet, RorySession session) {
         if (session.getConnector().getConfig().isForwardPlayerPing()) {
             long pingId;
             // so apparently, as of 1.16.200

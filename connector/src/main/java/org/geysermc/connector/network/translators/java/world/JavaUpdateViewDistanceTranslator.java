@@ -25,7 +25,7 @@
 
 package org.geysermc.connector.network.translators.java.world;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -35,7 +35,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.world.ServerUpdate
 public class JavaUpdateViewDistanceTranslator extends PacketTranslator<ServerUpdateViewDistancePacket> {
 
     @Override
-    public void translate(ServerUpdateViewDistancePacket packet, GeyserSession session) {
+    public void translate(ServerUpdateViewDistancePacket packet, RorySession session) {
         session.setRenderDistance(packet.getViewDistance());
     }
 }

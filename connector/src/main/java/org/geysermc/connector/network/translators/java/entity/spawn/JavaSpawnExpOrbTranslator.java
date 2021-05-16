@@ -28,7 +28,7 @@ package org.geysermc.connector.network.translators.java.entity.spawn;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.ExpOrbEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -39,7 +39,7 @@ import com.nukkitx.math.vector.Vector3f;
 public class JavaSpawnExpOrbTranslator extends PacketTranslator<ServerSpawnExpOrbPacket> {
 
     @Override
-    public void translate(ServerSpawnExpOrbPacket packet, GeyserSession session) {
+    public void translate(ServerSpawnExpOrbPacket packet, RorySession session) {
         Vector3f position = Vector3f.from(packet.getX(), packet.getY(), packet.getZ());
 
         Entity entity = new ExpOrbEntity(

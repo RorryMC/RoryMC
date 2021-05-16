@@ -25,7 +25,7 @@
 
 package org.geysermc.connector.network.translators.java.world;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.ChunkUtils;
@@ -38,7 +38,7 @@ import com.nukkitx.protocol.bedrock.packet.NetworkChunkPublisherUpdatePacket;
 public class JavaUpdateViewPositionTranslator extends PacketTranslator<ServerUpdateViewPositionPacket> {
 
     @Override
-    public void translate(ServerUpdateViewPositionPacket packet, GeyserSession session) {
+    public void translate(ServerUpdateViewPositionPacket packet, RorySession session) {
         if (!session.isSpawned() && session.getLastChunkPosition() == null) {
             ChunkUtils.updateChunkPosition(session, Vector3i.from(packet.getChunkX() << 4, 64, packet.getChunkZ() << 4));
         }

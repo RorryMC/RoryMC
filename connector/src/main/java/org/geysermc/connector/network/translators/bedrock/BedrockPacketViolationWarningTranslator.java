@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.bedrock;
 
 import com.nukkitx.protocol.bedrock.packet.PacketViolationWarningPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -34,7 +34,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class BedrockPacketViolationWarningTranslator extends PacketTranslator<PacketViolationWarningPacket> {
 
     @Override
-    public void translate(PacketViolationWarningPacket packet, GeyserSession session) {
+    public void translate(PacketViolationWarningPacket packet, RorySession session) {
         // Not translated since this is something that the developers need to know
         session.getConnector().getLogger().error("Packet violation warning sent from client! " + packet.toString());
     }

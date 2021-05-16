@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.java.entity.player;
 
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.attribute.AttributeType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -38,7 +38,7 @@ import com.nukkitx.protocol.bedrock.packet.SetHealthPacket;
 public class JavaPlayerHealthTranslator extends PacketTranslator<ServerPlayerHealthPacket> {
 
     @Override
-    public void translate(ServerPlayerHealthPacket packet, GeyserSession session) {
+    public void translate(ServerPlayerHealthPacket packet, RorySession session) {
         Entity entity = session.getPlayerEntity();
         if (entity == null)
             return;

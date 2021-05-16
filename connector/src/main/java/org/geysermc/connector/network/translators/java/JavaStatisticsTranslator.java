@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.java;
 
 import com.github.steveice10.mc.protocol.packet.ingame.server.ServerStatisticsPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.StatisticsUtils;
@@ -35,7 +35,7 @@ import org.geysermc.connector.utils.StatisticsUtils;
 public class JavaStatisticsTranslator extends PacketTranslator<ServerStatisticsPacket> {
 
     @Override
-    public void translate(ServerStatisticsPacket packet, GeyserSession session) {
+    public void translate(ServerStatisticsPacket packet, RorySession session) {
         session.updateStatistics(packet.getStatistics());
 
         if (session.isWaitingForStatistics()) {

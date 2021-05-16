@@ -31,7 +31,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.client.player.ClientPlaye
 import com.nukkitx.protocol.bedrock.packet.ItemFrameDropItemPacket;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.ItemFrameEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -44,7 +44,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class BedrockItemFrameDropItemTranslator extends PacketTranslator<ItemFrameDropItemPacket> {
 
     @Override
-    public void translate(ItemFrameDropItemPacket packet, GeyserSession session) {
+    public void translate(ItemFrameDropItemPacket packet, RorySession session) {
         Entity entity = ItemFrameEntity.getItemFrameEntity(session, packet.getBlockPosition());
         if (entity != null) {
             ClientPlayerInteractEntityPacket interactPacket = new ClientPlayerInteractEntityPacket((int) entity.getEntityId(),

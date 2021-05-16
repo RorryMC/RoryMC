@@ -30,7 +30,7 @@ import java.nio.file.Paths;
 
 public class DockerCheck {
 
-    // By default, Geyser now sets the IP to the local IP in all cases on plugin versions so we don't notify the user of anything
+    // By default, Rory now sets the IP to the local IP in all cases on plugin versions so we don't notify the user of anything
     // However we still have this check for the potential future bug
     public static boolean checkBasic() {
         try {

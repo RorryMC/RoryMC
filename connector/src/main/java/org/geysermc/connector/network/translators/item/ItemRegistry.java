@@ -43,7 +43,7 @@ import it.unimi.dsi.fastutil.ints.IntSet;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator1_16_210;
 import org.geysermc.connector.utils.FileUtils;
@@ -146,7 +146,7 @@ public class ItemRegistry {
 
         List<JsonNode> itemEntries;
         try {
-            itemEntries = GeyserConnector.JSON_MAPPER.readValue(stream, itemEntriesType);
+            itemEntries = RoryConnector.JSON_MAPPER.readValue(stream, itemEntriesType);
         } catch (Exception e) {
             throw new AssertionError(LanguageUtils.getLocaleStringLog("geyser.toolbox.fail.runtime_bedrock"), e);
         }
@@ -170,7 +170,7 @@ public class ItemRegistry {
 
         JsonNode creativeItemEntries;
         try {
-            creativeItemEntries = GeyserConnector.JSON_MAPPER.readTree(stream).get("items");
+            creativeItemEntries = RoryConnector.JSON_MAPPER.readTree(stream).get("items");
         } catch (Exception e) {
             throw new AssertionError(LanguageUtils.getLocaleStringLog("geyser.toolbox.fail.creative"), e);
         }
@@ -245,7 +245,7 @@ public class ItemRegistry {
 
         JsonNode items;
         try {
-            items = GeyserConnector.JSON_MAPPER.readTree(stream);
+            items = RoryConnector.JSON_MAPPER.readTree(stream);
         } catch (Exception e) {
             throw new AssertionError(LanguageUtils.getLocaleStringLog("geyser.toolbox.fail.runtime_java"), e);
         }
@@ -254,7 +254,7 @@ public class ItemRegistry {
 
         int itemIndex = 0;
         int javaFurnaceMinecartId = 0;
-        boolean usingFurnaceMinecart = GeyserConnector.getInstance().getConfig().isAddNonBedrockItems();
+        boolean usingFurnaceMinecart = RoryConnector.getInstance().getConfig().isAddNonBedrockItems();
         Iterator<Map.Entry<String, JsonNode>> iterator = items.fields();
         while (iterator.hasNext()) {
             Map.Entry<String, JsonNode> entry = iterator.next();
@@ -610,7 +610,7 @@ public class ItemRegistry {
 
         // This will hide the message when the player clicks with an empty hand
         if (data.getId() != 0 && data.getDamage() != 0) {
-            GeyserConnector.getInstance().getLogger().debug("Missing mapping for bedrock item " + data.getId() + ":" + data.getDamage());
+            RoryConnector.getInstance().getLogger().debug("Missing mapping for bedrock item " + data.getId() + ":" + data.getDamage());
         }
         return ItemEntry.AIR;
     }

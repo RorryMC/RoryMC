@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.java;
 
 import com.github.steveice10.mc.protocol.data.game.UnlockRecipesAction;
 import com.github.steveice10.mc.protocol.packet.ingame.server.ServerUnlockRecipesPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -40,7 +40,7 @@ import java.util.Arrays;
 public class JavaUnlockRecipesTranslator extends PacketTranslator<ServerUnlockRecipesPacket> {
 
     @Override
-    public void translate(ServerUnlockRecipesPacket packet, GeyserSession session) {
+    public void translate(ServerUnlockRecipesPacket packet, RorySession session) {
         if (packet.getAction() == UnlockRecipesAction.REMOVE) {
             session.getUnlockedRecipes().removeAll(Arrays.asList(packet.getRecipes()));
         } else {

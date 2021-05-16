@@ -25,7 +25,7 @@
 
 package org.geysermc.connector.network.translators.java.world;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.ChunkUtils;
@@ -37,7 +37,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.world.ServerMultiB
 public class JavaMultiBlockChangeTranslator extends PacketTranslator<ServerMultiBlockChangePacket> {
 
     @Override
-    public void translate(ServerMultiBlockChangePacket packet, GeyserSession session) {
+    public void translate(ServerMultiBlockChangePacket packet, RorySession session) {
         for (BlockChangeRecord record : packet.getRecords()) {
             ChunkUtils.updateBlock(session, record.getBlock(), record.getPosition());
         }

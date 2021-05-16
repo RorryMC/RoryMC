@@ -28,8 +28,8 @@ package org.geysermc.connector.network;
 import com.nukkitx.protocol.bedrock.BedrockPacket;
 import com.nukkitx.protocol.bedrock.handler.BedrockPacketHandler;
 import com.nukkitx.protocol.bedrock.packet.*;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 
 /**
  * Bare bones implementation of BedrockPacketHandler suitable for extension.
@@ -39,10 +39,10 @@ import org.geysermc.connector.network.session.GeyserSession;
  */
 public class LoggingPacketHandler implements BedrockPacketHandler {
 
-    protected GeyserConnector connector;
-    protected GeyserSession session;
+    protected RoryConnector connector;
+    protected RorySession session;
 
-    LoggingPacketHandler(GeyserConnector connector, GeyserSession session) {
+    LoggingPacketHandler(RoryConnector connector, RorySession session) {
         this.connector = connector;
         this.session = session;
     }

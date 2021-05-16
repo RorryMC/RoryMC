@@ -28,12 +28,12 @@ package org.geysermc.connector.command.defaults;
 import com.github.steveice10.mc.protocol.MinecraftConstants;
 import com.nukkitx.protocol.bedrock.BedrockPacketCodec;
 import org.geysermc.common.PlatformType;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.command.CommandSender;
-import org.geysermc.connector.command.GeyserCommand;
+import org.geysermc.connector.command.RoryCommand;
 import org.geysermc.connector.common.ChatColor;
 import org.geysermc.connector.network.BedrockProtocol;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.FileUtils;
 import org.geysermc.connector.utils.LanguageUtils;
 import org.geysermc.connector.utils.WebUtils;
@@ -44,18 +44,18 @@ import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Properties;
 
-public class VersionCommand extends GeyserCommand {
+public class VersionCommand extends RoryCommand {
 
-    private final GeyserConnector connector;
+    private final RoryConnector connector;
 
-    public VersionCommand(GeyserConnector connector, String name, String description, String permission) {
+    public VersionCommand(RoryConnector connector, String name, String description, String permission) {
         super(name, description, permission);
 
         this.connector = connector;
     }
 
     @Override
-    public void execute(GeyserSession session, CommandSender sender, String[] args) {
+    public void execute(RorySession session, CommandSender sender, String[] args) {
         String bedrockVersions;
         List<BedrockPacketCodec> supportedCodecs = BedrockProtocol.SUPPORTED_BEDROCK_CODECS;
         if (supportedCodecs.size() > 1) {
@@ -64,17 +64,17 @@ public class VersionCommand extends GeyserCommand {
             bedrockVersions = BedrockProtocol.DEFAULT_BEDROCK_CODEC.getMinecraftVersion();
         }
 
-        sender.sendMessage(LanguageUtils.getPlayerLocaleString("geyser.commands.version.version", sender.getLocale(), GeyserConnector.NAME, GeyserConnector.VERSION, GeyserConnector.MINECRAFT_VERSION, bedrockVersions));
+        sender.sendMessage(LanguageUtils.getPlayerLocaleString("geyser.commands.version.version", sender.getLocale(), RoryConnector.NAME, RoryConnector.VERSION, RoryConnector.MINECRAFT_VERSION, bedrockVersions));
 
-        // Disable update checking in dev mode and for players in Geyser Standalone
+        // Disable update checking in dev mode and for players in Rory Standalone
         //noinspection ConstantConditions - changes in production
-        if (!GeyserConnector.VERSION.equals("DEV") && !(!sender.isConsole() && connector.getPlatformType() == PlatformType.STANDALONE)) {
+        if (!RoryConnector.VERSION.equals("DEV") && !(!sender.isConsole() && connector.getPlatformType() == PlatformType.STANDALONE)) {
             sender.sendMessage(LanguageUtils.getPlayerLocaleString("geyser.commands.version.checking", sender.getLocale()));
             try {
                 Properties gitProp = new Properties();
                 gitProp.load(FileUtils.getResource("git.properties"));
 
-                String buildXML = WebUtils.getBody("https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/" + URLEncoder.encode(gitProp.getProperty("git.branch"), StandardCharsets.UTF_8.toString()) + "/lastSuccessfulBuild/api/xml?xpath=//buildNumber");
+                String buildXML = WebUtils.getBody("https://ci.opencollab.dev/job/RoryMC/job/Rory/job/" + URLEncoder.encode(gitProp.getProperty("git.branch"), StandardCharsets.UTF_8.toString()) + "/lastSuccessfulBuild/api/xml?xpath=//buildNumber");
                 if (buildXML.startsWith("<buildNumber>")) {
                     int latestBuildNum = Integer.parseInt(buildXML.replaceAll("<(\\\\)?(/)?buildNumber>", "").trim());
                     int buildNum = Integer.parseInt(gitProp.getProperty("git.build.number"));
@@ -87,7 +87,7 @@ public class VersionCommand extends GeyserCommand {
                     throw new AssertionError("buildNumber missing");
                 }
             } catch (IOException | AssertionError | NumberFormatException e) {
-                GeyserConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.commands.version.failed"), e);
+                RoryConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.commands.version.failed"), e);
                 sender.sendMessage(ChatColor.RED + LanguageUtils.getPlayerLocaleString("geyser.commands.version.failed", sender.getLocale()));
             }
         }

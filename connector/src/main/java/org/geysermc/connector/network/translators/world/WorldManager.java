@@ -31,7 +31,7 @@ import com.github.steveice10.mc.protocol.data.game.entity.player.GameMode;
 import com.github.steveice10.mc.protocol.data.game.setting.Difficulty;
 import com.nukkitx.math.vector.Vector3i;
 import com.nukkitx.nbt.NbtMap;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.GameRule;
 
 /**
@@ -39,7 +39,7 @@ import org.geysermc.connector.utils.GameRule;
  * from the world. Everything in this class should be
  * safe to return null or an empty value in the event
  * that chunk caching or anything of the sort is disabled
- * on the standalone version of Geyser.
+ * on the standalone version of Rory.
  */
 public abstract class WorldManager {
 
@@ -50,7 +50,7 @@ public abstract class WorldManager {
      * @param position the position
      * @return the block state at the specified location
      */
-    public int getBlockAt(GeyserSession session, Position position) {
+    public int getBlockAt(RorySession session, Position position) {
         return this.getBlockAt(session, position.getX(), position.getY(), position.getZ());
     }
 
@@ -61,7 +61,7 @@ public abstract class WorldManager {
      * @param vector the position
      * @return the block state at the specified location
      */
-    public int getBlockAt(GeyserSession session, Vector3i vector) {
+    public int getBlockAt(RorySession session, Vector3i vector) {
         return this.getBlockAt(session, vector.getX(), vector.getY(), vector.getZ());
     }
 
@@ -74,7 +74,7 @@ public abstract class WorldManager {
      * @param z the z coordinate to get the block at
      * @return the block state at the specified location
      */
-    public abstract int getBlockAt(GeyserSession session, int x, int y, int z);
+    public abstract int getBlockAt(RorySession session, int x, int y, int z);
 
     /**
      * Gets all block states in the specified chunk section.
@@ -85,7 +85,7 @@ public abstract class WorldManager {
      * @param z the chunk's Z coordinate
      * @param section the chunk section to store the block data in
      */
-    public abstract void getBlocksInSection(GeyserSession session, int x, int y, int z, Chunk section);
+    public abstract void getBlocksInSection(RorySession session, int x, int y, int z, Chunk section);
 
     /**
      * Checks whether or not this world manager requires a separate chunk cache/has access to more block data than the chunk cache.
@@ -105,7 +105,7 @@ public abstract class WorldManager {
      * @param z the chunk's Z coordinate
      * @return the biome data for the specified region with a length of 1024.
      */
-    public abstract int[] getBiomeDataAt(GeyserSession session, int x, int z);
+    public abstract int[] getBiomeDataAt(RorySession session, int x, int z);
 
     /**
      * Sigh. <br>
@@ -126,7 +126,7 @@ public abstract class WorldManager {
      * @return the Bedrock lectern block entity tag. This may not be the exact block entity tag - for example, Spigot's
      * block handled must be done on the server thread, so we send the tag manually there.
      */
-    public abstract NbtMap getLecternDataAt(GeyserSession session, int x, int y, int z, boolean isChunkLoad);
+    public abstract NbtMap getLecternDataAt(RorySession session, int x, int y, int z, boolean isChunkLoad);
 
     /**
      * @return whether we should expect lectern data to update, or if we have to fall back on a workaround.
@@ -140,7 +140,7 @@ public abstract class WorldManager {
      * @param name The gamerule to change
      * @param value The new value for the gamerule
      */
-    public abstract void setGameRule(GeyserSession session, String name, Object value);
+    public abstract void setGameRule(RorySession session, String name, Object value);
 
     /**
      * Gets a gamerule value as a boolean
@@ -149,7 +149,7 @@ public abstract class WorldManager {
      * @param gameRule The gamerule to fetch the value of
      * @return The boolean representation of the value
      */
-    public abstract Boolean getGameRuleBool(GeyserSession session, GameRule gameRule);
+    public abstract Boolean getGameRuleBool(RorySession session, GameRule gameRule);
 
     /**
      * Get a gamerule value as an integer
@@ -158,7 +158,7 @@ public abstract class WorldManager {
      * @param gameRule The gamerule to fetch the value of
      * @return The integer representation of the value
      */
-    public abstract int getGameRuleInt(GeyserSession session, GameRule gameRule);
+    public abstract int getGameRuleInt(RorySession session, GameRule gameRule);
 
     /**
      * Change the game mode of the given session
@@ -166,7 +166,7 @@ public abstract class WorldManager {
      * @param session The session of the player to change the game mode of
      * @param gameMode The game mode to change the player to
      */
-    public abstract void setPlayerGameMode(GeyserSession session, GameMode gameMode);
+    public abstract void setPlayerGameMode(RorySession session, GameMode gameMode);
 
     /**
      * Change the difficulty of the Java server
@@ -174,7 +174,7 @@ public abstract class WorldManager {
      * @param session The session of the user that requested the change
      * @param difficulty The difficulty to change to
      */
-    public abstract void setDifficulty(GeyserSession session, Difficulty difficulty);
+    public abstract void setDifficulty(RorySession session, Difficulty difficulty);
 
     /**
      * Checks if the given session's player has a permission
@@ -183,5 +183,5 @@ public abstract class WorldManager {
      * @param permission The permission node to check
      * @return True if the player has the requested permission, false if not
      */
-    public abstract boolean hasPermission(GeyserSession session, String permission);
+    public abstract boolean hasPermission(RorySession session, String permission);
 }

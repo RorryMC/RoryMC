@@ -32,7 +32,7 @@ import com.github.steveice10.opennbt.tag.builtin.Tag;
 import com.nukkitx.nbt.NbtMap;
 import com.nukkitx.nbt.NbtMapBuilder;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.utils.BlockEntityUtils;
 import org.geysermc.connector.utils.FileUtils;
 import org.geysermc.connector.utils.LanguageUtils;
@@ -74,30 +74,30 @@ public abstract class BlockEntityTranslator {
     }
 
     static {
-        Reflections ref = GeyserConnector.getInstance().useXmlReflections() ? FileUtils.getReflections("org.geysermc.connector.network.translators.world.block.entity") : new Reflections("org.geysermc.connector.network.translators.world.block.entity");
+        Reflections ref = RoryConnector.getInstance().useXmlReflections() ? FileUtils.getReflections("org.geysermc.connector.network.translators.world.block.entity") : new Reflections("org.geysermc.connector.network.translators.world.block.entity");
         for (Class<?> clazz : ref.getTypesAnnotatedWith(BlockEntity.class)) {
-            GeyserConnector.getInstance().getLogger().debug("Found annotated block entity: " + clazz.getCanonicalName());
+            RoryConnector.getInstance().getLogger().debug("Found annotated block entity: " + clazz.getCanonicalName());
 
             try {
                 BLOCK_ENTITY_TRANSLATORS.put(clazz.getAnnotation(BlockEntity.class).name(), (BlockEntityTranslator) clazz.newInstance());
             } catch (InstantiationException | IllegalAccessException e) {
-                GeyserConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.network.translator.block_entity.failed", clazz.getCanonicalName()));
+                RoryConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.network.translator.block_entity.failed", clazz.getCanonicalName()));
             }
         }
-        boolean cacheChunks = GeyserConnector.getInstance().getConfig().isCacheChunks();
+        boolean cacheChunks = RoryConnector.getInstance().getConfig().isCacheChunks();
         for (Class<?> clazz : ref.getSubTypesOf(RequiresBlockState.class)) {
-            GeyserConnector.getInstance().getLogger().debug("Found block entity that requires block state: " + clazz.getCanonicalName());
+            RoryConnector.getInstance().getLogger().debug("Found block entity that requires block state: " + clazz.getCanonicalName());
 
             try {
                 RequiresBlockState requiresBlockState = (RequiresBlockState) clazz.newInstance();
                 if (cacheChunks && !(requiresBlockState instanceof BedrockOnlyBlockEntity)) {
                     // Not needed to put this one in the map; cache chunks takes care of that for us
-                    GeyserConnector.getInstance().getLogger().debug("Not adding because cache chunks is enabled.");
+                    RoryConnector.getInstance().getLogger().debug("Not adding because cache chunks is enabled.");
                     continue;
                 }
                 REQUIRES_BLOCK_STATE_LIST.add(requiresBlockState);
             } catch (InstantiationException | IllegalAccessException e) {
-                GeyserConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.network.translator.block_state.failed", clazz.getCanonicalName()));
+                RoryConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.network.translator.block_state.failed", clazz.getCanonicalName()));
             }
         }
     }

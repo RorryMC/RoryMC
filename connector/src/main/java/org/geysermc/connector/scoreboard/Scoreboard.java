@@ -31,9 +31,9 @@ import com.nukkitx.protocol.bedrock.packet.RemoveObjectivePacket;
 import com.nukkitx.protocol.bedrock.packet.SetDisplayObjectivePacket;
 import com.nukkitx.protocol.bedrock.packet.SetScorePacket;
 import lombok.Getter;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.GeyserLogger;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.RoryLogger;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.LanguageUtils;
 
 import java.util.*;
@@ -44,8 +44,8 @@ import static org.geysermc.connector.scoreboard.UpdateType.*;
 
 @Getter
 public final class Scoreboard {
-    private final GeyserSession session;
-    private final GeyserLogger logger;
+    private final RorySession session;
+    private final RoryLogger logger;
     private final AtomicLong nextId = new AtomicLong(0);
 
     private final Map<String, Objective> objectives = new ConcurrentHashMap<>();
@@ -54,9 +54,9 @@ public final class Scoreboard {
     private int lastAddScoreCount = 0;
     private int lastRemoveScoreCount = 0;
 
-    public Scoreboard(GeyserSession session) {
+    public Scoreboard(RorySession session) {
         this.session = session;
-        this.logger = GeyserConnector.getInstance().getLogger();
+        this.logger = RoryConnector.getInstance().getLogger();
     }
 
     public Objective registerNewObjective(String objectiveId, boolean active) {

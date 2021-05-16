@@ -30,7 +30,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import net.kyori.adventure.text.Component;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.chat.MessageTranslator;
 
 public class CommandBlockMinecartEntity extends DefaultBlockMinecartEntity {
@@ -45,7 +45,7 @@ public class CommandBlockMinecartEntity extends DefaultBlockMinecartEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 13) {
             metadata.put(EntityData.COMMAND_BLOCK_COMMAND, entityMetadata.getValue());
         }
@@ -59,7 +59,7 @@ public class CommandBlockMinecartEntity extends DefaultBlockMinecartEntity {
      * By default, the command block shown is purple on Bedrock, which does not match Java Edition's orange.
      */
     @Override
-    public void updateDefaultBlockMetadata(GeyserSession session) {
+    public void updateDefaultBlockMetadata(RorySession session) {
         metadata.put(EntityData.DISPLAY_ITEM, session.getBlockTranslator().getBedrockRuntimeCommandBlockId());
         metadata.put(EntityData.DISPLAY_OFFSET, 6);
     }

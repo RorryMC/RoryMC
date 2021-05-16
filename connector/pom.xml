@@ -296,7 +296,7 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>${project.basedir}/src/main/java/org/geysermc/connector/GeyserConnector.java</include>
+                                <include>${project.basedir}/src/main/java/org/geysermc/connector/RoryConnector.java</include>
                             </includes>
                             <replacements>
                                 <replacement>
@@ -319,7 +319,7 @@
                         </goals>
                         <configuration>
                             <includes>
-                                <include>${project.basedir}/src/main/java/org/geysermc/connector/GeyserConnector.java</include>
+                                <include>${project.basedir}/src/main/java/org/geysermc/connector/RoryConnector.java</include>
                             </includes>
                             <replacements>
                                 <replacement>

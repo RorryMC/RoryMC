@@ -25,7 +25,7 @@
 
 package org.geysermc.connector.network.translators.collision.translators;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.collision.BoundingBox;
 import org.geysermc.connector.network.translators.collision.CollisionRemapper;
 
@@ -59,7 +59,7 @@ public class DoorCollision extends BlockCollision {
     }
 
     @Override
-    public boolean correctPosition(GeyserSession session, BoundingBox playerCollision) {
+    public boolean correctPosition(RorySession session, BoundingBox playerCollision) {
         boolean result = super.correctPosition(session, playerCollision);
         // Hack to prevent false positives
         playerCollision.setSizeX(playerCollision.getSizeX() - 0.0001);

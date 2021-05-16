@@ -26,8 +26,8 @@
 package org.geysermc.connector.command;
 
 import lombok.AllArgsConstructor;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 
 /**
  * Represents helper functions for listening to {@code /geyser} commands.
@@ -35,18 +35,18 @@ import org.geysermc.connector.network.session.GeyserSession;
 @AllArgsConstructor
 public class CommandExecutor {
 
-    protected final GeyserConnector connector;
+    protected final RoryConnector connector;
 
-    public GeyserCommand getCommand(String label) {
+    public RoryCommand getCommand(String label) {
         return connector.getCommandManager().getCommands().get(label);
     }
 
-    public GeyserSession getGeyserSession(CommandSender sender) {
+    public RorySession getRorySession(CommandSender sender) {
         if (sender.isConsole()) {
             return null;
         }
 
-        for (GeyserSession session : connector.getPlayers()) {
+        for (RorySession session : connector.getPlayers()) {
             if (sender.getName().equals(session.getPlayerEntity().getUsername())) {
                 return session;
             }

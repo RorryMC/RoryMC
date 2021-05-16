@@ -39,7 +39,7 @@ import com.nukkitx.protocol.bedrock.data.inventory.ItemData;
 import it.unimi.dsi.fastutil.ints.Int2ObjectMap;
 import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectArrayList;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.utils.FileUtils;
 import org.geysermc.connector.utils.LanguageUtils;
 
@@ -142,7 +142,7 @@ public class RecipeRegistry {
 
         JsonNode items;
         try {
-            items = GeyserConnector.JSON_MAPPER.readTree(stream);
+            items = RoryConnector.JSON_MAPPER.readTree(stream);
         } catch (Exception e) {
             throw new AssertionError(LanguageUtils.getLocaleStringLog("geyser.toolbox.fail.runtime_java"), e);
         }

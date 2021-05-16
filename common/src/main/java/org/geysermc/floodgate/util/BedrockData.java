@@ -34,7 +34,7 @@ import java.util.UUID;
 @Getter
 public class BedrockData {
     public static final int EXPECTED_LENGTH = 7;
-    public static final String FLOODGATE_IDENTIFIER = "Geyser-Floodgate";
+    public static final String FLOODGATE_IDENTIFIER = "Rory-Floodgate";
 
     private String version;
     private String username;

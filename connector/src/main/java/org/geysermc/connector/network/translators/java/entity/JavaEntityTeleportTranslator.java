@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.java.entity;
 
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -37,7 +37,7 @@ import com.nukkitx.math.vector.Vector3f;
 public class JavaEntityTeleportTranslator extends PacketTranslator<ServerEntityTeleportPacket> {
 
     @Override
-    public void translate(ServerEntityTeleportPacket packet, GeyserSession session) {
+    public void translate(ServerEntityTeleportPacket packet, RorySession session) {
         Entity entity = session.getEntityCache().getEntityByJavaId(packet.getEntityId());
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();

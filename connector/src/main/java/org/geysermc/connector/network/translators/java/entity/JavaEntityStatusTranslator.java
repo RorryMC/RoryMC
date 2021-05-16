@@ -39,7 +39,7 @@ import com.nukkitx.protocol.bedrock.packet.SetEntityMotionPacket;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.LivingEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
@@ -48,7 +48,7 @@ import org.geysermc.connector.network.translators.item.ItemRegistry;
 public class JavaEntityStatusTranslator extends PacketTranslator<ServerEntityStatusPacket> {
 
     @Override
-    public void translate(ServerEntityStatusPacket packet, GeyserSession session) {
+    public void translate(ServerEntityStatusPacket packet, RorySession session) {
         Entity entity;
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();
@@ -126,7 +126,7 @@ public class JavaEntityStatusTranslator extends PacketTranslator<ServerEntitySta
                 // The physics of this are clientside on Java
                 long pulledById = entity.getMetadata().getLong(EntityData.TARGET_EID);
                 if (session.getPlayerEntity().getGeyserId() == pulledById) {
-                    Entity hookOwner = session.getEntityCache().getEntityByGeyserId(entity.getMetadata().getLong(EntityData.OWNER_EID));
+                    Entity hookOwner = session.getEntityCache().getEntityByRoryId(entity.getMetadata().getLong(EntityData.OWNER_EID));
                     if (hookOwner != null) {
                         // https://minecraft.gamepedia.com/Fishing_Rod#Hooking_mobs_and_other_entities
                         SetEntityMotionPacket motionPacket = new SetEntityMotionPacket();

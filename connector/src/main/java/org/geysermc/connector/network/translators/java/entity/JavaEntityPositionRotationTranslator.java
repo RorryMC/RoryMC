@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.java.entity;
 
 import com.github.steveice10.mc.protocol.packet.ingame.server.entity.ServerEntityPositionRotationPacket;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -35,7 +35,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class JavaEntityPositionRotationTranslator extends PacketTranslator<ServerEntityPositionRotationPacket> {
 
     @Override
-    public void translate(ServerEntityPositionRotationPacket packet, GeyserSession session) {
+    public void translate(ServerEntityPositionRotationPacket packet, RorySession session) {
         Entity entity = session.getEntityCache().getEntityByJavaId(packet.getEntityId());
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();

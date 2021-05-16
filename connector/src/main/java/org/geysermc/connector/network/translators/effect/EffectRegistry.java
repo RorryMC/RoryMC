@@ -35,7 +35,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2IntMap;
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import lombok.NonNull;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.utils.FileUtils;
 
 import java.io.InputStream;
@@ -74,7 +74,7 @@ public class EffectRegistry {
         InputStream particleStream = FileUtils.getResource("mappings/particles.json");
         JsonNode particleEntries;
         try {
-            particleEntries = GeyserConnector.JSON_MAPPER.readTree(particleStream);
+            particleEntries = RoryConnector.JSON_MAPPER.readTree(particleStream);
         } catch (Exception e) {
             throw new AssertionError("Unable to load particle map", e);
         }
@@ -104,7 +104,7 @@ public class EffectRegistry {
         InputStream effectsStream = FileUtils.getResource("mappings/effects.json");
         JsonNode effects;
         try {
-            effects = GeyserConnector.JSON_MAPPER.readTree(effectsStream);
+            effects = RoryConnector.JSON_MAPPER.readTree(effectsStream);
         } catch (Exception e) {
             throw new AssertionError("Unable to load effects mappings", e);
         }
@@ -158,7 +158,7 @@ public class EffectRegistry {
                     SOUND_EFFECTS.put(javaEffect, effect);
                 }
             } catch (Exception e) {
-                GeyserConnector.getInstance().getLogger().warning("Failed to map sound effect " + entry.getKey() + " : " + e.toString());
+                RoryConnector.getInstance().getLogger().warning("Failed to map sound effect " + entry.getKey() + " : " + e.toString());
             }
         }
     }

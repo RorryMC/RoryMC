@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.data.game.entity.metadata.EntityMetadat
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class HorseEntity extends AbstractHorseEntity {
 
@@ -38,7 +38,7 @@ public class HorseEntity extends AbstractHorseEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 18) {
             metadata.put(EntityData.VARIANT, entityMetadata.getValue());
             metadata.put(EntityData.MARK_VARIANT, (((int) entityMetadata.getValue()) >> 8) % 5);

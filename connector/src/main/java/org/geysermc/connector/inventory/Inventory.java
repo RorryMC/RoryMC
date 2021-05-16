@@ -30,8 +30,8 @@ import com.nukkitx.math.vector.Vector3i;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 
 import java.util.Arrays;
 
@@ -53,7 +53,7 @@ public class Inventory {
     @Setter
     protected String title;
 
-    protected GeyserItemStack[] items;
+    protected RoryItemStack[] items;
 
     /**
      * The location of the inventory block. Will either be a fake block above the player's head, or the actual block location
@@ -82,29 +82,29 @@ public class Inventory {
         this.id = id;
         this.size = size;
         this.windowType = windowType;
-        this.items = new GeyserItemStack[size];
-        Arrays.fill(items, GeyserItemStack.EMPTY);
+        this.items = new RoryItemStack[size];
+        Arrays.fill(items, RoryItemStack.EMPTY);
     }
 
-    public GeyserItemStack getItem(int slot) {
+    public RoryItemStack getItem(int slot) {
         if (slot > this.size) {
-            GeyserConnector.getInstance().getLogger().debug("Tried to get an item out of bounds! " + this.toString());
-            return GeyserItemStack.EMPTY;
+            RoryConnector.getInstance().getLogger().debug("Tried to get an item out of bounds! " + this.toString());
+            return RoryItemStack.EMPTY;
         }
         return items[slot];
     }
 
-    public void setItem(int slot, @NonNull GeyserItemStack newItem, GeyserSession session) {
+    public void setItem(int slot, @NonNull RoryItemStack newItem, RorySession session) {
         if (slot > this.size) {
             session.getConnector().getLogger().debug("Tried to set an item out of bounds! " + this.toString());
             return;
         }
-        GeyserItemStack oldItem = items[slot];
+        RoryItemStack oldItem = items[slot];
         updateItemNetId(oldItem, newItem, session);
         items[slot] = newItem;
     }
 
-    protected static void updateItemNetId(GeyserItemStack oldItem, GeyserItemStack newItem, GeyserSession session) {
+    protected static void updateItemNetId(RoryItemStack oldItem, RoryItemStack newItem, RorySession session) {
         if (!newItem.isEmpty()) {
             if (newItem.getItemData(session).equals(oldItem.getItemData(session), false, false, false)) {
                 newItem.setNetId(oldItem.getNetId());

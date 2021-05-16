@@ -40,7 +40,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Main-Class>org.geysermc.platform.sponge.GeyserSpongeMain</Main-Class>
+                            <Main-Class>org.geysermc.platform.sponge.RorySpongeMain</Main-Class>
                         </manifestEntries>
                     </archive>
                 </configuration>

@@ -28,9 +28,9 @@ package org.geysermc.connector.skin;
 import com.nukkitx.protocol.bedrock.data.skin.ImageData;
 import com.nukkitx.protocol.bedrock.data.skin.SerializedSkin;
 import com.nukkitx.protocol.bedrock.packet.PlayerSkinPacket;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.entity.player.PlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.LanguageUtils;
 
 import java.util.Collections;
@@ -48,7 +48,7 @@ public class SkullSkinManager extends SkinManager {
         );
     }
 
-    public static void requestAndHandleSkin(PlayerEntity entity, GeyserSession session,
+    public static void requestAndHandleSkin(PlayerEntity entity, RorySession session,
                                             Consumer<SkinProvider.Skin> skinConsumer) {
         GameProfileData data = GameProfileData.from(entity.getProfile());
 
@@ -65,7 +65,7 @@ public class SkullSkinManager extends SkinManager {
                             session.sendUpstreamPacket(packet);
                         }
                     } catch (Exception e) {
-                        GeyserConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.skin.fail", entity.getUuid()), e);
+                        RoryConnector.getInstance().getLogger().error(LanguageUtils.getLocaleStringLog("geyser.skin.fail", entity.getUuid()), e);
                     }
 
                     if (skinConsumer != null) {

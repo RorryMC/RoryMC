@@ -36,7 +36,7 @@ import com.nukkitx.protocol.bedrock.packet.MovePlayerPacket;
 import org.geysermc.connector.common.ChatColor;
 import org.geysermc.connector.entity.player.PlayerEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -44,7 +44,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class BedrockMovePlayerTranslator extends PacketTranslator<MovePlayerPacket> {
 
     @Override
-    public void translate(MovePlayerPacket packet, GeyserSession session) {
+    public void translate(MovePlayerPacket packet, RorySession session) {
         PlayerEntity entity = session.getPlayerEntity();
         if (!session.isSpawned()) return;
 
@@ -140,7 +140,7 @@ public class BedrockMovePlayerTranslator extends PacketTranslator<MovePlayerPack
         }
     }
 
-    private boolean isValidMove(GeyserSession session, MovePlayerPacket.Mode mode, Vector3f currentPosition, Vector3f newPosition) {
+    private boolean isValidMove(RorySession session, MovePlayerPacket.Mode mode, Vector3f currentPosition, Vector3f newPosition) {
         if (mode != MovePlayerPacket.Mode.NORMAL)
             return true;
 

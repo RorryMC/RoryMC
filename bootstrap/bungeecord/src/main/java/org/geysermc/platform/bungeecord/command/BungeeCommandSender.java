@@ -37,7 +37,7 @@ public class BungeeCommandSender implements CommandSender {
     public BungeeCommandSender(net.md_5.bungee.api.CommandSender handle) {
         this.handle = handle;
         // Ensure even Java players' languages are loaded
-        LanguageUtils.loadGeyserLocale(getLocale());
+        LanguageUtils.loadRoryLocale(getLocale());
     }
 
     @Override

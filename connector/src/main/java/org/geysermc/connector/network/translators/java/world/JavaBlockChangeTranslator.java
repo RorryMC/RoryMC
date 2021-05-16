@@ -31,7 +31,7 @@ import com.nukkitx.math.vector.Vector3i;
 import com.nukkitx.protocol.bedrock.data.SoundEvent;
 import com.nukkitx.protocol.bedrock.packet.LevelSoundEventPacket;
 import org.geysermc.common.PlatformType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.sound.BlockSoundInteractionHandler;
@@ -42,7 +42,7 @@ import org.geysermc.connector.utils.ChunkUtils;
 public class JavaBlockChangeTranslator extends PacketTranslator<ServerBlockChangePacket> {
 
     @Override
-    public void translate(ServerBlockChangePacket packet, GeyserSession session) {
+    public void translate(ServerBlockChangePacket packet, RorySession session) {
         Position pos = packet.getRecord().getPosition();
         boolean updatePlacement = session.getConnector().getPlatformType() != PlatformType.SPIGOT && // Spigot simply listens for the block place event
                 !(session.getConnector().getConfig().isCacheChunks() &&
@@ -54,7 +54,7 @@ public class JavaBlockChangeTranslator extends PacketTranslator<ServerBlockChang
         this.checkInteract(session, packet);
     }
 
-    private boolean checkPlace(GeyserSession session, ServerBlockChangePacket packet) {
+    private boolean checkPlace(RorySession session, ServerBlockChangePacket packet) {
         Vector3i lastPlacePos = session.getLastBlockPlacePosition();
         if (lastPlacePos == null) {
             return false;
@@ -92,7 +92,7 @@ public class JavaBlockChangeTranslator extends PacketTranslator<ServerBlockChang
         return true;
     }
 
-    private void checkInteract(GeyserSession session, ServerBlockChangePacket packet) {
+    private void checkInteract(RorySession session, ServerBlockChangePacket packet) {
         Vector3i lastInteractPos = session.getLastInteractionBlockPosition();
         if (lastInteractPos == null || !session.isInteracting()) {
             return;

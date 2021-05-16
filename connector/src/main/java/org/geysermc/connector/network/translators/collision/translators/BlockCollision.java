@@ -28,7 +28,7 @@ package org.geysermc.connector.network.translators.collision.translators;
 import com.nukkitx.math.vector.Vector3d;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.collision.CollisionManager;
 import org.geysermc.connector.network.translators.collision.BoundingBox;
 
@@ -72,7 +72,7 @@ public class BlockCollision {
      * While the Java server should do this, it could result in false flags by anticheat
      * This functionality is currently only used in 6 or 7 layer snow
      */
-    public boolean correctPosition(GeyserSession session, BoundingBox playerCollision) {
+    public boolean correctPosition(RorySession session, BoundingBox playerCollision) {
         double playerMinY = playerCollision.getMiddleY() - (playerCollision.getSizeY() / 2);
         for (BoundingBox b : this.boundingBoxes) {
             double boxMinY = (b.getMiddleY() + y) - (b.getSizeY() / 2);

@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.bedrock.entity.player;
 
 import com.nukkitx.protocol.bedrock.packet.SetPlayerGameTypePacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -38,7 +38,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class BedrockSetPlayerGameTypeTranslator extends PacketTranslator<SetPlayerGameTypePacket> {
 
     @Override
-    public void translate(SetPlayerGameTypePacket packet, GeyserSession session) {
+    public void translate(SetPlayerGameTypePacket packet, RorySession session) {
         // no
         SetPlayerGameTypePacket playerGameTypePacket = new SetPlayerGameTypePacket();
         playerGameTypePacket.setGamemode(session.getGameMode().ordinal());

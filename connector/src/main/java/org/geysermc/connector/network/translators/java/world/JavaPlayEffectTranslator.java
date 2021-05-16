@@ -33,8 +33,8 @@ import com.nukkitx.protocol.bedrock.data.SoundEvent;
 import com.nukkitx.protocol.bedrock.packet.LevelEventPacket;
 import com.nukkitx.protocol.bedrock.packet.LevelSoundEventPacket;
 import com.nukkitx.protocol.bedrock.packet.TextPacket;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.effect.Effect;
@@ -49,7 +49,7 @@ import java.util.Locale;
 public class JavaPlayEffectTranslator extends PacketTranslator<ServerPlayEffectPacket> {
 
     @Override
-    public void translate(ServerPlayEffectPacket packet, GeyserSession session) {
+    public void translate(ServerPlayEffectPacket packet, RorySession session) {
         // Separate case since each RecordEffectData in Java is an individual track in Bedrock
         if (packet.getEffect() == SoundEffect.RECORD) {
             RecordEffectData recordEffectData = (RecordEffectData) packet.getData();
@@ -88,7 +88,7 @@ public class JavaPlayEffectTranslator extends PacketTranslator<ServerPlayEffectP
                 geyserEffect.handleEffectPacket(session, packet);
                 return;
             }
-            GeyserConnector.getInstance().getLogger().debug("Unhandled sound effect: " + soundEffect.name());
+            RoryConnector.getInstance().getLogger().debug("Unhandled sound effect: " + soundEffect.name());
         } else if (packet.getEffect() instanceof ParticleEffect) {
             ParticleEffect particleEffect = (ParticleEffect) packet.getEffect();
             Vector3f pos = Vector3f.from(packet.getPosition().getX(), packet.getPosition().getY(), packet.getPosition().getZ()).add(0.5f, 0.5f, 0.5f);
@@ -276,7 +276,7 @@ public class JavaPlayEffectTranslator extends PacketTranslator<ServerPlayEffectP
                     break;
                 }
                 default: {
-                    GeyserConnector.getInstance().getLogger().debug("Unhandled particle effect: " + particleEffect.name());
+                    RoryConnector.getInstance().getLogger().debug("Unhandled particle effect: " + particleEffect.name());
                     return;
                 }
             }

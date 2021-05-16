@@ -33,7 +33,7 @@ import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.living.animal.AnimalEntity;
 import org.geysermc.connector.entity.living.animal.OcelotEntity;
 import org.geysermc.connector.entity.living.animal.tameable.CatEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.sound.EntitySoundInteractionHandler;
 import org.geysermc.connector.network.translators.sound.SoundHandler;
 
@@ -41,7 +41,7 @@ import org.geysermc.connector.network.translators.sound.SoundHandler;
 public class FeedBabySoundInteractionHandler implements EntitySoundInteractionHandler {
 
     @Override
-    public void handleInteraction(GeyserSession session, Vector3f position, Entity entity) {
+    public void handleInteraction(RorySession session, Vector3f position, Entity entity) {
         if (entity instanceof AnimalEntity && !(entity instanceof CatEntity || entity instanceof OcelotEntity)) {
             String handIdentifier = session.getPlayerInventory().getItemInHand().getItemEntry().getJavaIdentifier();
             boolean isBaby = entity.getMetadata().getFlags().getFlag(EntityFlag.BABY);

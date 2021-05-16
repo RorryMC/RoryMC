@@ -33,7 +33,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.entity.spawn.Serve
 import com.nukkitx.math.vector.Vector3f;
 import org.geysermc.connector.entity.*;
 import org.geysermc.connector.entity.player.PlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.EntityUtils;
@@ -46,7 +46,7 @@ import java.lang.reflect.InvocationTargetException;
 public class JavaSpawnEntityTranslator extends PacketTranslator<ServerSpawnEntityPacket> {
 
     @Override
-    public void translate(ServerSpawnEntityPacket packet, GeyserSession session) {
+    public void translate(ServerSpawnEntityPacket packet, RorySession session) {
 
         Vector3f position = Vector3f.from(packet.getX(), packet.getY(), packet.getZ());
         Vector3f motion = Vector3f.from(packet.getMotionX(), packet.getMotionY(), packet.getMotionZ());

@@ -26,9 +26,9 @@
 package org.geysermc.connector.network.translators.java.window;
 
 import com.github.steveice10.mc.protocol.packet.ingame.server.window.ServerWindowItemsPacket;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.Inventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
@@ -38,14 +38,14 @@ import org.geysermc.connector.utils.InventoryUtils;
 public class JavaWindowItemsTranslator extends PacketTranslator<ServerWindowItemsPacket> {
 
     @Override
-    public void translate(ServerWindowItemsPacket packet, GeyserSession session) {
+    public void translate(ServerWindowItemsPacket packet, RorySession session) {
         session.addInventoryTask(() -> {
             Inventory inventory = InventoryUtils.getInventory(session, packet.getWindowId());
             if (inventory == null)
                 return;
 
             for (int i = 0; i < packet.getItems().length; i++) {
-                GeyserItemStack newItem = GeyserItemStack.from(packet.getItems()[i]);
+                RoryItemStack newItem = RoryItemStack.from(packet.getItems()[i]);
                 inventory.setItem(i, newItem, session);
             }
 

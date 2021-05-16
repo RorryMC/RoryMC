@@ -30,14 +30,14 @@ import com.github.steveice10.mc.protocol.packet.ingame.client.player.ClientPlaye
 import com.nukkitx.protocol.bedrock.packet.RiderJumpPacket;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.living.animal.horse.AbstractHorseEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
 @Translator(packet = RiderJumpPacket.class)
 public class BedrockRiderJumpTranslator extends PacketTranslator<RiderJumpPacket> {
     @Override
-    public void translate(RiderJumpPacket packet, GeyserSession session) {
+    public void translate(RiderJumpPacket packet, RorySession session) {
         Entity vehicle = session.getRidingVehicleEntity();
         if (vehicle instanceof AbstractHorseEntity) {
             ClientPlayerStatePacket playerStatePacket = new ClientPlayerStatePacket((int) vehicle.getEntityId(),  PlayerState.START_HORSE_JUMP, packet.getJumpStrength());

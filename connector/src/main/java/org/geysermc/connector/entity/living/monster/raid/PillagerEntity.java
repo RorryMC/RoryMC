@@ -28,7 +28,7 @@ package org.geysermc.connector.entity.living.monster.raid;
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
 
 public class PillagerEntity extends AbstractIllagerEntity {
@@ -38,14 +38,14 @@ public class PillagerEntity extends AbstractIllagerEntity {
     }
 
     @Override
-    public void updateMainHand(GeyserSession session) {
+    public void updateMainHand(RorySession session) {
         checkForCrossbow(session);
 
         super.updateMainHand(session);
     }
 
     @Override
-    public void updateOffHand(GeyserSession session) {
+    public void updateOffHand(RorySession session) {
         checkForCrossbow(session);
 
         super.updateOffHand(session);
@@ -54,7 +54,7 @@ public class PillagerEntity extends AbstractIllagerEntity {
     /**
      * Check for a crossbow in either the mainhand or offhand. If one exists, indicate that the pillager should be posing
      */
-    protected void checkForCrossbow(GeyserSession session) {
+    protected void checkForCrossbow(RorySession session) {
         boolean hasCrossbow = this.hand.getId() == ItemRegistry.CROSSBOW.getBedrockId()
                 || this.offHand.getId() == ItemRegistry.CROSSBOW.getBedrockId();
         boolean usingItemChanged = metadata.getFlags().setFlag(EntityFlag.USING_ITEM, hasCrossbow);

@@ -25,10 +25,10 @@
 
 package org.geysermc.connector.network.translators;
 
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public abstract class PacketTranslator<T> {
 
-    public abstract void translate(T packet, GeyserSession session);
+    public abstract void translate(T packet, RorySession session);
 
 }

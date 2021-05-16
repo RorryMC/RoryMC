@@ -31,10 +31,10 @@ import com.nukkitx.protocol.bedrock.data.ExperimentData;
 import com.nukkitx.protocol.bedrock.data.ResourcePackType;
 import com.nukkitx.protocol.bedrock.packet.*;
 import com.nukkitx.protocol.bedrock.v428.Bedrock_v428;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.common.AuthType;
-import org.geysermc.connector.configuration.GeyserConfiguration;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.configuration.RoryConfiguration;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.session.cache.AdvancementsCache;
 import org.geysermc.connector.network.translators.PacketTranslatorRegistry;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
@@ -47,7 +47,7 @@ import java.io.InputStream;
 
 public class UpstreamPacketHandler extends LoggingPacketHandler {
 
-    public UpstreamPacketHandler(GeyserConnector connector, GeyserSession session) {
+    public UpstreamPacketHandler(RoryConnector connector, RorySession session) {
         super(connector, session);
     }
 
@@ -90,7 +90,7 @@ public class UpstreamPacketHandler extends LoggingPacketHandler {
                     header.getUuid().toString(), header.getVersionString(), resourcePack.getFile().length(),
                             "", "", "", false, false));
         }
-        resourcePacksInfo.setForcedToAccept(GeyserConnector.getInstance().getConfig().isForceResourcePacks());
+        resourcePacksInfo.setForcedToAccept(RoryConnector.getInstance().getConfig().isForceResourcePacks());
         session.sendUpstreamPacket(resourcePacksInfo);
         return true;
     }
@@ -173,7 +173,7 @@ public class UpstreamPacketHandler extends LoggingPacketHandler {
 
     private boolean couldLoginUserByName(String bedrockUsername) {
         if (connector.getConfig().getUserAuths() != null) {
-            GeyserConfiguration.IUserAuthenticationInfo info = connector.getConfig().getUserAuths().get(bedrockUsername);
+            RoryConfiguration.IUserAuthenticationInfo info = connector.getConfig().getUserAuths().get(bedrockUsername);
 
             if (info != null) {
                 connector.getLogger().info(LanguageUtils.getLocaleStringLog("geyser.auth.stored_credentials", session.getAuthData().getName()));
@@ -191,7 +191,7 @@ public class UpstreamPacketHandler extends LoggingPacketHandler {
 
     @Override
     public boolean handle(SetLocalPlayerAsInitializedPacket packet) {
-        LanguageUtils.loadGeyserLocale(session.getLocale());
+        LanguageUtils.loadRoryLocale(session.getLocale());
 
         if (!session.isLoggedIn() && !session.isLoggingIn() && session.getRemoteAuthType() == AuthType.ONLINE) {
             // TODO it is safer to key authentication on something that won't change (UUID, not username)

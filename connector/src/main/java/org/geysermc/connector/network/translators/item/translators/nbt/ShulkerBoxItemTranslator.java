@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.item.translators.nbt;
 
 import com.github.steveice10.opennbt.tag.builtin.*;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.ItemRemapper;
 import org.geysermc.connector.network.translators.item.*;
 
@@ -34,7 +34,7 @@ import org.geysermc.connector.network.translators.item.*;
 public class ShulkerBoxItemTranslator extends NbtItemStackTranslator {
 
     @Override
-    public void translateToBedrock(GeyserSession session, CompoundTag itemTag, ItemEntry itemEntry) {
+    public void translateToBedrock(RorySession session, CompoundTag itemTag, ItemEntry itemEntry) {
         if (!itemTag.contains("BlockEntityTag")) return; // Empty shulker box
 
         CompoundTag blockEntityTag = itemTag.get("BlockEntityTag");

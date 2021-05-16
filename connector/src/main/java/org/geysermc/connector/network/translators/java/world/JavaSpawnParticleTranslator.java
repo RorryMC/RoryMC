@@ -34,7 +34,7 @@ import com.nukkitx.protocol.bedrock.data.LevelEventType;
 import com.nukkitx.protocol.bedrock.data.inventory.ItemData;
 import com.nukkitx.protocol.bedrock.packet.LevelEventPacket;
 import com.nukkitx.protocol.bedrock.packet.SpawnParticleEffectPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.effect.EffectRegistry;
@@ -49,7 +49,7 @@ public class JavaSpawnParticleTranslator extends PacketTranslator<ServerSpawnPar
     private final Random random = new Random();
 
     @Override
-    public void translate(ServerSpawnParticlePacket packet, GeyserSession session) {
+    public void translate(ServerSpawnParticlePacket packet, RorySession session) {
         Function<Vector3f, BedrockPacket> particleCreateFunction = createParticle(session, packet.getParticle());
         if (particleCreateFunction != null) {
             if (packet.getAmount() == 0) {
@@ -78,7 +78,7 @@ public class JavaSpawnParticleTranslator extends PacketTranslator<ServerSpawnPar
      * @return a function to create a packet with a specified particle, in the event we need to spawn multiple particles
      * with different offsets.
      */
-    private Function<Vector3f, BedrockPacket> createParticle(GeyserSession session, Particle particle) {
+    private Function<Vector3f, BedrockPacket> createParticle(RorySession session, Particle particle) {
         switch (particle.getType()) {
             case BLOCK: {
                 int blockState = session.getBlockTranslator().getBedrockBlockId(((BlockParticleData) particle.getData()).getBlockState());

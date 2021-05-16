@@ -29,7 +29,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.SoundEvent;
 import com.nukkitx.protocol.bedrock.packet.LevelSoundEventPacket;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
 import org.geysermc.connector.network.translators.sound.EntitySoundInteractionHandler;
 import org.geysermc.connector.network.translators.sound.SoundHandler;
@@ -38,7 +38,7 @@ import org.geysermc.connector.network.translators.sound.SoundHandler;
 public class MilkCowSoundInteractionHandler implements EntitySoundInteractionHandler {
 
     @Override
-    public void handleInteraction(GeyserSession session, Vector3f position, Entity value) {
+    public void handleInteraction(RorySession session, Vector3f position, Entity value) {
         if (!session.getPlayerInventory().getItemInHand().getItemEntry().getJavaIdentifier().equals("minecraft:bucket")) {
             return;
         }

@@ -30,7 +30,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class SpellcasterIllagerEntity extends AbstractIllagerEntity {
     private static final int SUMMON_VEX_PARTICLE_COLOR = (179 << 16) | (179 << 8) | 204;
@@ -44,7 +44,7 @@ public class SpellcasterIllagerEntity extends AbstractIllagerEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 16) {
             int spellType = (int) (byte) entityMetadata.getValue();
             // Summon vex, attack, or wololo

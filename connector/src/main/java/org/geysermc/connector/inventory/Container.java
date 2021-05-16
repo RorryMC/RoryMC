@@ -28,7 +28,7 @@ package org.geysermc.connector.inventory;
 import com.github.steveice10.mc.protocol.data.game.window.WindowType;
 import lombok.Getter;
 import lombok.NonNull;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.inventory.InventoryTranslator;
 
 /**
@@ -51,7 +51,7 @@ public class Container extends Inventory {
     }
 
     @Override
-    public GeyserItemStack getItem(int slot) {
+    public RoryItemStack getItem(int slot) {
         if (slot < this.size) {
             return super.getItem(slot);
         } else {
@@ -60,7 +60,7 @@ public class Container extends Inventory {
     }
 
     @Override
-    public void setItem(int slot, @NonNull GeyserItemStack newItem, GeyserSession session) {
+    public void setItem(int slot, @NonNull RoryItemStack newItem, RorySession session) {
         if (slot < this.size) {
             super.setItem(slot, newItem, session);
         } else {

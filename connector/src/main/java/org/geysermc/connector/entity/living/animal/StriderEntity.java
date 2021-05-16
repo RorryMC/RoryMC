@@ -30,7 +30,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemEntry;
 
 public class StriderEntity extends AnimalEntity {
@@ -45,7 +45,7 @@ public class StriderEntity extends AnimalEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         if (entityMetadata.getId() == 17) {
             shaking = (boolean) entityMetadata.getValue();
         }
@@ -57,7 +57,7 @@ public class StriderEntity extends AnimalEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(GeyserSession session) {
+    public void updateBedrockMetadata(RorySession session) {
         // Make sure they are not shaking when riding another entity
         // Needs to copy the parent state
         if (metadata.getFlags().getFlag(EntityFlag.RIDING)) {
@@ -88,7 +88,7 @@ public class StriderEntity extends AnimalEntity {
     }
 
     @Override
-    public boolean canEat(GeyserSession session, String javaIdentifierStripped, ItemEntry itemEntry) {
+    public boolean canEat(RorySession session, String javaIdentifierStripped, ItemEntry itemEntry) {
         return javaIdentifierStripped.equals("warped_fungus");
     }
 }

@@ -28,7 +28,7 @@ package org.geysermc.connector.network.translators.java.world;
 import com.github.steveice10.mc.protocol.packet.ingame.server.entity.ServerVehicleMovePacket;
 import com.nukkitx.math.vector.Vector3f;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -36,7 +36,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class JavaVehicleMoveTranslator extends PacketTranslator<ServerVehicleMovePacket> {
 
     @Override
-    public void translate(ServerVehicleMovePacket packet, GeyserSession session) {
+    public void translate(ServerVehicleMovePacket packet, RorySession session) {
         Entity entity = session.getRidingVehicleEntity();
         if (entity == null) return;
 

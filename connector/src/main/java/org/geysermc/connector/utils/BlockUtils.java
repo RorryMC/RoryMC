@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.data.game.entity.Effect;
 import com.github.steveice10.mc.protocol.data.game.entity.metadata.Position;
 import com.github.steveice10.opennbt.tag.builtin.CompoundTag;
 import com.nukkitx.math.vector.Vector3i;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemEntry;
 import org.geysermc.connector.network.translators.item.ToolItemEntry;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
@@ -109,7 +109,7 @@ public class BlockUtils {
         return 1.0 / speed;
     }
 
-    public static double getBreakTime(GeyserSession session, BlockMapping blockMapping, ItemEntry item, CompoundTag nbtData, boolean isSessionPlayer) {
+    public static double getBreakTime(RorySession session, BlockMapping blockMapping, ItemEntry item, CompoundTag nbtData, boolean isSessionPlayer) {
         boolean isWoolBlock = session.getTagCache().isWool(blockMapping);
         boolean isCobweb = blockMapping.getJavaBlockId() == BlockTranslator.JAVA_COBWEB_BLOCK_ID;
         String blockToolType = blockMapping.getToolType();

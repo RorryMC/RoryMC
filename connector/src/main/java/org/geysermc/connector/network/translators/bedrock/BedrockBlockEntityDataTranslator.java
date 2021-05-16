@@ -30,7 +30,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.client.window.ClientUpdat
 import com.github.steveice10.mc.protocol.packet.ingame.client.world.ClientUpdateSignPacket;
 import com.nukkitx.nbt.NbtMap;
 import com.nukkitx.protocol.bedrock.packet.BlockEntityDataPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.SignUtils;
@@ -39,7 +39,7 @@ import org.geysermc.connector.utils.SignUtils;
 public class BedrockBlockEntityDataTranslator extends PacketTranslator<BlockEntityDataPacket> {
 
     @Override
-    public void translate(BlockEntityDataPacket packet, GeyserSession session) {
+    public void translate(BlockEntityDataPacket packet, RorySession session) {
         NbtMap tag = packet.getData();
         if (tag.getString("id").equals("Sign")) {
             // This is the reason why this all works - Bedrock sends packets every time you update the sign, Java only wants the final packet

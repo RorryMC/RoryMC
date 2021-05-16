@@ -30,12 +30,12 @@ import com.nukkitx.protocol.bedrock.BedrockServerEventHandler;
 import com.nukkitx.protocol.bedrock.BedrockServerSession;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.socket.DatagramPacket;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.common.ping.GeyserPingInfo;
-import org.geysermc.connector.configuration.GeyserConfiguration;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.common.ping.RoryPingInfo;
+import org.geysermc.connector.configuration.RoryConfiguration;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.chat.MessageTranslator;
-import org.geysermc.connector.ping.IGeyserPingPassthrough;
+import org.geysermc.connector.ping.IRoryPingPassthrough;
 import org.geysermc.connector.utils.LanguageUtils;
 
 import java.net.InetSocketAddress;
@@ -47,15 +47,15 @@ public class ConnectorServerEventHandler implements BedrockServerEventHandler {
     The following constants are all used to ensure the ping does not reach a length where it is unparsable by the Bedrock client
      */
     private static final int MINECRAFT_VERSION_BYTES_LENGTH = BedrockProtocol.DEFAULT_BEDROCK_CODEC.getMinecraftVersion().getBytes(StandardCharsets.UTF_8).length;
-    private static final int BRAND_BYTES_LENGTH = GeyserConnector.NAME.getBytes(StandardCharsets.UTF_8).length;
+    private static final int BRAND_BYTES_LENGTH = RoryConnector.NAME.getBytes(StandardCharsets.UTF_8).length;
     /**
      * The MOTD, sub-MOTD and Minecraft version ({@link #MINECRAFT_VERSION_BYTES_LENGTH}) combined cannot reach this length.
      */
     private static final int MAGIC_RAKNET_LENGTH = 338;
 
-    private final GeyserConnector connector;
+    private final RoryConnector connector;
 
-    public ConnectorServerEventHandler(GeyserConnector connector) {
+    public ConnectorServerEventHandler(RoryConnector connector) {
         this.connector = connector;
     }
 
@@ -84,11 +84,11 @@ public class ConnectorServerEventHandler implements BedrockServerEventHandler {
     public BedrockPong onQuery(InetSocketAddress inetSocketAddress) {
         connector.getLogger().debug(LanguageUtils.getLocaleStringLog("geyser.network.pinged", inetSocketAddress));
 
-        GeyserConfiguration config = connector.getConfig();
+        RoryConfiguration config = connector.getConfig();
 
-        GeyserPingInfo pingInfo = null;
+        RoryPingInfo pingInfo = null;
         if (config.isPassthroughMotd() || config.isPassthroughPlayerCounts()) {
-            IGeyserPingPassthrough pingPassthrough = connector.getBootstrap().getGeyserPingPassthrough();
+            IRoryPingPassthrough pingPassthrough = connector.getBootstrap().getRoryPingPassthrough();
             pingInfo = pingPassthrough.getPingInformation(inetSocketAddress);
         }
 
@@ -103,7 +103,7 @@ public class ConnectorServerEventHandler implements BedrockServerEventHandler {
         if (config.isPassthroughMotd() && pingInfo != null && pingInfo.getDescription() != null) {
             String[] motd = MessageTranslator.convertMessageLenient(pingInfo.getDescription()).split("\n");
             String mainMotd = motd[0]; // First line of the motd.
-            String subMotd = (motd.length != 1) ? motd[1] : GeyserConnector.NAME; // Second line of the motd if present, otherwise default.
+            String subMotd = (motd.length != 1) ? motd[1] : RoryConnector.NAME; // Second line of the motd if present, otherwise default.
 
             pong.setMotd(mainMotd.trim());
             pong.setSubMotd(subMotd.trim()); // Trimmed to shift it to the left, prevents the universe from collapsing on us just because we went 2 characters over the text box's limit.
@@ -122,11 +122,11 @@ public class ConnectorServerEventHandler implements BedrockServerEventHandler {
 
         // Fallbacks to prevent errors and allow Bedrock to see the server
         if (pong.getMotd() == null || pong.getMotd().trim().isEmpty()) {
-            pong.setMotd(GeyserConnector.NAME);
+            pong.setMotd(RoryConnector.NAME);
         }
         if (pong.getSubMotd() == null || pong.getSubMotd().trim().isEmpty()) {
             // Sub-MOTD cannot be empty as of 1.16.210.59
-            pong.setSubMotd(GeyserConnector.NAME);
+            pong.setSubMotd(RoryConnector.NAME);
         }
 
         // The ping will not appear if the MOTD + sub-MOTD is of a certain length.
@@ -136,7 +136,7 @@ public class ConnectorServerEventHandler implements BedrockServerEventHandler {
         if (motdArray.length + subMotdLength > (MAGIC_RAKNET_LENGTH - MINECRAFT_VERSION_BYTES_LENGTH)) {
             // Shorten the sub-MOTD first since that only appears locally
             if (subMotdLength > BRAND_BYTES_LENGTH) {
-                pong.setSubMotd(GeyserConnector.NAME);
+                pong.setSubMotd(RoryConnector.NAME);
                 subMotdLength = BRAND_BYTES_LENGTH;
             }
             if (motdArray.length > (MAGIC_RAKNET_LENGTH - MINECRAFT_VERSION_BYTES_LENGTH - subMotdLength)) {
@@ -160,7 +160,7 @@ public class ConnectorServerEventHandler implements BedrockServerEventHandler {
     public void onSessionCreation(BedrockServerSession bedrockServerSession) {
         bedrockServerSession.setLogging(true);
         bedrockServerSession.setCompressionLevel(connector.getConfig().getBedrock().getCompressionLevel());
-        bedrockServerSession.setPacketHandler(new UpstreamPacketHandler(connector, new GeyserSession(connector, bedrockServerSession)));
+        bedrockServerSession.setPacketHandler(new UpstreamPacketHandler(connector, new RorySession(connector, bedrockServerSession)));
         // Set the packet codec to default just in case we need to send disconnect packets.
         bedrockServerSession.setPacketCodec(BedrockProtocol.DEFAULT_BEDROCK_CODEC);
     }

@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.java.entity;
 
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -36,7 +36,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.server.entity.ServerEntit
 public class JavaEntityDestroyTranslator extends PacketTranslator<ServerEntityDestroyPacket> {
 
     @Override
-    public void translate(ServerEntityDestroyPacket packet, GeyserSession session) {
+    public void translate(ServerEntityDestroyPacket packet, RorySession session) {
         for (int entityId : packet.getEntityIds()) {
             Entity entity = session.getEntityCache().getEntityByJavaId(entityId);
 

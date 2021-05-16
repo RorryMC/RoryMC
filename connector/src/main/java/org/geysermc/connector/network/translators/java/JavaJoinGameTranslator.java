@@ -35,7 +35,7 @@ import com.nukkitx.protocol.bedrock.data.GameRuleData;
 import com.nukkitx.protocol.bedrock.data.PlayerPermission;
 import com.nukkitx.protocol.bedrock.packet.*;
 import org.geysermc.connector.entity.player.PlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.DimensionUtils;
@@ -49,7 +49,7 @@ public class JavaJoinGameTranslator extends PacketTranslator<ServerJoinGamePacke
     private static final List<SkinPart> SKIN_PART_VALUES = Arrays.asList(SkinPart.values());
 
     @Override
-    public void translate(ServerJoinGamePacket packet, GeyserSession session) {
+    public void translate(ServerJoinGamePacket packet, RorySession session) {
         PlayerEntity entity = session.getPlayerEntity();
         entity.setEntityId(packet.getEntityId());
         // If the player is already initialized and a join game packet is sent, they
@@ -98,7 +98,7 @@ public class JavaJoinGameTranslator extends PacketTranslator<ServerJoinGamePacke
         ClientSettingsPacket clientSettingsPacket = new ClientSettingsPacket(locale, (byte) session.getRenderDistance(), ChatVisibility.FULL, true, SKIN_PART_VALUES, HandPreference.RIGHT_HAND);
         session.sendDownstreamPacket(clientSettingsPacket);
 
-        session.sendDownstreamPacket(new ClientPluginMessagePacket("minecraft:brand", PluginMessageUtils.getGeyserBrandData()));
+        session.sendDownstreamPacket(new ClientPluginMessagePacket("minecraft:brand", PluginMessageUtils.getRoryBrandData()));
 
         if (!newDimension.equals(session.getDimension())) {
             DimensionUtils.switchDimension(session, newDimension);

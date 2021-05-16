@@ -33,7 +33,7 @@ import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.PaintingType;
 
 @Getter @Setter
@@ -48,7 +48,7 @@ public class PaintingEntity extends Entity {
     }
 
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         AddPaintingPacket addPaintingPacket = new AddPaintingPacket();
         addPaintingPacket.setUniqueEntityId(geyserId);
         addPaintingPacket.setRuntimeEntityId(geyserId);
@@ -63,7 +63,7 @@ public class PaintingEntity extends Entity {
     }
 
     @Override
-    public void updateHeadLookRotation(GeyserSession session, float headYaw) {
+    public void updateHeadLookRotation(RorySession session, float headYaw) {
         // Do nothing, as head look messes up paintings
     }
 

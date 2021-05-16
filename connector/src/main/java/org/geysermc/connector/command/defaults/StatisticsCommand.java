@@ -27,19 +27,19 @@ package org.geysermc.connector.command.defaults;
 
 import com.github.steveice10.mc.protocol.data.game.ClientRequest;
 import com.github.steveice10.mc.protocol.packet.ingame.client.ClientRequestPacket;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.command.CommandSender;
-import org.geysermc.connector.command.GeyserCommand;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.command.RoryCommand;
+import org.geysermc.connector.network.session.RorySession;
 
-public class StatisticsCommand extends GeyserCommand {
+public class StatisticsCommand extends RoryCommand {
 
-    public StatisticsCommand(GeyserConnector connector, String name, String description, String permission) {
+    public StatisticsCommand(RoryConnector connector, String name, String description, String permission) {
         super(name, description, permission);
     }
 
     @Override
-    public void execute(GeyserSession session, CommandSender sender, String[] args) {
+    public void execute(RorySession session, CommandSender sender, String[] args) {
         if (session == null) return;
 
         session.setWaitingForStatistics(true);

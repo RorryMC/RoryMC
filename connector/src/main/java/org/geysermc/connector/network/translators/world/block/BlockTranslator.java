@@ -35,7 +35,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectMap;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import lombok.Getter;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.network.translators.world.chunk.ChunkSection;
 import org.geysermc.connector.network.translators.world.chunk.EmptyChunkProvider;
 import org.geysermc.connector.registry.type.BlockMapping;
@@ -111,7 +111,7 @@ public abstract class BlockTranslator {
     static {
         InputStream stream = FileUtils.getResource("mappings/blocks.json");
         try {
-            BLOCKS_JSON = GeyserConnector.JSON_MAPPER.readTree(stream);
+            BLOCKS_JSON = RoryConnector.JSON_MAPPER.readTree(stream);
         } catch (Exception e) {
             throw new AssertionError("Unable to load Java block mappings", e);
         }
@@ -373,7 +373,7 @@ public abstract class BlockTranslator {
     }
 
     /**
-     * @return an adjusted state list, if necessary, that converts Geyser's new mapping to Bedrock's older version
+     * @return an adjusted state list, if necessary, that converts Rory's new mapping to Bedrock's older version
      * of the mapping.
      */
     protected NbtMapBuilder adjustBlockStateForVersion(String bedrockIdentifier, NbtMapBuilder statesBuilder) {

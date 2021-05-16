@@ -27,7 +27,7 @@ package org.geysermc.connector.network.translators.java.world;
 
 import com.github.steveice10.mc.protocol.packet.ingame.server.world.ServerUnloadChunkPacket;
 import com.nukkitx.math.vector.Vector3i;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -37,7 +37,7 @@ import java.util.Iterator;
 public class JavaUnloadChunkTranslator extends PacketTranslator<ServerUnloadChunkPacket> {
 
     @Override
-    public void translate(ServerUnloadChunkPacket packet, GeyserSession session) {
+    public void translate(ServerUnloadChunkPacket packet, RorySession session) {
         session.getChunkCache().removeChunk(packet.getX(), packet.getZ());
 
         //Checks if a skull is in an unloaded chunk then removes it

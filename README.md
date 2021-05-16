@@ -1,19 +1,22 @@
-<img src="https://geysermc.org/img/geyser-1760-860.png" alt="Geyser" width="600"/>
+<img src="https://geysermc.org/img/geyser-1760-860.png" alt="Rory" width="600"/>
 
 [![forthebadge made-with-java](https://ForTheBadge.com/images/badges/made-with-java.svg)](https://java.com/)
 
 [![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
-[![Build Status](https://ci.opencollab.dev/job/Geyser/job/master/badge/icon)](https://ci.opencollab.dev/job/GeyserMC/job/Geyser/job/master/)
+[![Build Status](https://ci.opencollab.dev/job/Rory/job/master/badge/icon)](https://ci.opencollab.dev/job/RoryMC/job/Rory/job/master/)
 [![Discord](https://img.shields.io/discord/613163671870242838.svg?color=%237289da&label=discord)](https://discord.gg/geysermc/)
 [![HitCount](http://hits.dwyl.com/RoryMCDev/RoryMC.svg)](http://hits.dwyl.com/RoryMCDev/RoryMC)
 [![Crowdin](https://badges.crowdin.net/geyser/localized.svg)](https://translate.geysermc.org/)
 
 Rory is a bridge between Minecraft: Bedrock Edition and Minecraft: Java Edition, closing the gap from those wanting to play true cross-platform.
 
-## What is Rory?
-What is Rory? Rory is a proxy, bridging the gap between Minecraft: Bedrock Edition and Minecraft: Java Edition servers. The ultimate goal of this project is to allow Minecraft: Bedrock Edition users to join Minecraft: Java Edition servers as seamlessly as possible. **Please note, this project is still a work in progress and should not be used on production. Expect bugs!**
+Rory is an open collaboration project by [CubeCraft Games](https://cubecraft.net).
 
-Special thanks to the DragonProxy and GeyserMC project for being a trailblazer in protocol translation and for all the team members who have joined us here!
+## What is Rory?
+Rory is a proxy, bridging the gap between Minecraft: Bedrock Edition and Minecraft: Java Edition servers.
+The ultimate goal of this project is to allow Minecraft: Bedrock Edition users to join Minecraft: Java Edition servers as seamlessly as possible. **Please note, this project is still a work in progress and should not be used on production. Expect bugs!**
+
+Special thanks to the DragonProxy project for being a trailblazer in protocol translation and for all the team members who have joined us here!
 
 ### Currently supporting Minecraft Bedrock v1.16.100 - v1.16.220 and Minecraft Java v1.16.4 - v1.16.5.
 
@@ -27,7 +30,7 @@ Take a look [here](https://github.com/GeyserMC/Geyser/wiki#Setup) for how to set
 - Docs: https://github.com/GeyserMC/Geyser/wiki
 - Download: https://ci.geysermc.org
 - Discord: https://discord.gg/geysermc
-- ~~Donate: https://patreon.com/GeyserMC~~ Currently disabled.
+- ~~Donate: https://patreon.com/RoryMC~~ Currently disabled.
 - Test Server: `test.geysermc.org` port `25565` for Java and `19132` for Bedrock
 
 ## What's Left to be Added/Fixed
@@ -37,23 +40,23 @@ Take a look [here](https://github.com/GeyserMC/Geyser/wiki#Setup) for how to set
 - Structure block UI
 
 ## What can't be fixed
-The following things cannot be fixed without changes to Bedrock. As of now, they are not fixable in Geyser.
+The following things cannot be fixed without changes to Bedrock. As of now, they are not fixable in Rory.
 
 - Custom heads in inventories
 - Clickable links in chat
 - Glowing effect
 
-Do note that some things require the [GeyserOptionalPack](https://github.com/GeyserMC/Geyser/wiki/GeyserOptionalPack) in order to function, such as custom armor stand poses.
+Do note that some things require the [RoryOptionalPack](https://github.com/RoryMC/Rory/wiki/RoryOptionalPack) in order to function, such as custom armor stand poses.
 
 ## Compiling
 1. Clone the repo to your computer
 2. [Install Maven](https://maven.apache.org/install.html)
-3. Navigate to the Geyser root directory and run `git submodule update --init --recursive`. This command downloads all the needed submodules for Geyser and is a crucial step in this process.
+3. Navigate to the Rory root directory and run `git submodule update --init --recursive`. This command downloads all the needed submodules for Rory and is a crucial step in this process.
 4. Run `mvn clean install` and locate to the `target` folder.
 
 ## Contributing
 Any contributions are appreciated. Please feel free to reach out to us on [Discord](http://discord.geysermc.org/) if
-you're interested in helping out with Geyser.
+you're interested in helping out with Rory.
 
 ## Libraries Used:
 - [NukkitX Bedrock Protocol Library](https://github.com/NukkitX/Protocol)

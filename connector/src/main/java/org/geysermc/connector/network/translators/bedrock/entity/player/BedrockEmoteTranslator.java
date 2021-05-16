@@ -31,7 +31,7 @@ import com.github.steveice10.mc.protocol.packet.ingame.client.player.ClientPlaye
 import com.nukkitx.protocol.bedrock.packet.EmotePacket;
 import org.geysermc.connector.configuration.EmoteOffhandWorkaroundOption;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.utils.BlockUtils;
@@ -40,7 +40,7 @@ import org.geysermc.connector.utils.BlockUtils;
 public class BedrockEmoteTranslator extends PacketTranslator<EmotePacket> {
 
     @Override
-    public void translate(EmotePacket packet, GeyserSession session) {
+    public void translate(EmotePacket packet, RorySession session) {
         if (session.getConnector().getConfig().getEmoteOffhandWorkaround() != EmoteOffhandWorkaroundOption.DISABLED) {
             // Activate the workaround - we should trigger the offhand now
             ClientPlayerActionPacket swapHandsPacket = new ClientPlayerActionPacket(PlayerAction.SWAP_HANDS, BlockUtils.POSITION_ZERO,
@@ -53,7 +53,7 @@ public class BedrockEmoteTranslator extends PacketTranslator<EmotePacket> {
         }
 
         long javaId = session.getPlayerEntity().getEntityId();
-        for (GeyserSession otherSession : session.getConnector().getPlayers()) {
+        for (RorySession otherSession : session.getConnector().getPlayers()) {
             if (otherSession != session) {
                 if (otherSession.isClosed()) continue;
                 Entity otherEntity = otherSession.getEntityCache().getEntityByJavaId(javaId);

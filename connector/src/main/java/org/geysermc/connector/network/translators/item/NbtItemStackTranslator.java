@@ -26,7 +26,7 @@
 package org.geysermc.connector.network.translators.item;
 
 import com.github.steveice10.opennbt.tag.builtin.CompoundTag;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class NbtItemStackTranslator {
 
@@ -34,23 +34,23 @@ public class NbtItemStackTranslator {
      * Translate the item NBT to Bedrock
      * @param session the client's current session
      * @param itemTag the item's CompoundTag
-     * @param itemEntry Geyser's item entry
+     * @param itemEntry Rory's item entry
      */
-    public void translateToBedrock(GeyserSession session, CompoundTag itemTag, ItemEntry itemEntry) {
+    public void translateToBedrock(RorySession session, CompoundTag itemTag, ItemEntry itemEntry) {
 
     }
 
     /**
      * Translate the item NBT to Java.
      * @param itemTag the item's CompoundTag
-     * @param itemEntry Geyser's item entry
+     * @param itemEntry Rory's item entry
      */
     public void translateToJava(CompoundTag itemTag, ItemEntry itemEntry) {
 
     }
 
     /**
-     * @param itemEntry Geyser's item entry
+     * @param itemEntry Rory's item entry
      * @return if the item should be processed under this class
      */
     public boolean acceptItem(ItemEntry itemEntry) {

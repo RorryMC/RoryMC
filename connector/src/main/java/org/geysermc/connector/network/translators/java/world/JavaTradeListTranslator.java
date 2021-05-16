@@ -38,7 +38,7 @@ import com.nukkitx.protocol.bedrock.packet.UpdateTradePacket;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.inventory.Inventory;
 import org.geysermc.connector.inventory.MerchantContainer;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.item.ItemEntry;
@@ -52,7 +52,7 @@ import java.util.List;
 public class JavaTradeListTranslator extends PacketTranslator<ServerTradeListPacket> {
 
     @Override
-    public void translate(ServerTradeListPacket packet, GeyserSession session) {
+    public void translate(ServerTradeListPacket packet, RorySession session) {
         Inventory openInventory = session.getOpenInventory();
         if (!(openInventory instanceof MerchantContainer && openInventory.getId() == packet.getWindowId())) {
             return;
@@ -134,7 +134,7 @@ public class JavaTradeListTranslator extends PacketTranslator<ServerTradeListPac
         session.sendUpstreamPacket(updateTradePacket);
     }
 
-    private NbtMap getItemTag(GeyserSession session, ItemStack stack, int specialPrice) {
+    private NbtMap getItemTag(RorySession session, ItemStack stack, int specialPrice) {
         ItemData itemData = ItemTranslator.translateToBedrock(session, stack);
         ItemEntry itemEntry = ItemRegistry.getItem(stack);
 

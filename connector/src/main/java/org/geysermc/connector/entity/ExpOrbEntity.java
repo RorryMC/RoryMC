@@ -28,7 +28,7 @@ package org.geysermc.connector.entity;
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class ExpOrbEntity extends Entity {
 
@@ -41,7 +41,7 @@ public class ExpOrbEntity extends Entity {
     }
 
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         this.metadata.put(EntityData.EXPERIENCE_VALUE, amount);
         super.spawnEntity(session);
     }

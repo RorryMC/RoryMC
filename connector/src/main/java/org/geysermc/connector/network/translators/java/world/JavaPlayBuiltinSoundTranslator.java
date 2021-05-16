@@ -31,7 +31,7 @@ import com.nukkitx.protocol.bedrock.data.LevelEventType;
 import com.nukkitx.protocol.bedrock.data.SoundEvent;
 import com.nukkitx.protocol.bedrock.packet.LevelEventPacket;
 import com.nukkitx.protocol.bedrock.packet.LevelSoundEventPacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.sound.SoundRegistry;
@@ -41,7 +41,7 @@ import org.geysermc.connector.network.translators.world.block.BlockTranslator;
 public class JavaPlayBuiltinSoundTranslator extends PacketTranslator<ServerPlayBuiltinSoundPacket> {
 
     @Override
-    public void translate(ServerPlayBuiltinSoundPacket packet, GeyserSession session) {
+    public void translate(ServerPlayBuiltinSoundPacket packet, RorySession session) {
         String packetSound = packet.getSound().getName();
 
         SoundRegistry.SoundMapping soundMapping = SoundRegistry.fromJava(packetSound);

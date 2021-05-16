@@ -35,16 +35,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Contains information about the supported Bedrock protocols in Geyser.
+ * Contains information about the supported Bedrock protocols in Rory.
  */
 public class BedrockProtocol {
     /**
      * Default Bedrock codec that should act as a fallback. Should represent the latest available
-     * release of the game that Geyser supports.
+     * release of the game that Rory supports.
      */
     public static final BedrockPacketCodec DEFAULT_BEDROCK_CODEC = Bedrock_v431.V431_CODEC;
     /**
-     * A list of all supported Bedrock versions that can join Geyser
+     * A list of all supported Bedrock versions that can join Rory
      */
     public static final List<BedrockPacketCodec> SUPPORTED_BEDROCK_CODECS = new ArrayList<>();
 

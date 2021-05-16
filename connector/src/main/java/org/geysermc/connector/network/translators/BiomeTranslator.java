@@ -28,7 +28,7 @@ package org.geysermc.connector.network.translators;
 import com.nukkitx.nbt.NBTInputStream;
 import com.nukkitx.nbt.NbtMap;
 import com.nukkitx.nbt.NbtUtils;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.utils.FileUtils;
 import org.geysermc.connector.utils.LanguageUtils;
 
@@ -59,7 +59,7 @@ public class BiomeTranslator {
             biomesTag = (NbtMap) biomenbtInputStream.readTag();
             BIOMES = biomesTag;
         } catch (Exception ex) {
-            GeyserConnector.getInstance().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.toolbox.fail.biome_read"));
+            RoryConnector.getInstance().getLogger().warning(LanguageUtils.getLocaleStringLog("geyser.toolbox.fail.biome_read"));
             throw new AssertionError(ex);
         }
     }

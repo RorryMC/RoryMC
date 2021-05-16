@@ -51,7 +51,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Main-Class>org.geysermc.platform.spigot.GeyserSpigotMain</Main-Class>
+                            <Main-Class>org.geysermc.platform.spigot.RorySpigotMain</Main-Class>
                         </manifestEntries>
                     </archive>
                 </configuration>

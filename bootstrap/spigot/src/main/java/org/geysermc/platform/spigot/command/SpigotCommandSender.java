@@ -27,7 +27,7 @@ package org.geysermc.platform.spigot.command;
 
 import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.command.CommandSender;
 import org.geysermc.connector.utils.LanguageUtils;
 
@@ -50,7 +50,7 @@ public class SpigotCommandSender implements CommandSender {
         this.handle = handle;
         this.locale = getSpigotLocale();
         // Ensure even Java players' languages are loaded
-        LanguageUtils.loadGeyserLocale(locale);
+        LanguageUtils.loadRoryLocale(locale);
     }
 
     @Override
@@ -86,7 +86,7 @@ public class SpigotCommandSender implements CommandSender {
                 //noinspection JavaReflectionMemberAccess - of course it doesn't exist; that's why we're doing it
                 LOCALE_METHOD = Player.Spigot.class.getMethod("getLocale");
             } catch (NoSuchMethodException e) {
-                GeyserConnector.getInstance().getLogger().debug("Player.Spigot.getLocale() doesn't exist? Not a big deal but if you're seeing this please report it to the developers!");
+                RoryConnector.getInstance().getLogger().debug("Player.Spigot.getLocale() doesn't exist? Not a big deal but if you're seeing this please report it to the developers!");
             }
         }
     }

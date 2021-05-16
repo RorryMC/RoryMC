@@ -33,7 +33,7 @@ import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import com.nukkitx.protocol.bedrock.packet.UpdateAttributesPacket;
 import org.geysermc.connector.entity.attribute.AttributeType;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.AttributeUtils;
 
 import java.util.ArrayList;
@@ -51,7 +51,7 @@ public class IronGolemEntity extends GolemEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         super.updateBedrockMetadata(entityMetadata, session);
         if (entityMetadata.getId() == 8) {
             // Required so the resource pack sees the entity health
@@ -61,7 +61,7 @@ public class IronGolemEntity extends GolemEntity {
     }
 
     @Override
-    public void updateBedrockAttributes(GeyserSession session) {
+    public void updateBedrockAttributes(RorySession session) {
         if (!valid) return;
 
         List<AttributeData> attributes = new ArrayList<>();

@@ -30,7 +30,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.SoundEvent;
 import com.nukkitx.protocol.bedrock.packet.LevelSoundEventPacket;
 import lombok.Value;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 @Value
 public class SoundEventEffect implements Effect {
@@ -50,7 +50,7 @@ public class SoundEventEffect implements Effect {
     int extraData;
 
     @Override
-    public void handleEffectPacket(GeyserSession session, ServerPlayEffectPacket packet) {
+    public void handleEffectPacket(RorySession session, ServerPlayEffectPacket packet) {
         LevelSoundEventPacket levelSoundEvent = new LevelSoundEventPacket();
         levelSoundEvent.setSound(soundEvent);
         levelSoundEvent.setIdentifier(identifier);

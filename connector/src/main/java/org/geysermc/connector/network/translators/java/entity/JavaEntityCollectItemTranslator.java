@@ -31,7 +31,7 @@ import com.nukkitx.protocol.bedrock.packet.LevelEventPacket;
 import com.nukkitx.protocol.bedrock.packet.TakeItemEntityPacket;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.ExpOrbEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -44,7 +44,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class JavaEntityCollectItemTranslator extends PacketTranslator<ServerEntityCollectItemPacket> {
 
     @Override
-    public void translate(ServerEntityCollectItemPacket packet, GeyserSession session) {
+    public void translate(ServerEntityCollectItemPacket packet, RorySession session) {
         // Collected entity is the other entity
         Entity collectedEntity = session.getEntityCache().getEntityByJavaId(packet.getCollectedEntityId());
         if (collectedEntity == null) return;

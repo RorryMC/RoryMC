@@ -25,7 +25,7 @@
 
 package org.geysermc.connector.utils;
 
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -48,21 +48,21 @@ public class LanguageUtils {
     static {
         // Load it as a backup in case something goes really wrong
         if (!"en_US".equals(formatLocale(getDefaultLocale()))) { // getDefaultLocale() loads the locale automatically
-            loadGeyserLocale("en_US");
+            loadRoryLocale("en_US");
         }
     }
 
     /**
-     * Loads a Geyser locale from resources, if the file doesn't exist it just logs a warning
+     * Loads a Rory locale from resources, if the file doesn't exist it just logs a warning
      *
      * @param locale Locale to load
      */
-    public static void loadGeyserLocale(String locale) {
+    public static void loadRoryLocale(String locale) {
         locale = formatLocale(locale);
         // Don't load the locale if it's already loaded.
         if (LOCALE_MAPPINGS.containsKey(locale)) return;
 
-        InputStream localeStream = GeyserConnector.class.getClassLoader().getResourceAsStream("languages/texts/" + locale + ".properties");
+        InputStream localeStream = RoryConnector.class.getClassLoader().getResourceAsStream("languages/texts/" + locale + ".properties");
 
         // Load the locale
         if (localeStream != null) {
@@ -76,14 +76,14 @@ public class LanguageUtils {
             // Insert the locale into the mappings
             LOCALE_MAPPINGS.put(locale, localeProp);
         } else {
-            if (GeyserConnector.getInstance() != null && GeyserConnector.getInstance().getLogger() != null) {
-                GeyserConnector.getInstance().getLogger().warning("Missing locale: " + locale);
+            if (RoryConnector.getInstance() != null && RoryConnector.getInstance().getLogger() != null) {
+                RoryConnector.getInstance().getLogger().warning("Missing locale: " + locale);
             }
         }
     }
 
     /**
-     * Get a formatted language string with the default locale for Geyser
+     * Get a formatted language string with the default locale for Rory
      *
      * @param key Language string to translate
      * @param values Values to put into the string
@@ -94,7 +94,7 @@ public class LanguageUtils {
     }
 
     /**
-     * Get a formatted language string with the given locale for Geyser
+     * Get a formatted language string with the given locale for Rory
      *
      * @param key Language string to translate
      * @param locale Locale to translate to
@@ -147,17 +147,17 @@ public class LanguageUtils {
     }
 
     /**
-     * Get the default locale that Geyser should use
+     * Get the default locale that Rory should use
      * @return the current default locale
      */
     public static String getDefaultLocale() {
         if (CACHED_LOCALE != null) return CACHED_LOCALE; // We definitely know the locale the user is using
         String locale;
         boolean isValid = true;
-        if (GeyserConnector.getInstance() != null &&
-                GeyserConnector.getInstance().getConfig() != null &&
-                GeyserConnector.getInstance().getConfig().getDefaultLocale() != null) { // If the config option for getDefaultLocale does not equal null, use that
-            locale = formatLocale(GeyserConnector.getInstance().getConfig().getDefaultLocale());
+        if (RoryConnector.getInstance() != null &&
+                RoryConnector.getInstance().getConfig() != null &&
+                RoryConnector.getInstance().getConfig().getDefaultLocale() != null) { // If the config option for getDefaultLocale does not equal null, use that
+            locale = formatLocale(RoryConnector.getInstance().getConfig().getDefaultLocale());
             if (isValidLanguage(locale)) {
                 CACHED_LOCALE = locale;
                 return locale;
@@ -168,10 +168,10 @@ public class LanguageUtils {
         locale = formatLocale(Locale.getDefault().getLanguage() + "_" + Locale.getDefault().getCountry());
         if (!isValidLanguage(locale)) { // Bedrock does not support this language
             locale = "en_US";
-            loadGeyserLocale(locale);
+            loadRoryLocale(locale);
         }
-        if (GeyserConnector.getInstance() != null &&
-                GeyserConnector.getInstance().getConfig() != null && (GeyserConnector.getInstance().getConfig().getDefaultLocale() == null || !isValid)) { // Means we should use the system locale for sure
+        if (RoryConnector.getInstance() != null &&
+                RoryConnector.getInstance().getConfig() != null && (RoryConnector.getInstance().getConfig().getDefaultLocale() == null || !isValid)) { // Means we should use the system locale for sure
             CACHED_LOCALE = locale;
         }
         return locale;
@@ -180,22 +180,22 @@ public class LanguageUtils {
     /**
      * Ensures that the given locale is supported by Bedrock
      * @param locale the locale to validate
-     * @return true if the given locale is supported by Bedrock and by extension Geyser
+     * @return true if the given locale is supported by Bedrock and by extension Rory
      */
     private static boolean isValidLanguage(String locale) {
         boolean result = true;
         if (FileUtils.class.getResource("/languages/texts/" + locale + ".properties") == null) {
             result = false;
-            if (GeyserConnector.getInstance() != null && GeyserConnector.getInstance().getLogger() != null) { // Could be too early for these to be initialized
+            if (RoryConnector.getInstance() != null && RoryConnector.getInstance().getLogger() != null) { // Could be too early for these to be initialized
                 if (locale.equals("en_US")) {
-                    GeyserConnector.getInstance().getLogger().error("English locale not found in Geyser. Did you clone the submodules? (git submodule update --init)");
+                    RoryConnector.getInstance().getLogger().error("English locale not found in Rory. Did you clone the submodules? (git submodule update --init)");
                 } else {
-                    GeyserConnector.getInstance().getLogger().warning(locale + " is not a valid Bedrock language."); // We can't translate this since we just loaded an invalid language
+                    RoryConnector.getInstance().getLogger().warning(locale + " is not a valid Bedrock language."); // We can't translate this since we just loaded an invalid language
                 }
             }
         } else {
             if (!LOCALE_MAPPINGS.containsKey(locale)) {
-                loadGeyserLocale(locale);
+                loadRoryLocale(locale);
             }
         }
         return result;

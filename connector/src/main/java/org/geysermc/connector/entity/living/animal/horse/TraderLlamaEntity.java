@@ -28,7 +28,7 @@ package org.geysermc.connector.entity.living.animal.horse;
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class TraderLlamaEntity extends LlamaEntity {
 
@@ -37,7 +37,7 @@ public class TraderLlamaEntity extends LlamaEntity {
     }
 
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         this.metadata.put(EntityData.MARK_VARIANT, 1);
         super.spawnEntity(session);
     }

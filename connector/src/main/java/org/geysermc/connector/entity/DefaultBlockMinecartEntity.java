@@ -29,7 +29,7 @@ import com.github.steveice10.mc.protocol.data.game.entity.metadata.EntityMetadat
 import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 /**
  * This class is used as a base for minecarts with a default block to display like furnaces and spawners
@@ -47,13 +47,13 @@ public class DefaultBlockMinecartEntity extends MinecartEntity {
     }
 
     @Override
-    public void spawnEntity(GeyserSession session) {
+    public void spawnEntity(RorySession session) {
         updateDefaultBlockMetadata(session);
         super.spawnEntity(session);
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
 
         // Custom block
         if (entityMetadata.getId() == 10) {
@@ -88,5 +88,5 @@ public class DefaultBlockMinecartEntity extends MinecartEntity {
         super.updateBedrockMetadata(entityMetadata, session);
     }
 
-    public void updateDefaultBlockMetadata(GeyserSession session) { }
+    public void updateDefaultBlockMetadata(RorySession session) { }
 }

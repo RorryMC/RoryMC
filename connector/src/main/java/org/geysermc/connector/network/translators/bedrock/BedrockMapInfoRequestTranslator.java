@@ -27,8 +27,8 @@ package org.geysermc.connector.network.translators.bedrock;
 
 import com.nukkitx.protocol.bedrock.packet.ClientboundMapItemDataPacket;
 import com.nukkitx.protocol.bedrock.packet.MapInfoRequestPacket;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -38,12 +38,12 @@ import java.util.concurrent.TimeUnit;
 public class BedrockMapInfoRequestTranslator extends PacketTranslator<MapInfoRequestPacket> {
 
     @Override
-    public void translate(MapInfoRequestPacket packet, GeyserSession session) {
+    public void translate(MapInfoRequestPacket packet, RorySession session) {
         long mapID = packet.getUniqueMapId();
 
         if (session.getStoredMaps().containsKey(mapID)) {
             // Delay the packet 100ms to prevent the client from ignoring the packet
-            GeyserConnector.getInstance().getGeneralThreadPool().schedule(() -> {
+            RoryConnector.getInstance().getGeneralThreadPool().schedule(() -> {
                 ClientboundMapItemDataPacket mapPacket = session.getStoredMaps().remove(mapID);
                 if (mapPacket != null) {
                     session.sendUpstreamPacket(mapPacket);

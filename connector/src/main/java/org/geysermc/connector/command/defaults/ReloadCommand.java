@@ -26,23 +26,23 @@
 package org.geysermc.connector.command.defaults;
 
 import org.geysermc.common.PlatformType;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.command.CommandSender;
-import org.geysermc.connector.command.GeyserCommand;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.command.RoryCommand;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.LanguageUtils;
 
-public class ReloadCommand extends GeyserCommand {
+public class ReloadCommand extends RoryCommand {
 
-    private final GeyserConnector connector;
+    private final RoryConnector connector;
 
-    public ReloadCommand(GeyserConnector connector, String name, String description, String permission) {
+    public ReloadCommand(RoryConnector connector, String name, String description, String permission) {
         super(name, description, permission);
         this.connector = connector;
     }
 
     @Override
-    public void execute(GeyserSession session, CommandSender sender, String[] args) {
+    public void execute(RorySession session, CommandSender sender, String[] args) {
         if (!sender.isConsole() && connector.getPlatformType() == PlatformType.STANDALONE) {
             return;
         }
@@ -51,7 +51,7 @@ public class ReloadCommand extends GeyserCommand {
 
         sender.sendMessage(message);
 
-        for (GeyserSession otherSession : connector.getPlayers()) {
+        for (RorySession otherSession : connector.getPlayers()) {
             otherSession.disconnect(LanguageUtils.getPlayerLocaleString("geyser.commands.reload.kick", session.getLocale()));
         }
         connector.reload();

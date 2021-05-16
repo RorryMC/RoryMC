@@ -28,13 +28,13 @@ package org.geysermc.connector.command.defaults;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.geysermc.common.PlatformType;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.command.CommandSender;
-import org.geysermc.connector.command.GeyserCommand;
+import org.geysermc.connector.command.RoryCommand;
 import org.geysermc.connector.common.ChatColor;
 import org.geysermc.connector.common.serializer.AsteriskSerializer;
 import org.geysermc.connector.dump.DumpInfo;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.utils.LanguageUtils;
 import org.geysermc.connector.utils.WebUtils;
 
@@ -43,21 +43,21 @@ import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-public class DumpCommand extends GeyserCommand {
+public class DumpCommand extends RoryCommand {
 
-    private final GeyserConnector connector;
+    private final RoryConnector connector;
     private static final ObjectMapper MAPPER = new ObjectMapper();
     private static final String DUMP_URL = "https://dump.geysermc.org/";
 
-    public DumpCommand(GeyserConnector connector, String name, String description, String permission) {
+    public DumpCommand(RoryConnector connector, String name, String description, String permission) {
         super(name, description, permission);
 
         this.connector = connector;
     }
 
     @Override
-    public void execute(GeyserSession session, CommandSender sender, String[] args) {
-        // Only allow the console to create dumps on Geyser Standalone
+    public void execute(RorySession session, CommandSender sender, String[] args) {
+        // Only allow the console to create dumps on Rory Standalone
         if (!sender.isConsole() && connector.getPlatformType() == PlatformType.STANDALONE) {
             sender.sendMessage(LanguageUtils.getPlayerLocaleString("geyser.bootstrap.command.permission_fail", sender.getLocale()));
             return;
@@ -101,7 +101,7 @@ public class DumpCommand extends GeyserCommand {
             sender.sendMessage(LanguageUtils.getPlayerLocaleString("geyser.commands.dump.writing", sender.getLocale()));
 
             try {
-                FileOutputStream outputStream = new FileOutputStream(GeyserConnector.getInstance().getBootstrap().getConfigFolder().resolve("dump.json").toFile());
+                FileOutputStream outputStream = new FileOutputStream(RoryConnector.getInstance().getBootstrap().getConfigFolder().resolve("dump.json").toFile());
                 outputStream.write(dumpData.getBytes());
                 outputStream.close();
             } catch (IOException e) {

@@ -35,8 +35,8 @@ import com.nukkitx.protocol.bedrock.packet.LevelChunkPacket;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.ByteBufOutputStream;
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.BiomeTranslator;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
@@ -51,11 +51,11 @@ public class JavaChunkDataTranslator extends PacketTranslator<ServerChunkDataPac
     private final boolean cacheChunks;
 
     public JavaChunkDataTranslator() {
-        cacheChunks = GeyserConnector.getInstance().getConfig().isCacheChunks();
+        cacheChunks = RoryConnector.getInstance().getConfig().isCacheChunks();
     }
 
     @Override
-    public void translate(ServerChunkDataPacket packet, GeyserSession session) {
+    public void translate(ServerChunkDataPacket packet, RorySession session) {
         if (session.isSpawned()) {
             ChunkUtils.updateChunkPosition(session, session.getPlayerEntity().getPosition().toInt());
         }
@@ -74,7 +74,7 @@ public class JavaChunkDataTranslator extends PacketTranslator<ServerChunkDataPac
 
         boolean isNonFullChunk = packet.getColumn().getBiomeData() == null;
 
-        GeyserConnector.getInstance().getGeneralThreadPool().execute(() -> {
+        RoryConnector.getInstance().getGeneralThreadPool().execute(() -> {
             try {
                 ChunkUtils.ChunkData chunkData = ChunkUtils.translateToBedrock(session, mergedColumn, isNonFullChunk);
                 ChunkSection[] sections = chunkData.getSections();

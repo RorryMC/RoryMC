@@ -41,9 +41,9 @@ import com.nukkitx.protocol.bedrock.packet.PlayStatusPacket;
 import com.nukkitx.protocol.bedrock.packet.PlayerActionPacket;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.ItemFrameEntity;
-import org.geysermc.connector.inventory.GeyserItemStack;
+import org.geysermc.connector.inventory.RoryItemStack;
 import org.geysermc.connector.inventory.PlayerInventory;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.item.ItemEntry;
@@ -57,7 +57,7 @@ import java.util.concurrent.TimeUnit;
 public class BedrockActionTranslator extends PacketTranslator<PlayerActionPacket> {
 
     @Override
-    public void translate(PlayerActionPacket packet, GeyserSession session) {
+    public void translate(PlayerActionPacket packet, RorySession session) {
         Entity entity = session.getPlayerEntity();
 
         // Send book update before any player action
@@ -170,7 +170,7 @@ public class BedrockActionTranslator extends PacketTranslator<PlayerActionPacket
                         startBreak.setType(LevelEventType.BLOCK_START_BREAK);
                         startBreak.setPosition(vector.toFloat());
                         PlayerInventory inventory = session.getPlayerInventory();
-                        GeyserItemStack item = inventory.getItemInHand();
+                        RoryItemStack item = inventory.getItemInHand();
                         ItemEntry itemEntry;
                         CompoundTag nbtData;
                         if (item != null) {

@@ -25,9 +25,9 @@
 
 package org.geysermc.connector.scoreboard;
 
-import org.geysermc.connector.GeyserConnector;
-import org.geysermc.connector.configuration.GeyserConfiguration;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.RoryConnector;
+import org.geysermc.connector.configuration.RoryConfiguration;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.session.cache.WorldCache;
 import org.geysermc.connector.utils.LanguageUtils;
 
@@ -44,7 +44,7 @@ public class ScoreboardUpdater extends Thread {
     private static final boolean DEBUG_ENABLED;
 
     private final WorldCache worldCache;
-    private final GeyserSession session;
+    private final RorySession session;
 
     private int millisBetweenUpdates = FIRST_MILLIS_BETWEEN_UPDATES;
     private long lastUpdate = System.currentTimeMillis();
@@ -91,7 +91,7 @@ public class ScoreboardUpdater extends Thread {
                                 SECOND_SCORE_PACKETS_PER_SECOND_THRESHOLD :
                                 FIRST_SCORE_PACKETS_PER_SECOND_THRESHOLD;
 
-                        GeyserConnector.getInstance().getLogger().info(
+                        RoryConnector.getInstance().getLogger().info(
                                 LanguageUtils.getLocaleStringLog("geyser.scoreboard.updater.threshold_reached.log", session.getName(), threshold, pps) +
                                 LanguageUtils.getLocaleStringLog("geyser.scoreboard.updater.threshold_reached", (millisBetweenUpdates / 1000.0))
                         );
@@ -117,7 +117,7 @@ public class ScoreboardUpdater extends Thread {
     }
 
     static {
-        GeyserConfiguration config = GeyserConnector.getInstance().getConfig();
+        RoryConfiguration config = RoryConnector.getInstance().getConfig();
         FIRST_SCORE_PACKETS_PER_SECOND_THRESHOLD = Math.min(config.getScoreboardPacketThreshold(), SECOND_SCORE_PACKETS_PER_SECOND_THRESHOLD);
         DEBUG_ENABLED = config.isDebugMode();
     }

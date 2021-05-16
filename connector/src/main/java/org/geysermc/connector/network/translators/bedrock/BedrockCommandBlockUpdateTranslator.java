@@ -30,7 +30,7 @@ import com.github.steveice10.mc.protocol.data.game.world.block.CommandBlockMode;
 import com.github.steveice10.mc.protocol.packet.ingame.client.window.ClientUpdateCommandBlockMinecartPacket;
 import com.github.steveice10.mc.protocol.packet.ingame.client.window.ClientUpdateCommandBlockPacket;
 import com.nukkitx.protocol.bedrock.packet.CommandBlockUpdatePacket;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -38,7 +38,7 @@ import org.geysermc.connector.network.translators.Translator;
 public class BedrockCommandBlockUpdateTranslator extends PacketTranslator<CommandBlockUpdatePacket> {
 
     @Override
-    public void translate(CommandBlockUpdatePacket packet, GeyserSession session) {
+    public void translate(CommandBlockUpdatePacket packet, RorySession session) {
         String command = packet.getCommand();
         boolean outputTracked = packet.isOutputTracked();
         if (packet.isBlock()) {
@@ -62,7 +62,7 @@ public class BedrockCommandBlockUpdateTranslator extends PacketTranslator<Comman
             session.sendDownstreamPacket(commandBlockPacket);
         } else {
             ClientUpdateCommandBlockMinecartPacket commandMinecartPacket = new ClientUpdateCommandBlockMinecartPacket(
-                    (int) session.getEntityCache().getEntityByGeyserId(packet.getMinecartRuntimeEntityId()).getEntityId(),
+                    (int) session.getEntityCache().getEntityByRoryId(packet.getMinecartRuntimeEntityId()).getEntityId(),
                     command, outputTracked
             );
             session.sendDownstreamPacket(commandMinecartPacket);

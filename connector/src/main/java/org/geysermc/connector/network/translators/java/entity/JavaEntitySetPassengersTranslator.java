@@ -37,7 +37,7 @@ import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.living.ArmorStandEntity;
 import org.geysermc.connector.entity.living.animal.AnimalEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 
@@ -47,7 +47,7 @@ import java.util.Arrays;
 public class JavaEntitySetPassengersTranslator extends PacketTranslator<ServerEntitySetPassengersPacket> {
 
     @Override
-    public void translate(ServerEntitySetPassengersPacket packet, GeyserSession session) {
+    public void translate(ServerEntitySetPassengersPacket packet, RorySession session) {
         Entity entity;
         if (packet.getEntityId() == session.getPlayerEntity().getEntityId()) {
             entity = session.getPlayerEntity();
@@ -236,7 +236,7 @@ public class JavaEntitySetPassengersTranslator extends PacketTranslator<ServerEn
         return 0f;
     }
 
-    private void updateOffset(Entity passenger, Entity mount, GeyserSession session, boolean rider, boolean riding, boolean moreThanOneEntity) {
+    private void updateOffset(Entity passenger, Entity mount, RorySession session, boolean rider, boolean riding, boolean moreThanOneEntity) {
         passenger.getMetadata().getFlags().setFlag(EntityFlag.RIDING, riding);
         if (riding) {
             // Without the Y offset, Bedrock players will find themselves in the floor when mounting

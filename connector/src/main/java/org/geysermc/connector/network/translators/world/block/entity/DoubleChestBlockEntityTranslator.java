@@ -28,7 +28,7 @@ package org.geysermc.connector.network.translators.world.block.entity;
 import com.github.steveice10.opennbt.tag.builtin.CompoundTag;
 import com.nukkitx.math.vector.Vector3i;
 import com.nukkitx.nbt.NbtMapBuilder;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.world.block.BlockStateValues;
 import org.geysermc.connector.network.translators.world.block.DoubleChestValue;
 import org.geysermc.connector.utils.BlockEntityUtils;
@@ -44,7 +44,7 @@ public class DoubleChestBlockEntityTranslator extends BlockEntityTranslator impl
     }
 
     @Override
-    public void updateBlock(GeyserSession session, int blockState, Vector3i position) {
+    public void updateBlock(RorySession session, int blockState, Vector3i position) {
         CompoundTag javaTag = getConstantJavaTag("chest", position.getX(), position.getY(), position.getZ());
         NbtMapBuilder tagBuilder = getConstantBedrockTag(BlockEntityUtils.getBedrockBlockEntityId("chest"), position.getX(), position.getY(), position.getZ());
         translateTag(tagBuilder, javaTag, blockState);

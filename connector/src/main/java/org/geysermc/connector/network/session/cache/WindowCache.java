@@ -33,16 +33,16 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import lombok.Getter;
 
 import org.geysermc.common.window.FormWindow;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class WindowCache {
 
-    private final GeyserSession session;
+    private final RorySession session;
 
     @Getter
     private final Int2ObjectMap<FormWindow> windows = new Int2ObjectOpenHashMap<>();
 
-    public WindowCache(GeyserSession session) {
+    public WindowCache(RorySession session) {
         this.session = session;
     }
 

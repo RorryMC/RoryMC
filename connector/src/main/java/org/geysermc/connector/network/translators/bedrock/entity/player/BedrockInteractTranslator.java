@@ -37,7 +37,7 @@ import com.nukkitx.protocol.bedrock.packet.ContainerOpenPacket;
 import com.nukkitx.protocol.bedrock.packet.InteractPacket;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.living.animal.horse.AbstractHorseEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.item.ItemRegistry;
@@ -47,13 +47,13 @@ import org.geysermc.connector.utils.InteractiveTagManager;
 public class BedrockInteractTranslator extends PacketTranslator<InteractPacket> {
 
     @Override
-    public void translate(InteractPacket packet, GeyserSession session) {
+    public void translate(InteractPacket packet, RorySession session) {
         Entity entity;
         if (packet.getRuntimeEntityId() == session.getPlayerEntity().getGeyserId()) {
             //Player is not in entity cache
             entity = session.getPlayerEntity();
         } else {
-            entity = session.getEntityCache().getEntityByGeyserId(packet.getRuntimeEntityId());
+            entity = session.getEntityCache().getEntityByRoryId(packet.getRuntimeEntityId());
         }
         if (entity == null)
             return;
@@ -80,7 +80,7 @@ public class BedrockInteractTranslator extends PacketTranslator<InteractPacket> 
             case MOUSEOVER:
                 // Handle the buttons for mobile - "Mount", etc; and the suggestions for console - "ZL: Mount", etc
                 if (packet.getRuntimeEntityId() != 0) {
-                    Entity interactEntity = session.getEntityCache().getEntityByGeyserId(packet.getRuntimeEntityId());
+                    Entity interactEntity = session.getEntityCache().getEntityByRoryId(packet.getRuntimeEntityId());
                     session.setMouseoverEntity(interactEntity);
                     if (interactEntity == null) {
                         return;

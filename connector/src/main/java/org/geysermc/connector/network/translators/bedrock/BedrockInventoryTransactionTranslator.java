@@ -45,8 +45,8 @@ import org.geysermc.connector.entity.CommandBlockMinecartEntity;
 import org.geysermc.connector.entity.Entity;
 import org.geysermc.connector.entity.ItemFrameEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.inventory.GeyserItemStack;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.inventory.RoryItemStack;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.item.ItemEntry;
@@ -70,7 +70,7 @@ public class BedrockInventoryTransactionTranslator extends PacketTranslator<Inve
     private static final float MAXIMUM_BLOCK_DESTROYING_DISTANCE = 36f;
 
     @Override
-    public void translate(InventoryTransactionPacket packet, GeyserSession session) {
+    public void translate(InventoryTransactionPacket packet, RorySession session) {
         // Send book updates before opening inventories
         session.getBookEditCache().checkForSend();
 
@@ -96,7 +96,7 @@ public class BedrockInventoryTransactionTranslator extends PacketTranslator<Inve
                             session.sendDownstreamPacket(dropAllPacket);
 
                             if (dropAll) {
-                                session.getPlayerInventory().setItemInHand(GeyserItemStack.EMPTY);
+                                session.getPlayerInventory().setItemInHand(RoryItemStack.EMPTY);
                             } else {
                                 session.getPlayerInventory().getItemInHand().sub(1);
                             }
@@ -313,7 +313,7 @@ public class BedrockInventoryTransactionTranslator extends PacketTranslator<Inve
                 }
                 break;
             case ITEM_USE_ON_ENTITY:
-                Entity entity = session.getEntityCache().getEntityByGeyserId(packet.getRuntimeEntityId());
+                Entity entity = session.getEntityCache().getEntityByRoryId(packet.getRuntimeEntityId());
                 if (entity == null)
                     return;
 
@@ -366,7 +366,7 @@ public class BedrockInventoryTransactionTranslator extends PacketTranslator<Inve
      * @param session the session of the Bedrock client
      * @param blockPos the block position to restore
      */
-    private void restoreCorrectBlock(GeyserSession session, Vector3i blockPos, InventoryTransactionPacket packet) {
+    private void restoreCorrectBlock(RorySession session, Vector3i blockPos, InventoryTransactionPacket packet) {
         int javaBlockState = session.getConnector().getWorldManager().getBlockAt(session, blockPos);
         UpdateBlockPacket updateBlockPacket = new UpdateBlockPacket();
         updateBlockPacket.setDataLayer(0);

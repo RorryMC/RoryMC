@@ -31,7 +31,7 @@ import com.nukkitx.math.vector.Vector3f;
 import com.nukkitx.protocol.bedrock.data.entity.EntityData;
 import com.nukkitx.protocol.bedrock.data.entity.EntityFlag;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.item.ItemEntry;
 
 import java.util.Set;
@@ -52,7 +52,7 @@ public class WolfEntity extends TameableEntity {
     }
 
     @Override
-    public void updateBedrockMetadata(EntityMetadata entityMetadata, GeyserSession session) {
+    public void updateBedrockMetadata(EntityMetadata entityMetadata, RorySession session) {
         //Reset wolf color
         if (entityMetadata.getId() == 16) {
             byte xd = (byte) entityMetadata.getValue();
@@ -88,7 +88,7 @@ public class WolfEntity extends TameableEntity {
     }
 
     @Override
-    public boolean canEat(GeyserSession session, String javaIdentifierStripped, ItemEntry itemEntry) {
+    public boolean canEat(RorySession session, String javaIdentifierStripped, ItemEntry itemEntry) {
         // Cannot be a baby to eat these foods
         return WOLF_FOODS.contains(javaIdentifierStripped) && !metadata.getFlags().getFlag(EntityFlag.BABY);
     }

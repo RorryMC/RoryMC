@@ -32,9 +32,9 @@ import lombok.Setter;
 import org.geysermc.common.window.SimpleFormWindow;
 import org.geysermc.common.window.button.FormButton;
 import org.geysermc.common.window.response.SimpleFormResponse;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.chat.MessageTranslator;
-import org.geysermc.connector.utils.GeyserAdvancement;
+import org.geysermc.connector.utils.RoryAdvancement;
 import org.geysermc.connector.utils.LanguageUtils;
 import org.geysermc.connector.utils.LocaleUtils;
 
@@ -59,7 +59,7 @@ public class AdvancementsCache {
      * Stores advancements for the player.
      */
     @Getter
-    private final Map<String, GeyserAdvancement> storedAdvancements = new HashMap<>();
+    private final Map<String, RoryAdvancement> storedAdvancements = new HashMap<>();
 
     /**
      * Stores player's chosen advancement's ID and title for use in form creators.
@@ -67,9 +67,9 @@ public class AdvancementsCache {
     @Setter
     private String currentAdvancementCategoryId = null;
 
-    private final GeyserSession session;
+    private final RorySession session;
 
-    public AdvancementsCache(GeyserSession session) {
+    public AdvancementsCache(RorySession session) {
         this.session = session;
     }
 
@@ -84,7 +84,7 @@ public class AdvancementsCache {
 
         // Created menu window for advancement categories
         SimpleFormWindow window = new SimpleFormWindow(LocaleUtils.getLocaleString("gui.advancements", language), "");
-        for (Map.Entry<String, GeyserAdvancement> advancement : storedAdvancements.entrySet()) {
+        for (Map.Entry<String, RoryAdvancement> advancement : storedAdvancements.entrySet()) {
             if (advancement.getValue().getParentId() == null) { // No parent means this is a root advancement
                 window.getButtons().add(new FormButton(MessageTranslator.convertMessage(advancement.getValue().getDisplayData().getTitle(), language)));
             }
@@ -106,15 +106,15 @@ public class AdvancementsCache {
         // Cache the language for easier access
         String language = session.getLocale();
         String id = currentAdvancementCategoryId;
-        GeyserAdvancement categoryAdvancement = storedAdvancements.get(currentAdvancementCategoryId);
+        RoryAdvancement categoryAdvancement = storedAdvancements.get(currentAdvancementCategoryId);
 
         // Create the window
         SimpleFormWindow window = new SimpleFormWindow(MessageTranslator.convertMessage(categoryAdvancement.getDisplayData().getTitle(), language),
                 MessageTranslator.convertMessage(categoryAdvancement.getDisplayData().getDescription(), language));
 
         if (id != null) {
-            for (Map.Entry<String, GeyserAdvancement> advancementEntry : storedAdvancements.entrySet()) {
-                GeyserAdvancement advancement = advancementEntry.getValue();
+            for (Map.Entry<String, RoryAdvancement> advancementEntry : storedAdvancements.entrySet()) {
+                RoryAdvancement advancement = advancementEntry.getValue();
                 if (advancement != null) {
                     if (advancement.getParentId() != null && currentAdvancementCategoryId.equals(advancement.getRootId(this))) {
                         boolean earned = isEarned(advancement);
@@ -140,7 +140,7 @@ public class AdvancementsCache {
      * @param advancement The advancement used to create the info display
      * @return The information for the chosen advancement
      */
-    public SimpleFormWindow buildInfoForm(GeyserAdvancement advancement) {
+    public SimpleFormWindow buildInfoForm(RoryAdvancement advancement) {
         // Cache language for easier access
         String language = session.getLocale();
 
@@ -178,7 +178,7 @@ public class AdvancementsCache {
      * @param advancement the advancement to determine
      * @return true if the advancement has been earned.
      */
-    public boolean isEarned(GeyserAdvancement advancement) {
+    public boolean isEarned(RoryAdvancement advancement) {
         boolean earned = false;
         if (advancement.getRequirements().size() == 0) {
             // Minecraft handles this case, so we better as well
@@ -224,7 +224,7 @@ public class AdvancementsCache {
         String id = "";
         if (formResponse != null && formResponse.getClickedButton() != null) {
             int advancementIndex = 0;
-            for (Map.Entry<String, GeyserAdvancement> advancement : storedAdvancements.entrySet()) {
+            for (Map.Entry<String, RoryAdvancement> advancement : storedAdvancements.entrySet()) {
                 if (advancement.getValue().getParentId() == null) { // Root advancement
                     if (advancementIndex == formResponse.getClickedButtonId()) {
                         id = advancement.getKey();
@@ -263,10 +263,10 @@ public class AdvancementsCache {
         SimpleFormResponse formResponse = (SimpleFormResponse) listForm.getResponse();
 
         if (!listForm.isClosed() && formResponse != null && formResponse.getClickedButton() != null) {
-            GeyserAdvancement advancement = null;
+            RoryAdvancement advancement = null;
             int advancementIndex = 0;
             // Loop around to find the advancement that the client pressed
-            for (GeyserAdvancement advancementEntry : storedAdvancements.values()) {
+            for (RoryAdvancement advancementEntry : storedAdvancements.values()) {
                 if (advancementEntry.getParentId() != null &&
                         currentAdvancementCategoryId.equals(advancementEntry.getRootId(this))) {
                     if (advancementIndex == formResponse.getClickedButtonId()) {
@@ -311,7 +311,7 @@ public class AdvancementsCache {
         return true;
     }
 
-    public String getColorFromAdvancementFrameType(GeyserAdvancement advancement) {
+    public String getColorFromAdvancementFrameType(RoryAdvancement advancement) {
         String base = "\u00a7";
         if (advancement.getDisplayData().getFrameType() == Advancement.DisplayData.FrameType.CHALLENGE) {
             return base + "5";

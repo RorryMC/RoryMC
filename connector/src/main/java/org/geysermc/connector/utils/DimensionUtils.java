@@ -32,9 +32,9 @@ import com.nukkitx.math.vector.Vector3i;
 import com.nukkitx.protocol.bedrock.packet.ChangeDimensionPacket;
 import com.nukkitx.protocol.bedrock.packet.MobEffectPacket;
 import com.nukkitx.protocol.bedrock.packet.StopSoundPacket;
-import org.geysermc.connector.GeyserConnector;
+import org.geysermc.connector.RoryConnector;
 import org.geysermc.connector.entity.Entity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 
 public class DimensionUtils {
 
@@ -54,7 +54,7 @@ public class DimensionUtils {
      */
     public static final String THE_END = "minecraft:the_end";
 
-    public static void switchDimension(GeyserSession session, String javaDimension) {
+    public static void switchDimension(RorySession session, String javaDimension) {
         int bedrockDimension = javaToBedrock(javaDimension);
         Entity player = session.getPlayerEntity();
 
@@ -122,13 +122,13 @@ public class DimensionUtils {
      */
     public static String getNewDimension(CompoundTag dimensionTag) {
         if (dimensionTag == null || dimensionTag.isEmpty()) {
-            GeyserConnector.getInstance().getLogger().debug("Dimension tag was null or empty.");
+            RoryConnector.getInstance().getLogger().debug("Dimension tag was null or empty.");
             return OVERWORLD;
         }
         if (dimensionTag.getValue().get("effects") != null) {
             return ((StringTag) dimensionTag.getValue().get("effects")).getValue();
         }
-        GeyserConnector.getInstance().getLogger().debug("Effects portion of the tag was null or empty.");
+        RoryConnector.getInstance().getLogger().debug("Effects portion of the tag was null or empty.");
         return OVERWORLD;
     }
 

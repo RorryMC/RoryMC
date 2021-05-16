@@ -37,7 +37,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.geysermc.connector.entity.player.PlayerEntity;
 import org.geysermc.connector.entity.type.EntityType;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.collision.translators.BlockCollision;
 import org.geysermc.connector.network.translators.world.block.BlockTranslator;
 
@@ -49,7 +49,7 @@ import java.util.Locale;
 
 public class CollisionManager {
 
-    private final GeyserSession session;
+    private final RorySession session;
 
     @Getter
     private BoundingBox playerBoundingBox;
@@ -77,7 +77,7 @@ public class CollisionManager {
      */
     private static final DecimalFormat DECIMAL_FORMAT = new DecimalFormat("#.#####", new DecimalFormatSymbols(Locale.ENGLISH));
 
-    public CollisionManager(GeyserSession session) {
+    public CollisionManager(RorySession session) {
         this.session = session;
         this.playerBoundingBox = new BoundingBox(0, 0, 0, 0.6, 1.8, 0.6);
     }
@@ -226,7 +226,7 @@ public class CollisionManager {
     /**
      * Returns false if the movement is invalid, and in this case it shouldn't be sent to the server and should be
      * cancelled
-     * See {@link BlockCollision#correctPosition(GeyserSession, BoundingBox)} for more info
+     * See {@link BlockCollision#correctPosition(RorySession, BoundingBox)} for more info
      */
     public boolean correctPlayerPosition() {
 

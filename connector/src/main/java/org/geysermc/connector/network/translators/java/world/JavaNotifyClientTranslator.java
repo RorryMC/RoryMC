@@ -39,7 +39,7 @@ import com.nukkitx.protocol.bedrock.data.LevelEventType;
 import com.nukkitx.protocol.bedrock.data.entity.EntityEventType;
 import com.nukkitx.protocol.bedrock.packet.*;
 import org.geysermc.connector.entity.player.PlayerEntity;
-import org.geysermc.connector.network.session.GeyserSession;
+import org.geysermc.connector.network.session.RorySession;
 import org.geysermc.connector.network.translators.PacketTranslator;
 import org.geysermc.connector.network.translators.Translator;
 import org.geysermc.connector.network.translators.inventory.translators.PlayerInventoryTranslator;
@@ -49,7 +49,7 @@ import org.geysermc.connector.utils.LocaleUtils;
 public class JavaNotifyClientTranslator extends PacketTranslator<ServerNotifyClientPacket> {
 
     @Override
-    public void translate(ServerNotifyClientPacket packet, GeyserSession session) {
+    public void translate(ServerNotifyClientPacket packet, RorySession session) {
         PlayerEntity entity = session.getPlayerEntity();
         if (entity == null)
             return;
